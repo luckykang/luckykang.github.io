@@ -11,34 +11,34 @@ tag: 工具
 - 系统版本：win10 1809
 - vs code版本：1.45.1
 
-### 安装步骤
-- 1.中文汉化包
+### 安装扩展于设置
+- 中文汉化包
 
 Chinese (Simplified) Language Pack 
 
-- 2.python
+- python
 
 完成后左下角会出现你的电脑上安装的 Python 版本
 
-- 3.Material Icon Theme   
+- Material Icon Theme   
 
 这是一个比默认更好看的图标样式
 
-- 4.代码自动保存
+- 代码自动保存
 
 在菜单栏的文件，勾选自动保存即可
 
-- 5.Project Manager
+- Project Manager
 
 工作中，我们经常会来回切换多个项目，每次都要找到对应项目的目录再打开，比较麻烦。Project Manager插件可以解决这样的烦恼，它提供了专门的视图来展示你的项目，我们可以把常用的项目保存在这里，需要时一键切换，十分方便。
 
-- 6.Code Time
+- Code Time
 
 记录编程时间，统计代码行数。安装该插件后，登陆github账户后,VS Code 底部的状态栏右下角可以看到时间统计。在Project Manager界面点击 view summary可以查看代码编写时间。
 
-- 7.indent-rainbow  突出显示缩进
+- indent-rainbow  突出显示缩进
 
-- 8.yapf   用来格式化代码
+- yapf   用来格式化代码
 
 执行：
 
@@ -46,11 +46,11 @@ Chinese (Simplified) Language Pack
 
 打开vs code的设置，搜索yapf,然后在用户扩展中设置为yapf,然后在代码中点击鼠标右键，选择格式化代码，就会对代码进行格式化的操作
 
-- 9.安装主题  One Dark Pro
+- 安装主题  One Dark Pro
 
 这个主题很清新护眼,我很喜欢
 
-- 10.安装字体 Fira Code
+- 安装字体 Fira Code
 
 [下载地址](https://github.com/tonsky/FiraCode)
 
