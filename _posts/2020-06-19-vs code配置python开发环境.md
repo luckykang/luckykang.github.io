@@ -11,7 +11,7 @@ tag: 工具
 - 系统版本：win10 1809
 - vs code版本：1.45.1
 
-### 安装扩展于设置
+### 安装扩展和设置
 - 中文汉化包
 
 Chinese (Simplified) Language Pack 
@@ -36,9 +36,13 @@ Chinese (Simplified) Language Pack
 
 记录编程时间，统计代码行数。安装该插件后，登陆github账户后,VS Code 底部的状态栏右下角可以看到时间统计。在Project Manager界面点击 view summary可以查看代码编写时间。
 
-- indent-rainbow  突出显示缩进
+- indent-rainbow  
 
-- yapf   用来格式化代码
+突出显示缩进
+
+- yapf   
+
+用来格式化代码
 
 执行：
 
