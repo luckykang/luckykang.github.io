@@ -19,6 +19,8 @@ title: 关于我
 <h3> 如何联系我 </h3>  
 
 <p> 
+csdn博客：kan2016
+<p> 
 email：1304589181@qq.com       
 <p> 
 weixin: kangyaoming  
