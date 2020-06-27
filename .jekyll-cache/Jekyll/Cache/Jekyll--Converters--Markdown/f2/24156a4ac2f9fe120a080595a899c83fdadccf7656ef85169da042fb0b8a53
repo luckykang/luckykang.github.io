@@ -1,9 +1,4 @@
----
-layout: page
-title: 关于我 
----
-
-一个 python 开发者，喜欢研究一些新技术。
+I"�<p>一个 python 开发者，喜欢研究一些新技术。</p>
 <p>
 平时喜欢整理个人博客，逛逛技术论坛。
 <p>
@@ -23,9 +18,16 @@ email：1304589181@qq.com
 <p> 
 weixin: kangyaoming  
 <p> 
-如果有 python开发 或者 openvino学习 相关问题可以一起讨论.
+如果有 python开发 或者 openvino学习 以及 软件激活 等问题可以一起讨论.
 <p> 
 
 
-{% include comments.html %}
+<section class="post-comments">
 
+  
+
+</section>
+
+
+</p></p></p></p></p></p></p></p></p>
+:ET

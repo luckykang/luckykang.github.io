@@ -1,48 +1,37 @@
 # Basic
-title: 潘柏信
+title: 康瑶明
 subtitle: 个人站
-description: 欢迎来到我的个人站~
+description: 来了就喝一杯吧
 # 头像里面的标题
-avatarTitle: leopardpan
+avatarTitle: luckykang
 # 头像里面的描述
-avatarDesc: iOS / 机器学习
-url: "http://baixin.io"
+avatarDesc: python / 机器学习
+url: "https://luckykang.github.io"
 
-# Comment
+# Comment 
 comment:
-    disqus: leopard
+    # disqus: leopardb
     # gitment: xxx // 需要修改 comments.html中的client_id和client_secret
     # uyan: 2143225  # 有言id,登录有言官网申请
 
 # Social
-social:
-    weibo: 5366874726 
-    github: leopardpan
+social: 
+    github: luckykang
     # zhihu: panpanleopard
     # juejin: xxx
-    jianshu: 2ada30d8d0f7
+    # jianshu: 2ada30d8d0f7
     # twitter: 
-    mail: leopardpan@icloud.com
+    mail: 1304589181@qq.com
 
 
 # 百度统计 
 # 使用博客模板请去掉或者更换 id 
 baidu:
-    id: xxxx  
+    id: f9ce39264c2659ba8c1ae479f278c96a
 
-# Google Analytics
-# 使用博客模板请去掉或者更换 id
-ga:
-    id: xxxx  
-    host: auto  
 
 
 # 《----------------- 上面的信息修改成你自己的 ---------------------------》
-#
-#
-#  _post/ 下的文章更换成你自己的文章
-#  帮忙star一下，感谢~😆 地址： https://github.com/leopardpan/leopardpan.github.io
-#
 #
 # 《--------------- 下面的信息可以自行选择是否修改 ------------------------》
 
