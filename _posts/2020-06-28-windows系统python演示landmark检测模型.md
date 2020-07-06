@@ -1,33 +1,28 @@
 ---
 layout: post
-title: python演示道路分割模型
-tag: openvino
+title: windows系统python演示landmark检测
+tag: OpenVINO
 ---
 
 ***
 
 #### 效果展示  
 
-![](/images//post//2020-06//2020-06-27.png)   
+![](/images//post//2020-06//2020-06-28.png)  
 
 ***  
 
+## 一、 准备流程：
 
-### 1. python中加载openvino
-打开openvino安装目录如：C:\Intel\openvino\python\python3.6
+### 1. 在python环境中加载openvino
+打开openvino安装目录如：
+C:\Intel\openvino\python\python3.6
 
 把目录下的openvino文件夹复制到
 
 系统的python环境安装目录下如：  C:\Python36\Lib\site-packages
 
-### 2. 参考的代码
-openvino安装目录下的demo:
-
-C:\Intel\openvino_2019.1.087\deployment_tools\inference_engine\samples\python_samples\object_detection_demo_ssd_async目录的
-
-object_detection_demo_ssd_async.py文件
-
-### 3. 编译
+### 2. 编译
 C:\Intel\openvino\deployment_tools\inference_engine\samples 路径下执行：
 
     build_samples_msvc2017.bat
@@ -44,17 +39,38 @@ inference_engine_samples_build_2017 文件目录
 
     cpu_extension = "C:\Users\kang\Documents\Intel\OpenVINO\inference_engine_samples_build_2017\intel64\Release\cpu_extension.dll"
 
-### 4. 下载模型 road-segmentation-adas-0001 记录xml地址
+### 3. 下载模型，记录路径 
+face-detection-adas-0001
+
+landmarks-regression-retail-0009
+
+记录xml地址
 
     model_xml = ""   
     model_bin = ""
 
-### 5. 填写参数
+## 二、 参数说明
 
-    plugin_dir = ""     
-    cap = cv2.VideoCapture("")
+### 1. 人脸检测
+- 基于MobileNet v1版本
+- 输入格式：[1x3x384x672] = BCHW
+- 输出格式：[1，1，N，7] = [image_id, label, conf, x_min, y_min, x_max, y_max]
 
-### 附录代码：
+### 2. landmark提取
+- landmark提取 - 基于卷积神经网络，提取5个点
+- 输入 [1x3x48x48] = BCHW
+- 输出 [1X10X1X1] = 五个点坐标(x0,y0,x1,y1...x4,y4)
+
+### 3. python版本的api介绍
+- 同步调用，执行输入
+- Im_exec_net.infer(inputs={"0":face_roi})
+
+#### 4. 获取输出
+- landmark_res = Im_exec_net.request[0].outputs[Im_output_blob]
+- landmark_res = np.reshape(landmark_res,(5,2))
+
+
+## 三、 附录代码：
 
     import sys
     import cv2
@@ -62,13 +78,16 @@ inference_engine_samples_build_2017 文件目录
     import time
     import logging as log
     from openvino.inference_engine import IENetwork, IEPlugin
-    model_xml = "C:/Users/kang/Downloads/open_model_zoo-2019/model_downloader/Transportation/segmentation/curbs/dldt/road-segmentation-adas-0001.xml"
-    model_bin = "C:/Users/kang/Downloads/open_model_zoo-2019/model_downloader/Transportation/segmentation/curbs/dldt/road-segmentation-adas-0001.bin"
+    model_xml = "C:/Users/kang/Downloads/open_model_zoo-2019/model_downloader/Transportation/object_detection/face/pruned_mobilenet_reduced_ssd_shared_weights/dldt/face-detection-adas-0001.xml"
+    model_bin = "C:/Users/kang/Downloads/open_model_zoo-2019/model_downloader/Transportation/object_detection/face/pruned_mobilenet_reduced_ssd_shared_weights/dldt/face-detection-adas-0001.bin"
     plugin_dir = "C:/Intel/openvino/deployment_tools/inference_engine/bin/intel64/Release"
     cpu_extension = "C:/Users/kang/Documents/Intel/OpenVINO/inference_engine_samples_build_2017/intel64/Release/cpu_extension.dll"
 
+    landmark_xml = "C:/Users/kang/Downloads/open_model_zoo-2019/model_downloader/Retail/object_attributes/landmarks_regression/0009/dldt/landmarks-regression-retail-0009.xml"
+    landmark_bin = "C:/Users/kang/Downloads/open_model_zoo-2019/model_downloader/Retail/object_attributes/landmarks_regression/0009/dldt/landmarks-regression-retail-0009.bin"
 
-    def read_segmentation_demo():
+
+    def face_landmark_demo():
         log.basicConfig(format="[ %(levelname)s ] %(message)s",
                         level=log.INFO,
                         stream=sys.stdout)
@@ -76,9 +95,19 @@ inference_engine_samples_build_2017 文件目录
         log.info("Initializing plugin for {} device...".format("CPU"))
         plugin = IEPlugin(device="CPU", plugin_dirs=plugin_dir)
         plugin.add_cpu_extension(cpu_extension)
+
+        # lut
+        lut = []
+        lut.append((0, 0, 255))
+        lut.append((255, 0, 0))
+        lut.append((0, 255, 0))
+        lut.append((0, 255, 255))
+        lut.append((255, 0, 255))
+
         # Read IR
         log.info("Reading IR...")
         net = IENetwork(model=model_xml, weights=model_bin)
+        landmark_net = IENetwork(model=landmark_xml, weights=landmark_bin)
 
         if plugin.device == "CPU":
             supported_layers = plugin.get_supported_layers(net)
@@ -96,15 +125,25 @@ inference_engine_samples_build_2017 文件目录
         assert len(
             net.inputs.keys()) == 1, "Demo supports only single input topologies"
         assert len(net.outputs) == 1, "Demo supports only single output topologies"
+
         input_blob = next(iter(net.inputs))
         out_blob = next(iter(net.outputs))
+
+        lm_input_blob = next(iter(landmark_net.inputs))
+        lm_out_blob = next(iter(landmark_net.outputs))
+
         log.info("Loading IR to the plugin...")
         exec_net = plugin.load(network=net, num_requests=2)
+        lm_exec_net = plugin.load(network=landmark_net)
+
         # Read and pre-process input image
         n, c, h, w = net.inputs[input_blob].shape
+        nm, cm, hm, wm = landmark_net.inputs[lm_input_blob].shape
+
         del net
-        cap = cv2.VideoCapture(
-            "C:/Users/kang/Downloads/opencv_tutorial/data/images/road_line.mp4")
+        del landmark_net
+
+        cap = cv2.VideoCapture("C:/Users/kang/Downloads/material/av77002671.mp4")
 
         cur_request_id = 0
         next_request_id = 1
@@ -128,7 +167,6 @@ inference_engine_samples_build_2017 文件目录
                 break
             initial_w = cap.get(3)
             initial_h = cap.get(4)
-            # 开启同步或者异步执行模式
             inf_start = time.time()
             if is_async_mode:
                 in_frame = cv2.resize(next_frame, (w, h))
@@ -146,23 +184,32 @@ inference_engine_samples_build_2017 文件目录
                                     inputs={input_blob: in_frame})
             if exec_net.requests[cur_request_id].wait(-1) == 0:
 
-
                 res = exec_net.requests[cur_request_id].outputs[out_blob]
+                for obj in res[0][0]:
+                    if obj[2] > 0.5:
+                        xmin = int(obj[3] * initial_w)
+                        ymin = int(obj[4] * initial_h)
+                        xmax = int(obj[5] * initial_w)
+                        ymax = int(obj[6] * initial_h)
+                        if xmin > 0 and ymin > 0 and (xmax < initial_w) and (
+                                ymax < initial_h):
+                            roi = frame[ymin:ymax, xmin:xmax, :]
+                            rh, rw = roi.shape[:2]
+                            face_roi = cv2.resize(roi, (wm, hm))
+                            face_roi = face_roi.transpose((2, 0, 1))
+                            face_roi = face_roi.reshape((nm, cm, hm, wm))
+                            lm_exec_net.infer(inputs={'0': face_roi})
+                            landmark_res = lm_exec_net.requests[0].outputs[
+                                lm_out_blob]
+                            landmark_res = np.reshape(landmark_res, (5, 2))
+                            for m in range(len(landmark_res)):
+                                x = landmark_res[m][0] * rw
+                                y = landmark_res[m][1] * rh
+                                cv2.circle(roi, (np.int32(x), np.int32(y)), 3,
+                                        lut[m], 2, 8, 0)
 
-                res = np.squeeze(res, 0)
-                res = res.transpose(1, 2, 0)  #HWC格式
-                res = np.argmax(res, 2)
-                hh, ww = res.shape
-                mask = np.zeros((hh, ww, 3), dtype=np.uint8)
-                mask[np.where(res > 0)] = (0, 255, 255)
-                mask[np.where(res > 1)] = (255, 0, 255)
-
-
-                cv2.imshow("mask", mask)
- 
-                mask = cv2.resize(mask, dsize=(frame.shape[1], frame.shape[0]))
-
-                frame = cv2.addWeighted(mask, 0.2, frame, 0.8, 0)
+                        cv2.rectangle(frame, (xmin, ymin), (xmax, ymax),
+                                    (0, 0, 255), 2, 8, 0)
 
                 inf_end = time.time()
                 det_time = inf_end - inf_start
@@ -182,9 +229,9 @@ inference_engine_samples_build_2017 文件目录
                 cv2.putText(frame, async_mode_message, (10, int(initial_h - 20)),
                             cv2.FONT_HERSHEY_COMPLEX, 0.5, (10, 10, 200), 1)
 
-
+            #
             render_start = time.time()
-            cv2.imshow("segmentation Results", frame)
+            cv2.imshow("face detection", frame)
             render_end = time.time()
             render_time = render_end - render_start
 
@@ -195,18 +242,19 @@ inference_engine_samples_build_2017 文件目录
             key = cv2.waitKey(1)
             if key == 27:
                 break
-        cv2.destroyAllWindows()
 
+        cv2.destroyAllWindows()
         del exec_net
+        del lm_exec_net
         del plugin
 
 
     if __name__ == '__main__':
-        sys.exit(read_segmentation_demo() or 0)
+        sys.exit(face_landmark_demo() or 0)
 
 
 
 
-转载请注明：[康瑶明的博客](https://luckykang.github.io) 
+转载请注明：[康瑶明的博客](https://luckykang.github.io)
 
 

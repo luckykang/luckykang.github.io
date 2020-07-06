@@ -1,69 +1,36 @@
+---
+layout: post
+title: ubuntu系统python演示道路分割模型
+tag: OpenVINO
+---
 
 ***
 
 #### 效果展示  
 
-![](/images/post//2020-07//07-01.png)   
+![](/images//post//2020-06//2020-06-27.png)   
 
 ***  
 
-## 一、 准备流程：
+##  一、 操作步骤：
 
-### 1. 在python环境中加载openvino
-打开openvino安装目录如：
-C:\Intel\openvino\python\python3.6
+### 1. 安装OpenVINO
 
-把目录下的openvino文件夹复制到
+### 2. 执行下面命令，对samples编译
+    cd /opt/intel/openvino/deployment_tools/inference_engine/samples
+    ./build_samples.sh 
 
-系统的python环境安装目录下如：  C:\Python36\Lib\site-packages
+编译完成后，可以在home目录找到参数cpu_extension
+    
+    cpu_extension = "/home/kang/inference_engine_samples_build/intel64/Release/lib/libcpu_extension.so"
 
-### 2. 编译
-C:\Intel\openvino\deployment_tools\inference_engine\samples 路径下执行：
-
-    build_samples_msvc2017.bat
-
-执行完后在
-
-C:\Users\kang\Documents\Intel\OpenVINO 目录
-
-可以看到生成的
-
-inference_engine_samples_build_2017 文件目录
-
-在build目录中也可以找到cpu_extension：
-
-    cpu_extension = "C:\Users\kang\Documents\Intel\OpenVINO\inference_engine_samples_build_2017\intel64\Release\cpu_extension.dll"
-
-### 3. 下载模型，记录路径 
-face-detection-adas-0001
-
-emotions-recognition-retail-0003
+### 3. 下载模型，记录xml地址
+road-segmentation-adas-0001
 
     model_xml = ""   
     model_bin = ""
 
-## 二、 参数介绍：
-
-### 1. emotions提取
-
-- 基于MobileNet v1版本
-    · 输入格式：[1x3x384x672]= BCHW
-    · 输出格式：[1, 1, N, 7] = [image_id, label, conf, x_min, y_min, x_max, y_max]
-- 表情识别网络 – 输入-[1x3x64x64]=BCHW
-    · 输出格式- [1, 5, 1, 1]
-    · 检测五种表情 ('neutral', 'happy', 'sad', 'surprise', 'anger')
-
-### 2. python版本的api介绍
-- 同步调用，执行输入
-- landmark_res = exec_emotions_net.infer(inputs={input_blob: [face_roi]})
-
-### 3. 获取输出
-- landmark_res = landmark_res['prob_emotion']
-- landmark_res = np.reshape(landmark_res, (5))
-- landmark_res = labels[np.argmax(landmark_res)]
-
-
-### 附录代码：
+##  二、 附录代码：
 
     import sys
     import cv2
@@ -71,23 +38,13 @@ emotions-recognition-retail-0003
     import time
     import logging as log
     from openvino.inference_engine import IENetwork, IEPlugin
-
-    plugin_dir = "C:/Intel/openvino/deployment_tools/inference_engine/bin/intel64/Release"
-    cpu_extension = "C:/Users/kang/Documents/Intel/OpenVINO/inference_engine_samples_build_2017/intel64/Release/cpu_extension.dll"
-
-
-    # face-detection-adas-0001
-    model_xml  = "C:/Users/kang/Downloads/openvino_sample_show/open_model_zoo/model_downloader/Transportation/object_detection/face/pruned_mobilenet_reduced_ssd_shared_weights/dldt/face-detection-adas-0001.xml"
-    model_bin = "C:/Users/kang/Downloads/openvino_sample_show/open_model_zoo/model_downloader/Transportation/object_detection/face/pruned_mobilenet_reduced_ssd_shared_weights/dldt/face-detection-adas-0001.bin"
-
-    # emotions-recognition-retail-0003
-    emotions_xml = "C:/Users/kang/Downloads/openvino_sample_show/open_model_zoo/model_downloader/Retail/object_attributes/emotions_recognition/0003/dldt/emotions-recognition-retail-0003.xml"
-    emotions_bin = "C:/Users/kang/Downloads/openvino_sample_show/open_model_zoo/model_downloader/Retail/object_attributes/emotions_recognition/0003/dldt/emotions-recognition-retail-0003.bin"
-
-    labels = ['neutral', 'happy', 'sad', 'surprise', 'anger']
+    model_xml  = "/home/kang/open_model_zoo-2019/model_downloader/Transportation/segmentation/curbs/dldt/road-segmentation-adas-0001.xml"
+    model_bin = "/home/kang/open_model_zoo-2019/model_downloader/Transportation/segmentation/curbs/dldt/road-segmentation-adas-0001.bin"
+    plugin_dir = "/opt/intel/openvino/deployment_tools/inference_engine/lib/intel64"
+    cpu_extension = "/home/kang/inference_engine_samples_build/intel64/Release/lib/libcpu_extension.so"
 
 
-    def face_emotions_demo():
+    def read_segmentation_demo():
         log.basicConfig(format="[ %(levelname)s ] %(message)s",
                         level=log.INFO,
                         stream=sys.stdout)
@@ -98,9 +55,6 @@ emotions-recognition-retail-0003
         # Read IR
         log.info("Reading IR...")
         net = IENetwork(model=model_xml, weights=model_bin)
-
-
-        emotions_net = IENetwork(model=emotions_xml, weights=emotions_bin)
 
         if plugin.device == "CPU":
             supported_layers = plugin.get_supported_layers(net)
@@ -118,28 +72,14 @@ emotions-recognition-retail-0003
         assert len(
             net.inputs.keys()) == 1, "Demo supports only single input topologies"
         assert len(net.outputs) == 1, "Demo supports only single output topologies"
-
-
         input_blob = next(iter(net.inputs))
         out_blob = next(iter(net.outputs))
-        em_input_blob = next(iter(emotions_net.inputs))
-        em_out_blob = next(iter(emotions_net.outputs))
-
-
         log.info("Loading IR to the plugin...")
-
-        # 生成可执行网络,异步执行 num_requests=2
         exec_net = plugin.load(network=net, num_requests=2)
-        exec_emotions_net = plugin.load(network=emotions_net)
-
         # Read and pre-process input image
         n, c, h, w = net.inputs[input_blob].shape
-        en, ec, eh, ew = emotions_net.inputs[em_input_blob].shape
-
         del net
-        del emotions_net
-
-        cap = cv2.VideoCapture("C:/Users/kang/Downloads/openvino_sample_show/material/face_detection_demo.mp4")
+        cap = cv2.VideoCapture("/home/kang/Downloads/openvino_sample_show-master/material/read_segmentation_demo.mp4")
 
         cur_request_id = 0
         next_request_id = 1
@@ -163,6 +103,7 @@ emotions-recognition-retail-0003
                 break
             initial_w = cap.get(3)
             initial_h = cap.get(4)
+            # 开启同步或者异步执行模式
             inf_start = time.time()
             if is_async_mode:
                 in_frame = cv2.resize(next_frame, (w, h))
@@ -182,32 +123,17 @@ emotions-recognition-retail-0003
 
 
                 res = exec_net.requests[cur_request_id].outputs[out_blob]
+                res = np.squeeze(res, 0)
+                res = res.transpose(1, 2, 0)  
+                res = np.argmax(res, 2)
+                hh, ww = res.shape
+                mask = np.zeros((hh, ww, 3), dtype=np.uint8)
+                mask[np.where(res > 0)] = (0, 255, 255)
+                mask[np.where(res > 1)] = (255, 0, 255)
 
-
-
-                # 输出格式：[1,1,N,7]  从N行人脸中找到7个值   = [image_id,label,conf,x_min,y_min,x_max,y_max]
-                for obj in res[0][0]:
-                    if obj[2] > 0.5:
-                        xmin = int(obj[3] * initial_w)
-                        ymin = int(obj[4] * initial_h)
-                        xmax = int(obj[5] * initial_w)
-                        ymax = int(obj[6] * initial_h)
-                        if xmin > 0 and ymin > 0 and (xmax < initial_w) and (ymax < initial_h):
-                            roi = frame[ymin:ymax,xmin:xmax,:]
-                            face_roi = cv2.resize(roi,(ew,eh))
-                            face_roi =face_roi.transpose((2, 0, 1)) 
-                            face_roi= face_roi.reshape((en, ec, eh, ew))
-                            # 解析结果
-                            landmark_res = exec_emotions_net.infer(inputs={input_blob: [face_roi]})
-                            landmark_res = landmark_res['prob_emotion']
-                            landmark_res = np.reshape(landmark_res, (5))
-                            landmark_res = labels[np.argmax(landmark_res)]
-                            cv2.putText(frame, landmark_res, (np.int32(xmin), np.int32(ymin)), cv2.FONT_HERSHEY_SIMPLEX, 1.0,
-                                    (255, 0, 0), 2)
-                            cv2.rectangle(frame, (np.int32(xmin), np.int32(ymin)), (np.int32(xmax), np.int32(ymax)),
-                                        (0, 0, 255), 2, 8, 0)
-                        cv2.rectangle(frame, (xmin,ymin), (xmax,ymax), (0, 0, 255), 2, 8, 0)
-
+                cv2.imshow("mask", mask)
+                mask = cv2.resize(mask, dsize=(frame.shape[1], frame.shape[0]))
+                frame = cv2.addWeighted(mask, 0.2, frame, 0.8, 0)
 
                 inf_end = time.time()
                 det_time = inf_end - inf_start
@@ -228,7 +154,7 @@ emotions-recognition-retail-0003
 
 
             render_start = time.time()
-            cv2.imshow("face emotions demo", frame)
+            cv2.imshow("segmentation Results", frame)
             render_end = time.time()
             render_time = render_end - render_start
 
@@ -242,12 +168,14 @@ emotions-recognition-retail-0003
         cv2.destroyAllWindows()
 
         del exec_net
-        del exec_emotions_net
         del plugin
 
 
-    if __name__ == '__main__':
-        sys.exit(face_emotions_demo() or 0) 
+if __name__ == '__main__':
+    sys.exit(read_segmentation_demo() or 0)
 
+
+
+转载请注明：[康瑶明的博客](https://luckykang.github.io) 
 
 
