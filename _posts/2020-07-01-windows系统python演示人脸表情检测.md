@@ -1,6 +1,6 @@
 ---
 layout: post
-title: 2020-07-01-windows系统python演示人脸表情检测
+title: windows系统python演示人脸表情检测
 tag: OpenVINO
 ---
 
