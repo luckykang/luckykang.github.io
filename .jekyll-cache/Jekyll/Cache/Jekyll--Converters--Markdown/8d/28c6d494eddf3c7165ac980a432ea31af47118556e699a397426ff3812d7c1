@@ -1,4 +1,0 @@
-I"�<h3 id="1-python中加载openvino">1. python中加载openvino</h3>
-<p>把openvino安装目录 C:\Intel\openvino\python\python3.6 下的 openvino文件夹 <br />
-粘贴到python安装目录下   C:\Python36\Lib\site-packages</p>
-:ET
