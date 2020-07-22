@@ -1,6 +1,6 @@
 ---
 layout: post
-title: "2020-07-22-在VS Code中使用 Picgo + jsDelivr + Github搭建高速稳定图床"
+title: "在VS Code中使用Picgo+jsDelivr+Github搭建高速稳定图床"
 tag: vs code
 ---
 
