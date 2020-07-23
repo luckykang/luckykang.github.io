@@ -8,7 +8,8 @@ tag: OpenVINO
 
 #### 效果展示  
 
-![](/images//post//2020-06//2020-06-28.png)  
+
+![2020-06-28](https://cdn.jsdelivr.net/gh/luckykang/picture_bed/blogs_images/2020-06-28.png)
 
 ***  
 
