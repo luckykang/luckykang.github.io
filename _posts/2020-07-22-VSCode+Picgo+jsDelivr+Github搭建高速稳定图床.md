@@ -1,7 +1,7 @@
 ---
 layout: post
-title: "VS Code+Picgo+jsDelivr+Github搭建高速稳定图床"
-tag: vs code
+title: "VSCode+Picgo+jsDelivr+Github搭建高速稳定图床"
+tag: vscode
 ---
 
 ### 1.创建github仓库，生成token
