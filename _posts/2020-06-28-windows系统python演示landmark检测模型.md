@@ -230,7 +230,6 @@ landmarks-regression-retail-0009
                 cv2.putText(frame, async_mode_message, (10, int(initial_h - 20)),
                             cv2.FONT_HERSHEY_COMPLEX, 0.5, (10, 10, 200), 1)
 
-            #
             render_start = time.time()
             cv2.imshow("face detection", frame)
             render_end = time.time()
