@@ -37,7 +37,9 @@ tag: OpenVINO
 
 
 ### 三、在GPU上进行推理：
-1.切换到路径/opt/intel/openvino/install_dependencies，使用root权限执行脚本
+1.安装驱动
+
+切换到路径/opt/intel/openvino/install_dependencies，使用root权限执行脚本
 install_NEO_OCL_driver.sh
 
 ![11-45-01](https://cdn.jsdelivr.net/gh/luckykang/picture_bed/blogs_images/11-45-01.png)
@@ -53,7 +55,9 @@ install_NEO_OCL_driver.sh
 
 ### 四、在HDDL上进行推理：
 
-1.切换到路径/opt/intel/openvino/deployment_tools/inference_engine/external/hddl，执行install_IVAD_VPU_dependencies.sh
+1.安装驱动
+
+切换到路径/opt/intel/openvino/deployment_tools/inference_engine/external/hddl，执行install_IVAD_VPU_dependencies.sh
 
 ![13-18-54](https://cdn.jsdelivr.net/gh/luckykang/picture_bed/blogs_images/13-18-54.png)
 
@@ -74,7 +78,9 @@ install_NEO_OCL_driver.sh
 
 切换到路径/opt/intel/openvino/install_dependencies,执行install_NCS_udev_rules.sh
 
-安装完成后执行推理，CPU使用率稳定在54.9%左右
+2.推理运行
+
+执行推理，CPU使用率稳定在54.9%左右
 
 ![14-10-54](https://cdn.jsdelivr.net/gh/luckykang/picture_bed/blogs_images/14-10-54.png)
 
