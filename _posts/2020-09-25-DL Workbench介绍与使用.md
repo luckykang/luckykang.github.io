@@ -87,7 +87,7 @@ Workbench有两种安装方式：
 
 ### 6.如何下载模型
 
-在配置表的所选配置中，点击配置表右侧的下载按钮，即可下载转换后的模型文件。
+在配置表中点击右侧的下载按钮，即可下载转换后的模型文件。
 
 ![0927162821](https://cdn.jsdelivr.net/gh/luckykang/picture_bed/blogs_images/0927162821.png)
 
