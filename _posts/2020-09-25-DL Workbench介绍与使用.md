@@ -10,7 +10,7 @@ DL Workbench是可视化的OpenVINO模型性能评估工具，用户可以在web
 
 ### 2.DL Workbench支持哪些设备
 
-DL Workbench支持基于CPU，英特尔®处理器图形（GPU），英特尔®Movidius™神经计算棒2（NCS 2）和具有英特尔®Movidius™VPU架构的英特尔®视觉加速设备。
+DL Workbench支持基于CPU，英特尔®处理器图形（GPU），英特尔®Movidius™神经计算棒2（NCS 2）和具有英特尔®Movidius™VPU架构的英特尔®视觉加速设备。需要注意的是由于MYRIAD和HDDL设备不兼容，因此不能在DL Workbench中一起使用，故不能同时设置。
 
 ### 3.DL Workbench可以做哪些事情
 
