@@ -85,7 +85,13 @@ Workbench有两种安装方式：
 
 ![0927160420](https://cdn.jsdelivr.net/gh/luckykang/picture_bed/blogs_images/0927160420.png)
 
-### 6.如何通过调整参数比较模型的性能差异
+### 6.如何下载模型
+
+在配置表的所选配置中，点击配置表右侧的下载按钮，即可下载转换后的模型文件。
+
+![0927162821](https://cdn.jsdelivr.net/gh/luckykang/picture_bed/blogs_images/0927162821.png)
+
+### 7.如何通过调整参数比较模型的性能差异
 
 在配置表的所选配置中，我们可以选择单一流推理模式或组推理模式来比较模型的性能差异
 
@@ -95,7 +101,7 @@ Workbench有两种安装方式：
 
 ![0927103951](https://cdn.jsdelivr.net/gh/luckykang/picture_bed/blogs_images/0927103951.png)
 
-### 7.如何对模型进行转换和优化
+### 8.如何对模型进行转换和优化
 
 在配置表的所选配置中，我们可以通过降低计算精度来提高模型的性能，比如把FP32转换为INT8格式。
 
@@ -111,19 +117,13 @@ AccuracyAware方式又叫最大精度校准，它指的是达到指定的最大�
 
 ![0927154244](https://cdn.jsdelivr.net/gh/luckykang/picture_bed/blogs_images/0927154244.png)
 
-### 8.如何配置与下载模型
+### 9.生成最小部署包
 
-在配置表的所选配置中，下载模型的方式有两种：
-
-一种是从配置表右侧的下载按钮安装，这种安装方式仅仅下载转换后的模型文件。
-
-![0927162821](https://cdn.jsdelivr.net/gh/luckykang/picture_bed/blogs_images/0927162821.png)
-
-还有一种是选择配置中的`包下载`，这种方式可以自定义软件包想要支持的设备，以及是否包括转换后的模型文件、python API、安装脚本等等。默认的软件包中不包含模型，归档文件仅包含所选插件的库。这里我们勾选模型文件，python API和安装脚本选项进行打包。
+点击选择配置中的`包下载`，可以自定义最小部署包想要支持的设备类型、是否包括转换后的模型文件、python API、安装脚本等等。默认的最小部署包中不包含模型，仅包含所选的插件库。这里我们勾选模型文件、python API和安装脚本，生成最小部署包。
 
 ![0927164045](https://cdn.jsdelivr.net/gh/luckykang/picture_bed/blogs_images/0927164045.png)
 
-下载完成后可以看到归档文件包含了所选内容。
+下载完成后可以看到生成的最小部署包中包含了我们勾选的内容。
 
 ![0927163456](https://cdn.jsdelivr.net/gh/luckykang/picture_bed/blogs_images/0927163456.png)
 
