@@ -6,11 +6,11 @@ tag: OpenVINO
 
 ### 1.什么是DL Workbench 
 
-DL Workbench是可视化的web图形环境，用户可以在受支持的多种英特尔硬件设备下载模型、优化模型、校准模型、调整和比较模型的性能，从而找到最符合工程实践的模型进行部署和使用。
+DL Workbench是可视化的OpenVINO模型性能评估工具，用户可以在web界面下选择已有的英特尔硬件设备进行模型评估。这个工具包含了下载深度学习模型、定制推理所需数据集、优化模型、校准模型、调整和比较模型的性能，从而找到最符合工程实践的模型进行部署和使用。
 
 ### 2.DL Workbench支持哪些设备
 
-DL Workbench支持基于CPU，英特尔®处理器图形（GPU），英特尔®Movidius™神经计算棒2（NCS 2）和具有英特尔®Movidius™VPU架构的英特尔®视觉加速器设计的推理。
+DL Workbench支持基于CPU，英特尔®处理器图形（GPU），英特尔®Movidius™神经计算棒2（NCS 2）和具有英特尔®Movidius™VPU架构的英特尔®视觉加速设备。
 
 ### 3.DL Workbench可以做哪些事情
 
@@ -22,6 +22,8 @@ DL Workbench支持基于CPU，英特尔®处理器图形（GPU），英特尔®M
 
 - 准确性检查器，以确定模型的准确性
 
+- 可以定制推理所需数据集
+
 ### 4.DL Workbench安装
 
 Workbench有两种安装方式：
@@ -29,6 +31,7 @@ Workbench有两种安装方式：
 - 从Docker Hub安装DL Workbench（包括在Linux，Windows和macOS上安装）
 
 - 从英特尔®OpenVINO™工具包软件包中安装DL Workbench
+(参见链接)[https://docs.openvinotoolkit.org/latest/workbench_docs_Workbench_DG_Install_from_Package.html]
 
 这里我们使用从Docker Hub安装的方式。在机器上安装完docker后，从github的主分支下载start_workbench.sh脚本
 
