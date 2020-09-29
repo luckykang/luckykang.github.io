@@ -31,7 +31,10 @@ Workbench有两种安装方式：
 - 从Docker Hub安装DL Workbench（包括在Linux，Windows和macOS上安装）
 
 - 从英特尔®OpenVINO™工具包软件包中安装DL Workbench
-(参见链接)[https://docs.openvinotoolkit.org/latest/workbench_docs_Workbench_DG_Install_from_Package.html]
+
+参见链接:[https://docs.openvinotoolkit.org/latest/workbench_docs_Workbench_DG_Install_from_Package.html](https://docs.openvinotoolkit.org/latest/workbench_docs_Workbench_DG_Install_from_Package.html)
+
+
 
 这里我们使用从Docker Hub安装的方式。在机器上安装完docker后，从github的主分支下载start_workbench.sh脚本
 
