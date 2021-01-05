@@ -102,3 +102,9 @@ OpenVINO是英特尔基于自身现有的硬件平台开发的一种可以加快
 ### 10.Cvat
 
 Cvat全称Computer Vision Annotation Tool，是用于计算机视觉的免费、在线、交互式视频和图像注释工具。
+
+
+
+
+<br>
+转载请注明：[康瑶明的博客](https://luckykang.github.io)
