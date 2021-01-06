@@ -1,7 +1,6 @@
 ---
 layout: post
 title: vs code配置python环境
-date: 2020-06-19
 tag: 工具
 ---
 
