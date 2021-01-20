@@ -1,7 +1,7 @@
 ---
 layout: post
 title: 常用的的timeshift、打补丁、log
-tag: 工具
+tag: Tools
 ---
 
 

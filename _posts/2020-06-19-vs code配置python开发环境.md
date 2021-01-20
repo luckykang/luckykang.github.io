@@ -1,7 +1,7 @@
 ---
 layout: post
 title: vs code配置python环境
-tag: 工具
+tag: vscode
 ---
 
 
