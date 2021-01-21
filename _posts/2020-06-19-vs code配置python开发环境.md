@@ -56,7 +56,7 @@ Chinese (Simplified) Language Pack
 
 安装方法：
 
-解压后进入ttf文件夹，选中所有文件拷贝到C:\Windows\Fonts目录中，在vs code的设置中settings.json中添加下列代码，重启vs code就会使用该字体：
+解压后进入ttf文件夹，直接双击安装或者选中所有文件拷贝到C:\Windows\Fonts目录中，在vs code的设置中settings.json中添加下列代码，重启vs code就会使用该字体：
 
     //更改字体为Fira Code
     "editor.fontFamily": "Fira Code",
