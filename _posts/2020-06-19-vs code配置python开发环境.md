@@ -5,16 +5,13 @@ tag: VS Code
 ---
 
 
+### 1.安装 python
 
-### 1.安装中文汉化包
+国内下载源：[https://mirrors.huaweicloud.com/python/](https://mirrors.huaweicloud.com/python/)
+
+### 2.打开VS Code,安装中文汉化包
 
 Chinese (Simplified) Language Pack 
-
-### 2.安装 python
-
-国内源：[https://mirrors.huaweicloud.com/python/](https://mirrors.huaweicloud.com/python/)
-
-完成后左下角会出现你的电脑上安装的 Python 版本
 
 ### 3.安装 Material Icon Theme   
 
