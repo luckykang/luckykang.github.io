@@ -8,7 +8,10 @@ tag: VS Code
 
 下载网址：[https://golang.google.cn/dl/](https://golang.google.cn/dl/)
 
-### 二.在linux上的安装
+### 二.在linux上的下载安装
+
+    wget https://golang.google.cn/dl/go1.15.6.linux-amd64.tar.gz
+
     tar xf go1.15.6.linux-amd64.tar.gz
 
     sudo mv go /usr/local/go-1.15
