@@ -1,6 +1,6 @@
 ---
 layout: post
-title: VS Code配置python环境
+title: VS Code系列02-配置python开发环境
 tag: VS Code
 ---
 

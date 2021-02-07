@@ -1,6 +1,6 @@
 ---
 layout: post
-title: "VS Code+Picgo+jsDelivr+Github搭建高速稳定图床"
+title: VS Code系列03-Picgo+jsDelivr+Github搭建高速稳定图床
 tag: VS Code
 ---
 
