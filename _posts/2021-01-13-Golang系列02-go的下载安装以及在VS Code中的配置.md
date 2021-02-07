@@ -1,6 +1,6 @@
 ---
 layout: post
-title: Golang的下载安装以及在VS Code中的配置
+title: Golang系列02-go的下载安装以及在VS Code中的配置
 tag: VS Code
 ---
 
