@@ -65,9 +65,9 @@ moduledemo
 
 └── mypackage
 
-|    ├── go.mod
+│   └── go.mod
 
-|    └── mypackage.go
+│   └── mypackage.go
 
 #### 导入包
 这个时候，`mypackage`也需要进行module初始化，即拥有一个属于自己的`go.mod`文件，内容如下：
@@ -85,6 +85,8 @@ moduledemo
         mypackage.New()
         fmt.Println("main")
     }
+
+  
 因为这两个包不在同一个项目路径下，你想要导入本地包，并且这些包也没有发布到远程的github或其他代码仓库地址。这个时候我们就需要在`go.mod`文件中使用`replace`指令。
 
 在调用方也就是 `moduledemo/go.mod`中按如下方式指定使用相对路径来寻找 `mypackage`这个包。
