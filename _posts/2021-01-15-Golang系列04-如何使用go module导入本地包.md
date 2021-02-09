@@ -18,7 +18,8 @@ tag: Golang
     }
 
 ### 二.第一种情况--在同一个项目下导入
-- 注意：在一个项目（project）下我们是可以定义多个包（package）的。
+
+#### 注意：在一个项目（project）下我们是可以定义多个包（package）的。
 
 #### 目录结构
 现在的情况是，我们在`moduledemo/main.go`中调用了`mypackage`这个包。
