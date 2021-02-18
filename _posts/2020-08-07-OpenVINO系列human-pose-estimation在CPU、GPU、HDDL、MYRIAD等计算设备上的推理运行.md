@@ -1,6 +1,6 @@
 ---
 layout: post
-title: human-pose-estimation在CPU、GPU、HDDL、MYRIAD等计算设备上的推理运行
+title: OpenVINO系列human-pose-estimation在CPU、GPU、HDDL、MYRIAD等计算设备上的推理运行
 tag: OpenVINO
 ---
 

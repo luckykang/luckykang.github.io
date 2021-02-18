@@ -1,6 +1,6 @@
 ---
 layout: post
-title: face_detection检测人脸并做标记
+title: OpenVINO系列face_detection检测人脸并做标记
 tag: OpenVINO
 ---
 

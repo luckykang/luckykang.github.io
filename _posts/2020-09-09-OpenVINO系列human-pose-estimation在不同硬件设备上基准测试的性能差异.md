@@ -1,6 +1,6 @@
 ---
 layout: post
-title: human-pose-estimation在不同硬件设备上基准测试的性能差异
+title: OpenVINO系列human-pose-estimation在不同硬件设备上基准测试的性能差异
 tag: OpenVINO
 ---
 

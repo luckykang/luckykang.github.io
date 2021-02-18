@@ -1,6 +1,6 @@
 ---
 layout: post
-title: ubuntu系统python演示道路分割模型
+title: OpenVINO系列ubuntu系统python演示道路分割模型
 tag: OpenVINO
 ---
 

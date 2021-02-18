@@ -1,6 +1,6 @@
 ---
 layout: post
-title: windows系统python演示人脸表情检测
+title: OpenVINO系列windows系统python演示人脸表情检测
 tag: OpenVINO
 ---
 

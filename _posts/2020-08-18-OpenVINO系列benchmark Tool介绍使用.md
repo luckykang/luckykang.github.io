@@ -1,6 +1,6 @@
 ---
 layout: post
-title: OpenVINO的benchmark Tool介绍与使用
+title: OpenVINO系列benchmark Tool介绍与使用
 tag: OpenVINO
 ---
 

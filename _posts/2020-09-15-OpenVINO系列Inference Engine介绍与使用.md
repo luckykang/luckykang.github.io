@@ -1,6 +1,6 @@
 ---
 layout: post
-title: Inference Engine介绍与使用
+title: OpenVINO系列Inference Engine介绍与使用
 tag: OpenVINO
 ---
 
