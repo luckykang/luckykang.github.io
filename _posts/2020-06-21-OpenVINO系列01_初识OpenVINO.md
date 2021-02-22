@@ -1,6 +1,6 @@
 ---
 layout: post
-title: 2020-06-21-OpenVINO系列01_初识OpenVINO
+title: OpenVINO系列01_初识OpenVINO
 tag: OpenVINO
 ---
 
