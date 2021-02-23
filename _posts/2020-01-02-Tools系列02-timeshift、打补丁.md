@@ -30,18 +30,5 @@ tag: Tools
 
     sudo  apt install timeshift
 
-### 3.child
-
-    sudo gedit /etc/apt/apt.conf
-
-    Acquire::http::Proxy "http://proxy-prc.xx.com:912";
-    或者
-    Acquire::http::Proxy "http://c-prc.xx.com:913";
-
-
-    sudo gedit /etc/environment
-
-    export http_proxy='http://c-prc.xx.com:913/'
-    export https_proxy='http://c-prc.xx.com:913/'
 
 

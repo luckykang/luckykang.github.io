@@ -3,7 +3,7 @@ layout: post
 title: OpenVINO系列04_Ubuntu上演示human-pose-estimation-0001
 tag: OpenVINO
 ---
-   
+
 ### 1.下载模型
 
 进入open_model_zoo路径
@@ -23,7 +23,7 @@ tag: OpenVINO
     /opt/intel/openvino_2019.3.334/deployment_tools/open_model_zoo/tools/downloader/intel/human-pose-estimation-0001/FP32/human-pose-estimation-0001.xml
 
 ### 2.编译
-
+ 
 执行下列命令
 
     cd /opt/intel/openvino/deployment_tools/inference_engine/demos
