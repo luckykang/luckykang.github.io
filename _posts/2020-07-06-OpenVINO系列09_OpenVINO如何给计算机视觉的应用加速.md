@@ -1,6 +1,6 @@
 ---
 layout: post
-title: OpenVINO如何给计算机视觉的应用加速
+title: OpenVINO系列09_OpenVINO如何给计算机视觉的应用加速
 tag: OpenVINO
 ---
 ### 1. 什么是计算机视觉

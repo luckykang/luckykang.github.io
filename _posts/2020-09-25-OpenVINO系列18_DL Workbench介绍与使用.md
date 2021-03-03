@@ -1,6 +1,6 @@
 ---
 layout: post
-title: OpenVINO系列DL Workbench的介绍与使用
+title: OpenVINO系列18_DL Workbench的介绍与使用
 tag: OpenVINO
 ---
 

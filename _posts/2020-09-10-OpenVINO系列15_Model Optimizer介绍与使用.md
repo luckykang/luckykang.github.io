@@ -1,6 +1,6 @@
 ---
 layout: post
-title: OpenVINO系列Model Optimizer介绍与使用
+title: OpenVINO系列15_Model Optimizer介绍与使用
 tag: OpenVINO
 ---
 

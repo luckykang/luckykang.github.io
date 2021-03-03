@@ -1,6 +1,6 @@
 ---
 layout: post
-title: Vtune对human-pose-estimation在CPU推理运行的性能分析
+title: OpenVINO系列11_Vtune对human-pose-estimation在CPU推理运行的性能分析
 tag: OpenVINO
 ---
 
