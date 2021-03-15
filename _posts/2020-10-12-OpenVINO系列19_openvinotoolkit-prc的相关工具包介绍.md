@@ -1,6 +1,6 @@
 ---
 layout: post
-title: oOpenVINO系列19_openvinotoolkit-prc的相关工具包介绍
+title: OpenVINO系列19_openvinotoolkit-prc的相关工具包介绍
 tag: OpenVINO
 ---
 
