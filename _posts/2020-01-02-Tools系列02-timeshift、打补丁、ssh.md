@@ -1,6 +1,6 @@
 ---
 layout: post
-title: Tools系列02-timeshift、打补丁
+title: Tools系列02-timeshift、打补丁、ssh
 tag: Tools
 ---
 
