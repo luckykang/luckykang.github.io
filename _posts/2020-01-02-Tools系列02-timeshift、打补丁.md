@@ -30,5 +30,18 @@ tag: Tools
 
     sudo  apt install timeshift
 
+### 3.ssh-server
+
+    # 安装
+    sudo apt install openssh-server
+
+    # 查看安装的服务
+    dpkg -l | grep ssh
+
+    #确认ssh-server是否启动
+    ps -e | grep ssh
+
+
+
 
 
