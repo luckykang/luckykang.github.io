@@ -8,8 +8,7 @@ tag: Tools
 
 kazam是linux下的一款简单但是功能强大的屏幕录制工具. 它可录制声音并选择全屏录制或局部区域录制.
 
-    sudo add-apt-repository ppa:kazam-team/unstable-series
-    sudo apt-get update && sudo apt-get install kazam
+    sudo apt-get install kazam
 
 若安装成功, 在终端输入以下指令可打开该软件界面
 
@@ -19,8 +18,6 @@ FFmpeg是用于录制、转换和流化音频和视频的完整解决方案， �
 
 在ubuntu上, 在终端输入以下命令:
 
-    sudo apt-repository ppa:kirillshkrogalev/ffmpeg-next 
-    sudo apt-get update
     sudo apt-get install ffmpeg
 
  安装完成后, 在终端输入
