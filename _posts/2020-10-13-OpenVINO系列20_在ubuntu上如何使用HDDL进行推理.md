@@ -1,6 +1,6 @@
 ---
 layout: post
-title: OpenVINO系列19_openvinotoolkit-prc的相关工具包介绍
+title: OpenVINO系列20_在ubuntu上如何使用HDDL进行推理
 tag: OpenVINO
 ---
 
