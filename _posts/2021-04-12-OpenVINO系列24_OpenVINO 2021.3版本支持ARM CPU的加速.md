@@ -179,5 +179,5 @@ cmake -D InferenceEngineDeveloperPackage_DIR=<path to OpenVINO package build fol
 
 ### 附录
 
-项目地址：(https://github.com/openvinotoolkit/openvino_contrib/tree/master/modules/arm_plugin)
+项目地址：[https://github.com/openvinotoolkit/openvino_contrib/tree/master/modules/arm_plugin](https://github.com/openvinotoolkit/openvino_contrib/tree/master/modules/arm_plugin)
 
