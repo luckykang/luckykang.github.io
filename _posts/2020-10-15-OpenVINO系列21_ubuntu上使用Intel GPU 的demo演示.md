@@ -1,6 +1,6 @@
 ---
 layout: post
-title: OpenVINO系列22_ubuntu上使用Intel GPU 的demo演示
+title: OpenVINO系列21_ubuntu上使用Intel GPU 的demo演示
 tag: OpenVINO
 ---
 
@@ -20,15 +20,14 @@ sudo -E su
 ./install_NEO_OCL_driver.sh
 ```
 
-- 遇到报错： 
+- 遇到报错：
+ 
 ```
 error processing package intel-igc-core
 ```
 ![20210412132552](https://cdn.jsdelivr.net/gh/luckykang/picture_bed/blogs_images/20210412132552.png)
 
-- 解决办法：
-
-可以通过apt在ubuntu中首先删除intel-igc-opencl,然后再删除intel-igc-core
+- 解决办法：可以通过apt在ubuntu中首先删除intel-igc-opencl,然后再删除intel-igc-core
 
 ```
 apt remove intel-igc-opencl
@@ -41,9 +40,10 @@ apt remove intel-igc-core
 ```
 ./install_NEO_OCL_driver.sh
 ```
+
 ![20210412132643](https://cdn.jsdelivr.net/gh/luckykang/picture_bed/blogs_images/20210412132643.png)
 
-### 3.使用：
+### 3.使用
 
 ```
 cd ~/inference_engine_samples_build/intel64/Release

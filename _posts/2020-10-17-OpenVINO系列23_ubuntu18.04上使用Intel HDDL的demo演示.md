@@ -1,6 +1,6 @@
 ---
 layout: post
-title: OpenVINO系列24_ubuntu18.04上使用Intel HDDL的demo演示
+title: OpenVINO系列23_ubuntu18.04上使用Intel HDDL的demo演示
 tag: OpenVINO
 ---
 

@@ -1,6 +1,6 @@
 ---
 layout: post
-title: OpenVINO系列21_ubuntu演示crossroad_camera_demo
+title: OpenVINO系列20_ubuntu演示crossroad_camera_demo
 tag: OpenVINO
 ---
 

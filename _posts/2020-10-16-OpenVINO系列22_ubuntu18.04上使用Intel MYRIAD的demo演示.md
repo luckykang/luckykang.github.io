@@ -1,6 +1,6 @@
 ---
 layout: post
-title: OpenVINO系列23_ubuntu18.04上使用Intel MYRIAD的demo演示
+title: OpenVINO系列22_ubuntu18.04上使用Intel MYRIAD的demo演示
 tag: OpenVINO
 ---
 
