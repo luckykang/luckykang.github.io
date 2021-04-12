@@ -176,3 +176,8 @@ cmake -D InferenceEngineDeveloperPackage_DIR=<path to OpenVINO package build fol
 ```
 我们也可以使用 `-DARM_COMPUTE_SCONS_JOBS=N` 参数来通过N个同时执行的构建工作来加快ArmCompute库的构建。
 
+
+### 附录
+
+项目地址：(https://github.com/openvinotoolkit/openvino_contrib/tree/master/modules/arm_plugin)
+
