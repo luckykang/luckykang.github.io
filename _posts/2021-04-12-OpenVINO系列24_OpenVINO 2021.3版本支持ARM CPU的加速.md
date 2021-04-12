@@ -1,6 +1,6 @@
 ---
 layout: post
-title: OpenVINO 2021.3版本支持ARM CPU的加速
+title: OpenVINO系列24_OpenVINO 2021.3版本支持ARM CPU的加速
 tag: OpenVINO
 ---
 
