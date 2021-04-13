@@ -42,28 +42,38 @@ sudo mkdir -p /opt/intel/openvino
 ```
 - 解压到相应位置
 
-```sudo tar -xf  l_openvino_toolkit_runtime_raspbian_p_<version>.tgz --strip 1 -C /opt/intel/openvino```
+```
+sudo tar -xf  l_openvino_toolkit_runtime_raspbian_p_<version>.tgz --strip 1 -C /opt/intel/openvino
+```
 
 
 - 安装外部依赖
 
-```sudo apt install cmake```
+```
+sudo apt install cmake
+```
 
 - 设置环境变量
 
-```echo "source /opt/intel/openvino_2021/bin/setupvars.sh" >> ~/.bashrc```
+```
+echo "source /opt/intel/openvino/bin/setupvars.sh" >> ~/.bashrc
+```
 
 ### 5.添加NCS2驱动
 
 - 把用户加入用户组
 
-```sudo usermod -a -G users "$(whoami)"```
+```
+sudo usermod -a -G users "$(whoami)"
+```
 
 **然后重启系统**
 
 - 安装驱动
 
-```sh /opt/intel/openvino/install_dependencies/install_NCS_udev_rules.sh```
+```
+sh /opt/intel/openvino/install_dependencies/install_NCS_udev_rules.sh
+```
 
 - 插入NCS 2计算棒
 
@@ -71,12 +81,14 @@ sudo mkdir -p /opt/intel/openvino
 
 - 在home目录创建文件夹
 
-```mkdir build && cd build```
+```
+mkdir build && cd build
+```
 
 - 构建构建对象检测sample
 
 ```
-cmake -DCMAKE_BUILD_TYPE=Release -DCMAKE_CXX_FLAGS="-march=armv7-a" /opt/intel/openvino_2021/deployment_tools/inference_engine/samples/cpp
+cmake -DCMAKE_BUILD_TYPE=Release -DCMAKE_CXX_FLAGS="-march=armv7-a" /opt/intel/openvino/deployment_tools/inference_engine/samples/cpp
 
 make -j2 object_detection_sample_ssd
 ```
