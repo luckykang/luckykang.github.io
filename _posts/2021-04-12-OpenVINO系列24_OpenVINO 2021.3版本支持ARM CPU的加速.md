@@ -39,13 +39,40 @@ cd openvino_contrib/modules/arm_plugin
 docker image build -t arm-plugin -f Dockerfile.RPi32 .
 ```
 
-编译过程共有15步，我在执行到第七步的时候报错了，如图：
+编译过程共有15步，我在执行的时候报错了，如图：
 
-![2021-04-02-14-13-41](https://cdn.jsdelivr.net/gh/luckykang/picture_bed/blogs_images/2021-04-02-14-13-41.png)
 
-然后根据报错从key-server匹配给定密钥ID的key,但是发现还是无法解决这个问题。
 
-![2021-04-02-14-31-22](https://cdn.jsdelivr.net/gh/luckykang/picture_bed/blogs_images/2021-04-02-14-31-22.png)
+通过排错，发现编译器的版本不对应，需要切换编译器。首先安装gcc6和g++6防止编译报错。先查看默认的gcc和g++
+
+```
+gcc -v
+g++ -v
+```
+
+系统默认为gcc 8的版本。此时安装gcc 6和g++ 6
+
+sudo apt-get install gcc-6 g++-6
+
+安装好之后进行版本切换，将系统的gcc与g++切换至6，对gcc的切换执行如下操作
+
+```
+sudo update-alternatives --install /usr/bin/gcc gcc /usr/bin/gcc-6 60
+sudo update-alternatives --install /usr/bin/gcc gcc /usr/bin/gcc-8 20
+```
+
+接着输入
+
+```
+sudo update-alternatives --config gcc
+```
+
+会出现三个选项，输入对应的编号，按回车即可。如果版本改变则切换成功。
+
+
+
+
+
 
 #### 方法2：使用Docker 构建OpenVINO和不具有OpenCV的插件
 
@@ -102,6 +129,12 @@ docker image build -t ie_cross_armhf ie_cross_armhf
 ```
 
 ![20210412163823](https://cdn.jsdelivr.net/gh/luckykang/picture_bed/blogs_images/20210412163823.png)
+
+
+
+
+
+
 
 - 运行同时挂载openvino和openvino_contrib存储库的Docker容器
 

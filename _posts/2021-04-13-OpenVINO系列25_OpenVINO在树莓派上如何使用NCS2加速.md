@@ -1,6 +1,6 @@
 ---
 layout: post
-title: OpenVINO系列25_OpenVINO 2021.3在树莓派上的使用
+title: OpenVINO系列25_OpenVINO在树莓派上如何使用NCS2加速
 tag: OpenVINO
 ---
 
