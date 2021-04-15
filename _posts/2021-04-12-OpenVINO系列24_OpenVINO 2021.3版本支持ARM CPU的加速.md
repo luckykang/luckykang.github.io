@@ -17,197 +17,107 @@ OpenVINO ARM CPU插件在以下平台上受支持和验证：
 树莓派4B | Debian 10.3 (32-bit)
 树莓派4B | Ubuntu 18.04 (64-bit)
 
-### 3.编译以及遇到的问题
+### 3.编译
 
-#### 方法1：使用预设的Dockerfile构建OpenCV，OpenVINO和插件
+**我这里使用方法1，预设的Dockerfile构建**
 
-- 克隆openvino_contrib存储库：
+找一台机器，使用预设的Dockerfile，在容器中构建OpenVINO、OpenCV和ARM CPU plugin。这里使用的是有ubuntu18.04系统的机器。
+
+- 克隆openvino_contrib存储库
 
 ```
 git clone --recurse-submodules --single-branch --branch=master https://github.com/openvinotoolkit/openvino_contrib.git 
 ```
 
-- 转到插件目录：
+- 转到arm_plugin目录
 
 ```
 cd openvino_contrib/modules/arm_plugin
 ```
 
-- 构建Docker image：
+- build Docker image
 
+build过程由`/armplg_build.sh`在armcpu_plugin路径执行脚本，共有15步。
 ```
 docker image build -t arm-plugin -f Dockerfile.RPi32 .
 ```
 
-编译过程共有15步，我在执行的时候报错了，如图：
+![20210415174905](https://cdn.jsdelivr.net/gh/luckykang/picture_bed/blogs_images/20210415174905.png)
 
+- Build the plugin in Docker container
 
-
-通过排错，发现编译器的版本不对应，需要切换编译器。首先安装gcc6和g++6防止编译报错。先查看默认的gcc和g++
-
-```
-gcc -v
-g++ -v
-```
-
-系统默认为gcc 8的版本。此时安装gcc 6和g++ 6
-
-sudo apt-get install gcc-6 g++-6
-
-安装好之后进行版本切换，将系统的gcc与g++切换至6，对gcc的切换执行如下操作
+所有的中间结果和build artifacts都保存在工作路径下，
+因此，我们可以挂载整个工作目录以将所有结果存储在容器外部。
 
 ```
-sudo update-alternatives --install /usr/bin/gcc gcc /usr/bin/gcc-6 60
-sudo update-alternatives --install /usr/bin/gcc gcc /usr/bin/gcc-8 20
+mkdir build
+docker container run --rm -ti -v $PWD/build:/armcpu_plugin arm-plugin
 ```
 
-接着输入
+完成后如图所示
 
+![20210415175048](https://cdn.jsdelivr.net/gh/luckykang/picture_bed/blogs_images/20210415175048.png)
+
+查看目录包含哪些文件
+
+![20210415175232](https://cdn.jsdelivr.net/gh/luckykang/picture_bed/blogs_images/20210415175232.png)
+
+
+- 上述操作耗时近2个小时，生成的build文件2.4GB。为了节省时间，我们也可以只导出带有artifacts的归档文件`OV_ARM_package.tar.gz`,只有108MB，即执行下面命令：
 ```
-sudo update-alternatives --config gcc
-```
-
-会出现三个选项，输入对应的编号，按回车即可。如果版本改变则切换成功。
-
-
-
-
-
-
-#### 方法2：使用Docker 构建OpenVINO和不具有OpenCV的插件
-
-- 克隆openvino和openvino_contrib存储库：
-
-```
-git clone --recurse-submodules --single-branch --branch=master https://github.com/openvinotoolkit/openvino.git 
-
-git clone --recurse-submodules --single-branch --branch=master https://github.com/openvinotoolkit/openvino_contrib.git 
+docker container run --rm -ti --tmpfs /armcpu_plugin:rw -v $PWD:/remote \
+                     arm-plugin sh -c "sh /armplg_build.sh && cp ./OV_ARM_package.tar.gz /remote"
 ```
 
-- 构建ie_cross_armhf
+![20210415175352](https://cdn.jsdelivr.net/gh/luckykang/picture_bed/blogs_images/20210415175352.png)
 
-创建一个`ie_cross_armhf`文件夹，并在里面添加一个Dockerfile，包含以下内容：
 
-```
-FROM debian:stretch
+### 4.运行加速
 
-USER root
+- 把编译生成的包`OV_ARM_package.tar.gz`拷贝到树莓派4上
+，并解压。
 
-RUN dpkg --add-architecture armhf && \
-    apt-get update && \
-    apt-get install -y --no-install-recommends \
-    build-essential \
-    crossbuild-essential-armhf \
-    git \
-    wget \
-    libusb-1.0-0-dev:armhf \
-    libgtk-3-dev:armhf \
-    libavcodec-dev:armhf \
-    libavformat-dev:armhf \
-    libswscale-dev:armhf \
-    libgstreamer1.0-dev:armhf \
-    libgstreamer-plugins-base1.0-dev:armhf \
-    libpython3-dev:armhf \
-    python3-pip \
-    python-minimal \
-    python-argparse
+![20210415180556](https://cdn.jsdelivr.net/gh/luckykang/picture_bed/blogs_images/20210415180556.png)
 
-RUN wget https://www.cmake.org/files/v3.14/cmake-3.14.3.tar.gz && \
-    tar xf cmake-3.14.3.tar.gz && \
-    (cd cmake-3.14.3 && ./bootstrap --parallel=$(nproc --all) && make --jobs=$(nproc --all) && make install) && \
-    rm -rf cmake-3.14.3 cmake-3.14.3.tar.gz
+- 我这里提前准备了优化好的IR文件`vehicle-license-plate-detection-barrier-0106.xml`和`vehicle-license-plate-detection-barrier-0106.bin`并拷贝到树莓派4上，这样就可以直接在模型中加载。
 
-RUN git config --global user.name "Your Name" && \
-    git config --global user.email "you@example.com"
-```
-#### 注意：上面代码的user.name和user.email要替换为自己的。它使用Debian Stretch（Debian 9）操作系统进行编译，因为它是Raspbian Stretch的基础。
-
-- 构建Docker image
+- 转到推理引擎bin目录
 
 ```
-docker image build -t ie_cross_armhf ie_cross_armhf
+cd /home/pi/deployment_tools/inference_engine/bin/armv7l
 ```
-
-![20210412163823](https://cdn.jsdelivr.net/gh/luckykang/picture_bed/blogs_images/20210412163823.png)
-
-
-
-
-
-
-
-- 运行同时挂载openvino和openvino_contrib存储库的Docker容器
+- 下载车辆图像
 
 ```
-docker container run --rm -it -v /absolute/path/to/openvino:/openvino -v /absolute/path/to/openvino_contrib:/openvino_contrib ie_cross_armhf /bin/bash 
+wget https://raw.githubusercontent.com/openvinotoolkit/openvino/master/scripts/demo/car_1.bmp
 ```
 
-![20210412164302](https://cdn.jsdelivr.net/gh/luckykang/picture_bed/blogs_images/20210412164302.png)
-
-- 在容器中安装scons
-  
-```
-apt-get install scons
-```
-
-![20210412164407](https://cdn.jsdelivr.net/gh/luckykang/picture_bed/blogs_images/20210412164407.png)
-
-- 转到openvino目录,准备一个构建文件夹
+- 将OpenCV和OpenVINO库目录添加到LD_LIBRARY_PATH
 
 ```
-cd openvino
-mkdir build && cd build
-```
-- 使用ARM插件构建OpenVINO
-
-```
- cmake -DCMAKE_BUILD_TYPE=Release \
-       -DCMAKE_TOOLCHAIN_FILE="../cmake/arm.toolchain.cmake" \
-       -DTHREADING=SEQ \
-       -DIE_EXTRA_MODULES=/openvino_contrib/modules \
-       -DBUILD_java_api=OFF .. && make
+export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:~/opencv/lib/:~/deployment_tools/inference_engine/lib/armv7l/
 ```
 
-#### 遇到了报错，说编译失败，container中的openvino文件夹中没CMakeLists.txt
 
-![20210412164637](https://cdn.jsdelivr.net/gh/luckykang/picture_bed/blogs_images/20210412164637.png)
 
-我查看了openvino文件夹，居然是空目录。所以第二种方法也尝试失败了。
-
-![20210412165331](https://cdn.jsdelivr.net/gh/luckykang/picture_bed/blogs_images/20210412165331.png)
-
-#### 方法3：在ARM平台上构建OpenVINO和不带OpenCV的插件（本机编译）
-
-- 安装必要的构建依赖项：
+- 在ARM平台上运行对象检测demo
 
 ```
-sudo apt-get update  
-sudo apt-get install -y git cmake  scons build-essential
+./object_detection_sample_ssd -m ~/FP32/vehicle-license-plate-detection-barrier-0106.xml -i car_1.bmp -d CPU
 ```
 
-![20210412165612](https://cdn.jsdelivr.net/gh/luckykang/picture_bed/blogs_images/20210412165612.png)
+![20210415182940](https://cdn.jsdelivr.net/gh/luckykang/picture_bed/blogs_images/20210415182940.png)
 
-- 克隆openvino_contrib存储库：
 
-```
-git clone --recurse-submodules --single-branch --branch=master https://github.com/openvinotoolkit/openvino_contrib.git 
-```
+- 查看使用ARM CPU加速推理后的图像
 
-- 转到插件目录,准备一个build文件夹：
+![20210415175909](https://cdn.jsdelivr.net/gh/luckykang/picture_bed/blogs_images/20210415175909.png)
 
-```
-cd openvino_contrib/modules/arm_plugin
-mkdir build && cd build
-```
 
-- 构建插件：
 
-#### 注意：`<path to OpenVINO package build folder>` 要替换为自己相应的路径
 
-```
-cmake -D InferenceEngineDeveloperPackage_DIR=<path to OpenVINO package build folder> -DCMAKE_BUILD_TYPE=Release .. && make
-```
-我们也可以使用 `-DARM_COMPUTE_SCONS_JOBS=N` 参数来通过N个同时执行的构建工作来加快ArmCompute库的构建。
+
+
 
 
 ### 附录
