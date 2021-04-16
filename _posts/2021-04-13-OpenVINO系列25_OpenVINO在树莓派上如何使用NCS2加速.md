@@ -4,6 +4,9 @@ title: OpenVINO系列25_OpenVINO在树莓派上如何使用NCS2加速
 tag: OpenVINO
 ---
 
+
+>>> 全文字数331，预计阅读2min
+
 ### 1.介绍说明
 
 Raspbian OS的OpenVINO工具包包括推理引擎和MYRIAD插件。我们可以将其与插入USB端口之一的Intel Neural Compute Stick 2一起使用。
