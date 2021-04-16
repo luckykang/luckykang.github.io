@@ -64,11 +64,13 @@ docker container run --rm -ti -v $PWD/build:/armcpu_plugin arm-plugin
 
 
 - 为了节省时间，我们也可以只导出带有artifacts的归档文件`OV_ARM_package.tar.gz`,只有108MB，即执行下面命令：
-```
+  
 
+```
 docker container run --rm -ti --tmpfs /armcpu_plugin:rw -v $PWD:/remote \
                      arm-plugin sh -c "sh /armplg_build.sh && cp ./OV_ARM_package.tar.gz /remote"
 ```
+
 
 ![20210415175352](https://cdn.jsdelivr.net/gh/luckykang/picture_bed/blogs_images/20210415175352.png)
 
