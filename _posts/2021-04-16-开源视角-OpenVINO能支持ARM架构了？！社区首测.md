@@ -74,7 +74,7 @@ docker container run --rm -ti --tmpfs /armcpu_plugin:rw -v $PWD:/remote \
 
 ### 4.运行加速
 
-- 把编译生成的包`OV_ARM_package.tar.gz`拷贝到树莓派4上
+- 把编译生成的包`OV_ARM_package.tar.gz`拷贝到树莓派4B上
 ，并解压。
 
 ![20210415180556](https://cdn.jsdelivr.net/gh/luckykang/picture_bed/blogs_images/20210415180556.png)
