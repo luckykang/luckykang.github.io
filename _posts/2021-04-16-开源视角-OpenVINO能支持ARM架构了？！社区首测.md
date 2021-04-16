@@ -4,11 +4,11 @@ title: 开源视角-OpenVINO能支持ARM架构了？！社区首测
 tag: OpenVINO
 ---
 
->>> 全文字数428，预计阅读2min
+>>> 全文字数447，预计阅读2min
 
 ### 1.扩展模块的介绍
 
-OpenVINO刚不久发布了新版本2021.3，其中增加了一个扩展模块，但是由于不太稳定，并未放到OpenVINO的发行版中，不过可以单独编译使用。开发OpenVINO ARM CPU插件是为了使OpenVINO API在ARM CPU上启用深度神经网络推理。该插件使用ARM Compute Library 作为后端。
+`openvino_contrib`是一个独立的repo，其中的模块稳定后会merge到openvino repo中，它是在2021.3版本的基础上开发的扩展模块。扩展模块中的每个模块都是解耦的，可以独立编译使用。主要包括三部分：arm_plugin、java_api、mo_pytorch。本文主要介绍arm_plugin模块的使用。`arm_plugin`使用OpenVINO API在ARM CPU上启用深度神经网络推理。该插件使用ARM Compute Library作为后端。
 
 ### 2.支持的平台
 
@@ -21,9 +21,9 @@ OpenVINO ARM CPU插件在以下平台上受支持和验证：
 
 ### 3.编译构建
 
-**文档提供三种方法，文档链接见附录。我这里使用了交叉编译的方式，Build Dockerfile来构建OpenVINO、OpenCV和ARM CPU Plugin。**
+- 编译方法和使用环境：
 
-我找了一台装有ubuntu18.04的机器，通过build Dockerfile，在容器中构建OpenVINO、OpenCV和Plugin。
+github文档提供了三种方法(文档链接见文章末尾`Q&A`)。我这里使用了第一种交叉编译的方式，在ubuntu18.04系统上Build Dockerfile来构建OpenVINO、OpenCV和ARM CPU Plugin。
 
 - 克隆openvino_contrib存储库
 
@@ -57,7 +57,7 @@ mkdir build
 docker container run --rm -ti -v $PWD/build:/armcpu_plugin arm-plugin
 ```
 
-完成后如图所示，不过该操作耗时近2个小时，生成的build文件2.4GB。
+完成后如图所示
 
 ![20210415175048](https://cdn.jsdelivr.net/gh/luckykang/picture_bed/blogs_images/20210415175048.png)
 
@@ -66,8 +66,8 @@ docker container run --rm -ti -v $PWD/build:/armcpu_plugin arm-plugin
 ![20210415175232](https://cdn.jsdelivr.net/gh/luckykang/picture_bed/blogs_images/20210415175232.png)
 
 
-- 为了节省时间，我们也可以只导出带有artifacts的归档文件`OV_ARM_package.tar.gz`,只有108MB，即执行下面命令：
-  
+- 上述操作耗时近2小时，生成的build文件2.4GB。我们可以只导出带有artifacts的归档文件`OV_ARM_package.tar.gz`,比较节约时间，只有108MB，即执行下面命令：
+
 
 ```
 docker container run --rm -ti --tmpfs /armcpu_plugin:rw -v $PWD:/remote \
@@ -126,7 +126,13 @@ export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:~/opencv/lib/:~/deployment_tools/inferen
 ![20210415175909](https://cdn.jsdelivr.net/gh/luckykang/picture_bed/blogs_images/20210415175909.png)
 
 
-### 附录
+### Q&A：
 
-项目地址：[https://github.com/openvinotoolkit/openvino_contrib/tree/master/modules/arm_plugin](https://github.com/openvinotoolkit/openvino_contrib/tree/master/modules/arm_plugin)
+> 1.项目地址：[https://github.com/openvinotoolkit/openvino_contrib/tree/master/modules/arm_plugin](https://github.com/openvinotoolkit/openvino_contrib/tree/master/modules/arm_plugin)
+
+> 2.本文所用的IR文件和编译生成的tar包扫码可下载：
+
+![webwxgetmsgimg](https://cdn.jsdelivr.net/gh/luckykang/picture_bed/blogs_images/webwxgetmsgimg.png)
+
+> 3.由于文档没有详细说明，编译阶段我使用过适合树莓派安装的raspbarrypi、ubuntu mate系统进行build,都发现了一些报错，在此建议编译在x86架构的硬件上进行。
 
