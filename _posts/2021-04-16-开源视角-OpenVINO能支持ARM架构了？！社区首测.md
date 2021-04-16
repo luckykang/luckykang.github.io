@@ -4,7 +4,7 @@ title: 开源视角-OpenVINO能支持ARM架构了？！社区首测
 tag: OpenVINO
 ---
 
->>> 全文字数447，预计阅读2min
+>>> 全文字数514，预计阅读2min
 
 ### 1.扩展模块的介绍
 
@@ -135,4 +135,5 @@ export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:~/opencv/lib/:~/deployment_tools/inferen
 ![webwxgetmsgimg](https://cdn.jsdelivr.net/gh/luckykang/picture_bed/blogs_images/webwxgetmsgimg.png)
 
 > 3.由于文档没有详细说明，编译阶段我使用过适合树莓派安装的raspbarrypi、ubuntu mate系统进行build,都发现了一些报错，在此建议编译在x86架构的硬件上进行。
+
 
