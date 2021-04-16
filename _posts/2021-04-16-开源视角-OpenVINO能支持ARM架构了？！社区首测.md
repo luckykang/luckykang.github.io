@@ -19,7 +19,7 @@ OpenVINO ARM CPU插件在以下平台上受支持和验证：
 
 ### 3.编译构建
 
-**文档提供三种方法，文档链接见附录。我这里使用了交叉编译的方式，build dockerfile来构建OpenCV, OpenVINO和pulgin。**
+**文档提供三种方法，文档链接见附录。我这里使用了交叉编译的方式，build dockerfile来构建OpenCV, OpenVINO和plugin。**
 
 我找了一台装有ubuntu18.04的机器，通过build Dockerfile，在容器中构建OpenVINO、OpenCV和ARM CPU plugin。
 
