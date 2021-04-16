@@ -4,11 +4,11 @@ title: 开源视角-OpenVINO能支持ARM架构了？！社区首测
 tag: OpenVINO
 ---
 
->>> 全文字数514，预计阅读2min
+>>> 全文字数537，预计阅读2min
 
 ### 1.扩展模块的介绍
 
-`openvino_contrib`是一个独立的repo，其中的模块稳定后会merge到openvino repo中，它是在2021.3版本的基础上开发的扩展模块。扩展模块中的每个模块都是解耦的，可以独立编译使用。主要包括三部分：arm_plugin、java_api、mo_pytorch。本文主要介绍arm_plugin模块的使用。`arm_plugin`使用OpenVINO API在ARM CPU上启用深度神经网络推理。该插件使用ARM Compute Library作为后端。
+OpenVINO诞生至今，其功能越来越强，模块也越来越多。为了保证发布版本的稳定性，Github上新增了`openvino_contrib`代码库用来开发扩展模块，功能稳定后再合并到OpenVINO库中。扩展模块中的每个模块都是解耦的，可以独立编译使用。主要包括三部分：arm_plugin、java_api、mo_pytorch。本文主要介绍arm_plugin模块的使用。`arm_plugin`使用OpenVINO API在ARM CPU上启用深度神经网络推理。该插件使用ARM Compute Library作为后端。
 
 ### 2.支持的平台
 
