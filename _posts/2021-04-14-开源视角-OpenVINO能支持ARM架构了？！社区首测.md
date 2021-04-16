@@ -1,6 +1,6 @@
 ---
 layout: post
-title: OpenVINO系列24_OpenVINO 2021.3版本支持ARM CPU的加速
+title: 开源视角-OpenVINO能支持ARM架构了？！社区首测
 tag: OpenVINO
 ---
 
@@ -17,11 +17,11 @@ OpenVINO ARM CPU插件在以下平台上受支持和验证：
 树莓派4B | Debian 10.3 (32-bit)
 树莓派4B | Ubuntu 18.04 (64-bit)
 
-### 3.编译
+### 3.编译构建
 
-**我这里使用方法1，预设的Dockerfile构建**
+**文档提供三种方法，文档链接见附录。我这里使用了交叉编译的方式，build dockerfile来构建OpenCV, OpenVINO和pulgin。**
 
-找一台机器，使用预设的Dockerfile，在容器中构建OpenVINO、OpenCV和ARM CPU plugin。这里使用的是有ubuntu18.04系统的机器。
+我找了一台装有ubuntu18.04的机器，通过build Dockerfile，在容器中构建OpenVINO、OpenCV和ARM CPU plugin。
 
 - 克隆openvino_contrib存储库
 
@@ -98,7 +98,7 @@ wget https://raw.githubusercontent.com/openvinotoolkit/openvino/master/scripts/d
 export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:~/opencv/lib/:~/deployment_tools/inference_engine/lib/armv7l/
 ```
 
-
+![2021-04-15-013301_1541x50_scrot](https://cdn.jsdelivr.net/gh/luckykang/picture_bed/blogs_images/2021-04-15-013301_1541x50_scrot.png)
 
 - 在ARM平台上运行对象检测demo
 
@@ -106,18 +106,12 @@ export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:~/opencv/lib/:~/deployment_tools/inferen
 ./object_detection_sample_ssd -m ~/FP32/vehicle-license-plate-detection-barrier-0106.xml -i car_1.bmp -d CPU
 ```
 
-![20210415182940](https://cdn.jsdelivr.net/gh/luckykang/picture_bed/blogs_images/20210415182940.png)
+![2021-04-15-013301-4234](https://cdn.jsdelivr.net/gh/luckykang/picture_bed/blogs_images/2021-04-15-013301-4234.gif)
 
 
 - 查看使用ARM CPU加速推理后的图像
 
 ![20210415175909](https://cdn.jsdelivr.net/gh/luckykang/picture_bed/blogs_images/20210415175909.png)
-
-
-
-
-
-
 
 
 ### 附录
