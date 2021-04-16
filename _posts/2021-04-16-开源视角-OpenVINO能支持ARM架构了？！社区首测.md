@@ -54,7 +54,7 @@ mkdir build
 docker container run --rm -ti -v $PWD/build:/armcpu_plugin arm-plugin
 ```
 
-完成后如图所示
+完成后如图所示，不过该操作耗时近2个小时，生成的build文件2.4GB。
 
 ![20210415175048](https://cdn.jsdelivr.net/gh/luckykang/picture_bed/blogs_images/20210415175048.png)
 
@@ -63,7 +63,7 @@ docker container run --rm -ti -v $PWD/build:/armcpu_plugin arm-plugin
 ![20210415175232](https://cdn.jsdelivr.net/gh/luckykang/picture_bed/blogs_images/20210415175232.png)
 
 
-- 上述操作耗时近2个小时，生成的build文件2.4GB。为了节省时间，我们也可以只导出带有artifacts的归档文件`OV_ARM_package.tar.gz`,只有108MB，即执行下面命令：
+- 为了节省时间，我们也可以只导出带有artifacts的归档文件`OV_ARM_package.tar.gz`,只有108MB，即执行下面命令：
 ```
 docker container run --rm -ti --tmpfs /armcpu_plugin:rw -v $PWD:/remote \
                      arm-plugin sh -c "sh /armplg_build.sh && cp ./OV_ARM_package.tar.gz /remote"
@@ -79,7 +79,13 @@ docker container run --rm -ti --tmpfs /armcpu_plugin:rw -v $PWD:/remote \
 
 ![20210415180556](https://cdn.jsdelivr.net/gh/luckykang/picture_bed/blogs_images/20210415180556.png)
 
-- 我这里提前准备了优化好的IR文件`vehicle-license-plate-detection-barrier-0106.xml`和`vehicle-license-plate-detection-barrier-0106.bin`并拷贝到树莓派4上，这样就可以直接在模型中加载。
+
+- 我这里提前准备了优化好的IR文件,并拷贝到树莓派4B上，这样就可以直接在模型中加载。
+
+```
+vehicle-license-plate-detection-barrier-0106.xml
+vehicle-license-plate-detection-barrier-0106.bin
+```
 
 - 转到推理引擎bin目录
 
