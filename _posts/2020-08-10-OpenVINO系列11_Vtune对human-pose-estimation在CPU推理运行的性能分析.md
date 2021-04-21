@@ -4,6 +4,8 @@ title: OpenVINO系列11_Vtune对human-pose-estimation在CPU推理运行的性能
 tag: OpenVINO
 ---
 
+>>> 全文字数766，预计阅读4min
+
 ### 一、什么是VTune？
 
 Vtune可视化性能分析器（Intel VTune Performance Analyzer）是一个用于分析和优化程序性能的工具，作为Intel为众多开发者们提供的专门针对寻找软硬件性能瓶颈的一款分析工具，它能帮助你确定程序的热点（hotspot），帮助你找到导致性能不理想的原因，从而让你能据此对程序进行优化。
