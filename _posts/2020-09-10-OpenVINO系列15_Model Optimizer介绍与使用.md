@@ -10,7 +10,8 @@ tag: OpenVINO
 
 2.在线网站下载
 
-https://download.01.org/opencv/2020/openvinotoolkit/2020.4/open_model_zoo/ 
+[https://download.01.org/opencv/2020/openvinotoolkit/2020.4/open_model_zoo/](https://download.01.org/opencv/2020/openvinotoolkit/2020.4/open_model_zoo/)
+
 
 如下图是image-retrieval-0001模型的IR文件，可以直接下载
 
@@ -24,7 +25,7 @@ https://download.01.org/opencv/2020/openvinotoolkit/2020.4/open_model_zoo/
 
 一方面，现在有很多深度学习框架在产业界被广泛的使用，像caffe、tensorflow、mxnet,而每几个月就会有新的框架。我们想在所有的框架中做推理。
 
-另一方面Intel有丰富的计算类型比如CPU、GPU、VPU、FPGA等供大家做选择，要能够有软件套件对应上述任何不同的计算类型是非常复杂的。一是因为所有深度学习框架的表示法都是不同的，例如tf和caffe的表示法；二是每个计算类型有不用的系统架构，不用的指令集和程序编写模式，如果我们自己去学习编写VPU或者FPGA的程序，会花费很多的时间，也需要学习很多的技能，所以Intel提供了单一的共享软件开发接口(common-API),方便开发推理程序并在不同的计算类型上运行，基本上帮助做到硬件的抽象化。
+另一方面Intel有丰富的计算类型比如CPU、GPU、VPU、FPGA等供大家做选择，要能够有软件套件对应上述任何不同的计算类型是非常复杂的。一是因为所有深度学习框架的表示法都是不同的，例如tf和caffe的表示法；二是每个计算类型有不用的系统架构，不用的指令集和程序编写模式，如果我们自己去学习编写VPU或者FPGA的程序，会花费很多的时间，也需要学习很多的技能，所以Intel提供了单一的共享软件开发接口(common-API),方便开发推理程序并在不同的计算类型上运行，基本上帮助做到硬件的抽象化。这工作分为两部分：阶段一是转换所有的模型成一个统一的表示法称作IR，阶段二是使用这些IR文件来让推理能执行在不同的计算类型上，Model Optimizer就是执行第一阶段的任务，接收不同表示法的模型，然后 1.转换 2.优化 3.转换权值和偏移量。
 
 ### 3.Model Optimizer工作原理
 
@@ -32,11 +33,14 @@ Model Optimizer将模型加载到内存中，读取模型并构建模型的内�
 
 .xml文件，它描述整个模型拓扑，每个阶层，相连性和参数值。
 
-.bin文件，它包含每层已经训练好的权重和偏移值。
+.bin文件，它包含每层已经训练好的权值和偏移值。
+
 
 ### 4.Model Optimizer有哪些功能
 
 1.可以对深度学习框架caffe、mxnet、onnx、tf、kaldi的模型进行转换
+
+![20210421143128](https://cdn.jsdelivr.net/gh/luckykang/picture_bed/blogs_images/20210421143128.png)
 
 2.优化网络图层，减少推理时间。预训练模型包含一些对于训练很重要的图层，但在执行推理阶段无用，有可能增加推理时间，通过优化可以精简图层。
 
@@ -76,25 +80,35 @@ mo.py
 
 1.下载mobilenetv2-7.onnx分类
 
-    wget https://github.com/onnx/models/raw/master/vision/classification/mobilenet/model/mobilenetv2-7.onnx
+```
+wget https://github.com/onnx/models/raw/master/vision/classification/mobilenet/model/mobilenetv2-7.onnx
+```
 
 ![0915113830](https://cdn.jsdelivr.net/gh/luckykang/picture_bed/blogs_images/0915113830.png)
 
 2.模型转换
 
-添加均值 --mean_values 
+添加均值 `--mean_values`
 
-缩放值 --scale_values
+缩放值 `--scale_values`
 
-RGB反转为BGR --reverse_input_channels
+RGB反转为BGR `--reverse_input_channels`
 
+存放路径 `--output_dir` 
+
+转换后名称 `--model_name`
+
+```
 mo.py  --input_model /home/kang/Documents/mobilenetv2-7.onnx      --mean_values=data[123.675,116.28,103.53] --scale_values=data[58.624,57.12,57.375]  --reverse_input_channels -o ~/Documents/
+```
 
 ![0915113928](https://cdn.jsdelivr.net/gh/luckykang/picture_bed/blogs_images/0915113928.png)
 
 3.运行推理
 
+```
 python3 classification_sample.py  -m  /home/kang/Documents/mobilenetv2-7.xml -i /opt/intel/openvino/deployment_tools/demo/car.png
+```
 
 ![0915114328](https://cdn.jsdelivr.net/gh/luckykang/picture_bed/blogs_images/0915114328.png)
 
