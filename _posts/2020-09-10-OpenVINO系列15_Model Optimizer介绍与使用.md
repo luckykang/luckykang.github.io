@@ -5,8 +5,7 @@ tag: OpenVINO
 ---
 
 
-### 1.获取模型的方法
-
+### 1.获取模型的方法有几种
 1.自己训练一个模型
 
 2.在线网站下载
@@ -23,12 +22,17 @@ https://download.01.org/opencv/2020/openvinotoolkit/2020.4/open_model_zoo/
 
 ### 2.为什么需要使用Model Optimizer
 
-训练好的网络模型，在OpenVINO中执行推理，需要使用Inference Engine，
-但是Inference Engine不使用原始模型运行，中间表示（IR）是推理引擎接受的唯一格式，因为中间表示（IR）在终端目标设备上执行了优化。所以我们需要使用Model Optimizer为训练后的模型先进行转化生成IR文件，才能使用Inference Engine执行推理操作。
+一方面，现在有很多深度学习框架在产业界被广泛的使用，像caffe、tensorflow、mxnet,而每几个月就会有新的框架。我们想在所有的框架中做推理。
+
+另一方面Intel有丰富的计算类型比如CPU、GPU、VPU、FPGA等供大家做选择，要能够有软件套件对应上述任何不同的计算类型是非常复杂的。一是因为所有深度学习框架的表示法都是不同的，例如tf和caffe的表示法；二是每个计算类型有不用的系统架构，不用的指令集和程序编写模式，如果我们自己去学习编写VPU或者FPGA的程序，会花费很多的时间，也需要学习很多的技能，所以Intel提供了单一的共享软件开发接口(common-API),方便开发推理程序并在不同的计算类型上运行，基本上帮助做到硬件的抽象化。
 
 ### 3.Model Optimizer工作原理
 
-Model Optimizer将模型加载到内存中，读取模型并构建模型的内部表示，对其进行优化，然后生成中间表示（IR），Model Optimizer是一个离线工具，运行一次就可以生成IR文件(.xml和.bin),模型优化器的使用和硬件没有关系
+Model Optimizer将模型加载到内存中，读取模型并构建模型的内部表示，对其进行优化，然后生成中间表示（IR），Model Optimizer是一个离线工具，运行一次就可以生成IR文件(.xml和.bin),模型优化器的使用和硬件没有关系。
+
+.xml文件，它描述整个模型拓扑，每个阶层，相连性和参数值。
+
+.bin文件，它包含每层已经训练好的权重和偏移值。
 
 ### 4.Model Optimizer有哪些功能
 
