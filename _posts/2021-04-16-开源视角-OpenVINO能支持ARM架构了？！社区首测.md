@@ -4,7 +4,7 @@ title: 开源视角-OpenVINO能支持ARM架构了？！社区首测
 tag: OpenVINO
 ---
 
->>> 全文字数537，预计阅读2min
+>>> 全文字数625，预计阅读2min
 
 ### 1.扩展模块的介绍
 
@@ -128,12 +128,19 @@ export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:~/opencv/lib/:~/deployment_tools/inferen
 
 ### Q&A：
 
-> 1.项目地址：[https://github.com/openvinotoolkit/openvino_contrib/tree/master/modules/arm_plugin](https://github.com/openvinotoolkit/openvino_contrib/tree/master/modules/arm_plugin)
+> 1.请问项目在哪里可以看到？
 
-> 2.本文所用的IR文件和编译生成的tar包扫码可下载：
+项目地址：[https://github.com/openvinotoolkit/openvino_contrib/tree/master/modules/arm_plugin](https://github.com/openvinotoolkit/openvino_contrib/tree/master/modules/arm_plugin)
 
-![webwxgetmsgimg](https://cdn.jsdelivr.net/gh/luckykang/picture_bed/blogs_images/webwxgetmsgimg.png)
+> 2.请问编译阶段可以在ARM平台执行吗？
 
-> 3.由于文档没有详细说明，编译阶段我使用过适合树莓派安装的raspbarrypi、ubuntu mate系统进行build,都发现了一些报错，在此建议编译在x86架构的硬件上进行。
+由于文档没有详细说明，编译阶段我尝试在树莓派4B上build,但是发现各种莫名其妙的问题，在此建议编译在x86架构的硬件上进行。
+
+> 3.请问文章所用的IR文件和编译生成的tar包哪里可以下载，可以跳过编译阶段直接用tar包进行推理吗？
+
+IR文件和tar包我已经上传到百度云网盘，可以扫码获取。可以跳过编译阶段，直接把tar包拷贝到ARM平台加载模型进行推理。
+
+![WechatIMG18](https://cdn.jsdelivr.net/gh/luckykang/picture_bed/blogs_images/WechatIMG18.jpeg)
+
 
 
