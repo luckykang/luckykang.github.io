@@ -1,10 +1,10 @@
 ---
 layout: post
-title: 开源视角-OpenVINO能支持ARM架构了？！社区首测
+title: OpenVINO系列26_OpenVINO能支持ARM架构了？！
 tag: OpenVINO
 ---
 
->>> 全文字数625，预计阅读4min
+>>> 全文字数619，预计阅读4min
 
 ### 1.扩展模块的介绍
 
@@ -130,7 +130,11 @@ export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:~/opencv/lib/:~/deployment_tools/inferen
 
 > 1.请问项目在哪里可以看到？
 
-项目地址：[https://github.com/openvinotoolkit/openvino_contrib/tree/master/modules/arm_plugin](https://github.com/openvinotoolkit/openvino_contrib/tree/master/modules/arm_plugin)
+Gitee(推荐):
+[https://gitee.com/openvinotoolkit-prc/openvino_contrib#/openvinotoolkit-prc/openvino_contrib/blob/master/modules/arm_plugin](https://gitee.com/openvinotoolkit-prc/openvino_contrib#/openvinotoolkit-prc/openvino_contrib/blob/master/modules/arm_plugin)
+
+Github:
+[https://github.com/openvinotoolkit/openvino_contrib/tree/master/modules/arm_plugin](https://github.com/openvinotoolkit/openvino_contrib/tree/master/modules/arm_plugin)
 
 > 2.请问编译阶段可以在ARM平台执行吗？
 

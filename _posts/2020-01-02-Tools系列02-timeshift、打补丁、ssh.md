@@ -43,6 +43,10 @@ tag: Tools
     ps -e | grep ssh
 
 
+### 4.vnc-server
+
+
+
 
 
 
