@@ -3,7 +3,6 @@ layout: post
 title: Tools系列02-Timeshift、Diff、Ssh、Vnc
 tag: Tools
 ---
-vnc
 
 
 ### 1.git diff
@@ -54,7 +53,7 @@ ps -e | grep ssh
 
 ### 4.vnc-server
 
-- 1.在设置中允许进行远程控制，访问密码可自由设置，可不使用系统的登录密码，该选项要呈开启状态。
+- 1.打开setting-->sharing,设置允许进行远程控制，访问密码可自由设置，一会我们使用vnc登录的时候会用到，该选项要呈开启状态。
 
 ![20210425121406](https://cdn.jsdelivr.net/gh/luckykang/picture_bed/blogs_images/20210425121406.png)
 
