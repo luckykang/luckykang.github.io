@@ -4,11 +4,11 @@ title: OpenVINO系列26_OpenVINO能支持ARM架构了？！
 tag: OpenVINO
 ---
 
->>> 全文字数619，预计阅读4min
+>>> 全文字数635，预计阅读4min
 
 ### 1.扩展模块的介绍
 
-以前，推理引擎仅支持Intel硬件：CPU，GPU，FPGA和VPU。最近，一个新的扩展模块`openvino_contrib`已在GitHub上发布，它是OpenVINO开源版本的一部分，不包含在OpenVINO工具包的英特尔发行版中。主要包括三部分：arm_plugin、java_api、mo_pytorch，其中每部分都是解耦的，可以独立编译使用。本文主要介绍`arm_plugin`插件的编译使用。该插件允许推理引擎使用ARM Compute Library作为后端在ARM CPU上运行DL网络。
+以前，推理引擎仅支持Intel硬件：CPU，GPU，FPGA和VPU。最近，一个新的扩展模块`openvino_contrib`已在GitHub上发布，它是OpenVINO开源版本的一部分，不包含在OpenVINO工具包的英特尔发行版中。主要包括三部分：arm_plugin、java_api、mo_pytorch，每部分都是解耦的，可以独立编译使用。本文主要介绍`arm_plugin`插件的编译使用。该插件允许推理引擎使用ARM Compute Library作为后端在ARM CPU上运行DL网络。
 
 
 ### 2.支持的平台
@@ -147,8 +147,13 @@ IR文件和tar包我已经上传到百度云网盘，可以扫码获取。可以
 
 ![WechatIMG18](https://cdn.jsdelivr.net/gh/luckykang/picture_bed/blogs_images/WechatIMG18.jpeg)
 
-> 4.请问哪里可以下载树莓派使用的Ubuntu Mate18.04版本呀，网上找到的资源都是20.04的？
+> 4.请问哪里可以下载文章所说的树莓派的系统?
 
-Ubuntu Mate下载地址：
+raspberrypi(Debian 10)下载地址：
+
+[https://www.raspberrypi.org/software/operating-systems/#raspberry-pi-os-32-bit](https://www.raspberrypi.org/software/operating-systems/#raspberry-pi-os-32-bit)
+
+Ubuntu Mate(18.04) 下载地址：
 
 [https://ubuntu-mate.org/download/amd64/](https://ubuntu-mate.org/download/amd64/)
+
