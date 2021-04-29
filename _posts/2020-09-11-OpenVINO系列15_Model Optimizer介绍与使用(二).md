@@ -65,7 +65,7 @@ sudo python3 ./mo_caffe.py  --input_model $model/squeezenet1.0.caffemodel --outp
 ![20210427175811](https://cdn.jsdelivr.net/gh/luckykang/picture_bed/blogs_images/20210427175811.png)
 
 
-当我们添加参数`--batch 4`
+当我们更改原来的`model_name`，并且添加参数`--batch 4`，重新模型优化
 
 ```
 sudo python3 ./mo_caffe.py  --input_model $model/squeezenet1.0.caffemodel --output_dir  $model --model_name batch4  --batch 4
@@ -74,3 +74,6 @@ sudo python3 ./mo_caffe.py  --input_model $model/squeezenet1.0.caffemodel --outp
 可以看到网络结构修改为[4,3,227,227]
 
 ![20210427180432](https://cdn.jsdelivr.net/gh/luckykang/picture_bed/blogs_images/20210427180432.png)
+
+
+
