@@ -22,10 +22,10 @@ git diff > a.diff
 
 ```
 # 先检查是否报错
-git diff --check apply a.diff  
+git apply --check a.diff  
 
 # 如果没报错就可以打   
-git diff apply a.diff
+git apply a.diff
 ```
 
 ### 2.timeshift
