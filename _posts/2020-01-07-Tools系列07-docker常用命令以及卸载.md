@@ -1,6 +1,6 @@
 ---
 layout: post
-title: Tools系列07-docker常用命令
+title: Tools系列07-docker常用命令以及卸载
 tag: Tools
 ---
 
@@ -128,7 +128,7 @@ docker exec -it  f94d2c317477 /bin/bash
         dpkg -l |grep ^rc|awk '{print $2}' |sudo xargs dpkg -P
 
 > 3.卸载docker的相关组件
-> 
+
         sudo apt-get autoremove docker-ce-*
 
 ![20210529183152](https://cdn.jsdelivr.net/gh/luckykang/picture_bed/blogs_images/20210529183152.png)
