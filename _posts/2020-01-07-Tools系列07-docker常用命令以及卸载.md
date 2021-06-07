@@ -1,6 +1,6 @@
 ---
 layout: post
-title: Tools系列07-docker常用命令
+title: Tools系列07-docker常用命令以及卸载
 tag: Tools
 ---
 
@@ -109,6 +109,35 @@ docker exec -it  f94d2c317477 /bin/bash
 
 2、如果使用exit退出，那么在退出之后会关闭容器，可以使用下面的流程进行恢复
 
-使用docker restart命令重启容器
+使用`docker restart`命令重启容器
 
-使用docker attach命令进入容器
+使用`docker attach`命令进入容器
+
+### 10.卸载docker
+
+1.删除docker及其安装时自动安装的所有包
+
+        sudo apt-get autoremove docker docker-ce docker-engine  docker.io  containerd runc
+
+2.删除docker没有卸载的配置
+
+        dpkg -l | grep docker
+
+        # 删除无用的相关配置文件
+
+        dpkg -l |grep ^rc|awk '{print $2}' |sudo xargs dpkg -P
+
+3.卸载docker的相关组件
+
+        sudo apt-get autoremove docker-ce-*
+
+![20210529183152](https://cdn.jsdelivr.net/gh/luckykang/picture_bed/blogs_images/20210529183152.png)
+
+4.删除docker的相关配置&目录
+
+        sudo rm -rf /etc/systemd/system/docker.service.d
+        sudo rm -rf /var/lib/docker
+
+5.确定docker卸载完毕
+
+        docker --version
