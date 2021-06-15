@@ -68,12 +68,32 @@ sudo python3 ./mo_caffe.py  --input_model $model/squeezenet1.0.caffemodel --outp
 当我们更改原来的`model_name`，并且添加参数`--batch 4`，重新模型优化
 
 ```
-sudo python3 ./mo_caffe.py  --input_model $model/squeezenet1.0.caffemodel --output_dir  $model --model_name batch4  --batch 4
+sudo python3 ./mo_caffe.py,  --input_model $model/squeezenet1.0.caffemodel --output_dir  $model --model_name batch4  --batch 4
 ```
 
 可以看到网络结构修改为[4,3,227,227]
 
 ![20210427180432](https://cdn.jsdelivr.net/gh/luckykang/picture_bed/blogs_images/20210427180432.png)
 
+### 3.调整拓扑网络
+
+- 1.剪切部分网络
+- 2.预处理输入数据
+
+### 4.使用Model Optimizer转换ONNX模型
+
+Model Optimizer支持ONNX，所以我们可以将pyTorch,caffe-2和其他模型转换为ONNX模型,然后使用模型优化器进行转换为IR文件。
+
+- 1.当我们下载一个ONNX模型后，要先了解模型优化器支持的ONNX图层列表是哪些，这个可以在官网的相关文档中查看。
+
+- 2.确保我们具备执行ONNX的先决条件，执行下面指令
+
+```
+    install-prerequisites-onnx.sh
+```
+
+- 3.通过Netron软件查看ONNX的模型拓扑
+
+- 4.转换模型，生成IR文件
 
 
