@@ -1,6 +1,6 @@
 ---
 layout: post
-title: OpenVINO系列16_Inference Engine介绍与使用(一)
+title: OpenVINO系列16_Inference Engine介绍与使用
 tag: OpenVINO
 ---
 
@@ -86,7 +86,7 @@ exex_net = my_ie.load_network(network=net,device_name='MULTI:MYRIAD,CPU')  所�
 
 同步- `InferenceEngine::InferRequest::Infer()`方法。阻塞直到推断完成。
 
-异步- `InferenceEngine::InferRequest::StartAsync()`方法。使用`InferenceEngine::InferRequest::Wait()`方法（0超时）检查状态，等待或指定完成回调。
+异步- `InferenceEngine::InferRequest::StartAsync()`方法。使用`InferenceEngine::InferRequest::Wait()方法（0超时）检查状态，等待或指定完成回调。
 
 #### 8.获取输出 
 
@@ -160,7 +160,41 @@ cpu的吞吐量模式支持推理引擎在cpu上同时高效运行多个推理�
     if __name__ == '__main__':
         sys.exit(main() or 0)
 
+### 13.OpenVINO的异构插件
 
+我们可以拆分神经网络模型，并在不同的设备上执行不同的层吗？
+
+是的，可以。推理引擎有一个灵活的插件架构，它能够使不同的插件用于不同的设备。因此，相同的神经网络拓扑可以在不同的设备上执行。每个插件都会提供正确的库单元，并为该设备创建一个特定的执行。我们之所以会把同一个拓扑拆分并在多个设备上运行，其背后有多种原因。第一个原因是，某个设备不支持某些层，但是另一个设备支持。比如这个神经网络有一个不被FPGA支持的层，该层能被CPU支持。所以除非你能找到在FPGA上执行的正确方法，否则在CPU上执行该层就合情合理。又或者一个完整的网络无法在某个设备上正常运行，但如果分割出几层又可以的话，那么就应该在别的设备上执行分割出去的层。
+
+OpenVINO具备这个能力，其本身的“hetero”插件可以利用多个插件来执行一个神经网络。这里有两种方法可以实现这一点，这两种方法也可以一起使用。
+
+第一种方法，是直接给特定层指定关联设备或者目标设备，因此基本可以指定在哪个设备上执行哪个层。怎么做到呢，可以通过利用“CNNLayer::affinity”指令设置层的关联设备来实现。在下图的例子中，你可以看到我获取了“qqq”层，并将其分配给CPU执行。
+
+![20210617162702](https://cdn.jsdelivr.net/gh/luckykang/picture_bed/blogs_images/20210617162702.png)
+
+第二种方法，是让`Hetero`这个异构插件根据特定的优先级别，在多个设备上执行网络层。第一个执行的设备将是第一优先级设备，支持某个特定的层，那么Hetero插件会将其退回到第二优先级设备，以此类推，直到找到支持。在下图的例子中，你可以看到我请求在FPGA上执行此网络，如果遇到无法执行的层，请在CPU上执行。你也可以在这里，按照自己的优先级输入所有的插件名称：CPU、GPU、MYRIAD、FPGA。请注意，某些拓扑对某些设备上异构执行不友好，或者根本无法在这种异构模式下执行，甚至这样做在性能上没有任何意义。另外要注意的是，不同的设备使用不同的数据格式，CPU支持的数据格式是FP32和INT8,GPU支持FP32和FP16，Movidius则支持FP16等。所以在执行前请先读取文件，这样推理引擎会先对数据格式进行自动转换。如果要在GPU上优先执行拓扑，并以CPU作为后备设备，则只需使用FP16格式的IR文件。因为该拓扑的权值将通过`hetero`插件自动从FP16转换为FP32。它可以提供一定的灵活性，然而那些不被目前设备支持的层，可以转而利用CPU或者其他设备。
+
+![20210617162914](https://cdn.jsdelivr.net/gh/luckykang/picture_bed/blogs_images/20210617162914.png)
+
+### 14.Inference Engine的异步操作API
+
+视频处理的过程是逐帧进行的。下面的通道示意图很好的展示了如何进行视频序列的，先解码，然后对一帧进行推理准备，再对这一帧进行推理，然后移到下一帧。等待通道以同步模式逐个阶段地完成，会降低性能。我们其实不需要等待推理完成，而是应该在发送推理请求之后就继续准备下一帧，或者执行其他任务。当推理请求和执行没有冲突时，我们在推理进行的同时就可以准备好帧。这样下来，不需要任何额外支持就可以获得巨大的吞吐量提升。
+
+![20210617170431](https://cdn.jsdelivr.net/gh/luckykang/picture_bed/blogs_images/20210617170431.png)
+
+如下图案例
+
+![20210617171747](https://cdn.jsdelivr.net/gh/luckykang/picture_bed/blogs_images/20210617171747.png)
+
+同步模式下的平均吞吐量
+
+![20210617171842](https://cdn.jsdelivr.net/gh/luckykang/picture_bed/blogs_images/20210617171842.png)
+
+异步模式下的平均吞吐量
+
+![20210617171927](https://cdn.jsdelivr.net/gh/luckykang/picture_bed/blogs_images/20210617171927.png)
+
+通过对比我们发现，差异挺明显。
 
 
 
