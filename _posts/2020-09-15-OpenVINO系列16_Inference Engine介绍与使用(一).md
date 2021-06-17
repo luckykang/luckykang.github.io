@@ -8,7 +8,7 @@ tag: OpenVINO
 
 ### 1.推理引擎介绍：
 
-我们需要使用一个预先训练好的模型，并将其准备好给推理使用，推理引擎的起点是IR文件。推理引擎其实是一个可以整合到自己应用程序中的API，这个API适用于所有的硬件装置，在C++和python中提供了API。
+我们需要使用一个预先训练好的模型，并将其准备好给推理使用，推理引擎的起点是IR文件。推理引擎其实是一个可以整合到自己应用程序中的API，这个API适用于所有的硬件设备，在C++和python中提供了API。
 
 模型优化器先处理原始模型，然后把基元数据或者图层映射到所支持的操作中，这一过程就构建了IR文件。在不同的设备上实施每个操作，其过程都将有所不同。我们以乘法为例，同一个操作，在CPU实施时，使用的语言是C、C++或者汇编语言，但是同样的函数在GPU上实施时，则将使用OpenCL语言编写。因此，推理引擎对于每个所支持的设备都有不同的`插件`，CPU插件使用MKL-DNN库(数学核心函数库)，GPU插件使用clDNN库(深度神经网络计算库)。对于开发者而言，只需要指定目标设备，推理引擎就可以使用正确的插件，并在目标硬件上进行推理运行。
 
@@ -74,7 +74,7 @@ exex_net = my_ie.load_network(network=net,device_name='MULTI:MYRIAD,CPU')  所�
 
 #### 5.编译和加载网络到设备 
 
-使用InferenceEngine::Core::LoadNetwork()与特定的装置（例如方法CPU，GPU等）来编译和加载网络在设备上。传递针对此编译和加载操作的每个目标加载配置。
+使用InferenceEngine::Core::LoadNetwork()与特定的设备（例如方法CPU，GPU等）来编译和加载网络在设备上。传递针对此编译和加载操作的每个目标加载配置。
 
 #### 6.设置输入数据 
 
@@ -84,9 +84,9 @@ exex_net = my_ie.load_network(network=net,device_name='MULTI:MYRIAD,CPU')  所�
 
 现在定义了输入和输出存储器，选择执行模式：
 
-同步- InferenceEngine::InferRequest::Infer()方法。阻塞直到推断完成。
+同步- `InferenceEngine::InferRequest::Infer()`方法。阻塞直到推断完成。
 
-异步- InferenceEngine::InferRequest::StartAsync()方法。使用InferenceEngine::InferRequest::Wait()方法（0超时）检查状态，等待或指定完成回调。
+异步- `InferenceEngine::InferRequest::StartAsync()`方法。使用`InferenceEngine::InferRequest::Wait()`方法（0超时）检查状态，等待或指定完成回调。
 
 #### 8.获取输出 
 
