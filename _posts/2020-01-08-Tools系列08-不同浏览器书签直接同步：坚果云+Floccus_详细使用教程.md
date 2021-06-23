@@ -22,7 +22,11 @@ floccus是一个开源的，通过Nextcloud、WEbDAV、本地文件（或者任�
 
 ![20210623143433](https://cdn.jsdelivr.net/gh/luckykang/picture_bed/blogs_images/20210623143433.png)
 
-然后上传一个`bookmarks.xbel`文件到刚才新建的文件夹里面，没有的点这里下载。[]()
+然后上传一个`bookmarks.xbel`文件到刚才新建的文件夹里面，没有的点这里下载。[https://pan.baidu.com/s/14-P_VPG-qwQTUkJWXZpjFQ 
+](https://pan.baidu.com/s/14-P_VPG-qwQTUkJWXZpjFQ 
+)
+
+提取码：qiwc 
 
 ![20210623143453](https://cdn.jsdelivr.net/gh/luckykang/picture_bed/blogs_images/20210623143453.png)
 
