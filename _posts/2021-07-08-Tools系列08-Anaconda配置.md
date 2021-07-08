@@ -27,3 +27,12 @@ tag: Tools
     proxy_servers:
     http: http://c-prc.xxx.com:913 
     https: https://c-prc.xxx.com:913
+
+### 3.安装 jupyter_contrib_nbextensions
+
+    python -m pip install  jupyter_contrib_nbextensions
+
+    jupyter contrib nbextension install --user --skip-running-check
+
+
+![20210708180732](https://cdn.jsdelivr.net/gh/luckykang/picture_bed/blogs_images/20210708180732.png)
