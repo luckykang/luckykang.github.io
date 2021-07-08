@@ -1,5 +1,6 @@
+---
 layout: post
-title: Tools系列08-Anaconda配置
+title: 机器学习系列02-Anaconda与Jupyter Notebook安装与配置
 tag: Tools
 ---
 
@@ -36,3 +37,26 @@ tag: Tools
 
 
 ![20210708180732](https://cdn.jsdelivr.net/gh/luckykang/picture_bed/blogs_images/20210708180732.png)
+
+### 4.在anaconda中新建虚拟环境
+
+    conda update conda
+
+    conda create -n AI_01
+
+    conda env list
+
+### 5.库的安装
+
+新建`requirenments.txt`文件，复制下面的代码
+
+    matplotlib==2.2.2
+    numpy==1.14.2
+    pandas==0.20.3
+    tables==3.4.2
+    jupyter==1.0.0
+
+
+然后在终端执行  
+
+    pip install -r requirements.txt
