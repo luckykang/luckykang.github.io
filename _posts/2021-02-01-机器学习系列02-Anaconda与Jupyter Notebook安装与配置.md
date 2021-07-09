@@ -35,8 +35,8 @@ tag: Tools
 
     jupyter contrib nbextension install --user --skip-running-check
 
+![20210709140359](https://cdn.jsdelivr.net/gh/luckykang/picture_bed/blogs_images/20210709140359.png)
 
-![20210708180732](https://cdn.jsdelivr.net/gh/luckykang/picture_bed/blogs_images/20210708180732.png)
 
 ### 4.在anaconda中新建虚拟环境
 
@@ -60,3 +60,31 @@ tag: Tools
 然后在终端执行  
 
     pip install -r requirements.txt
+
+### 6.jupyter快捷键
+
+- 两种模式通用快捷键
+    - Shift+Enter,执行本单元代码，并跳转到下一单元
+    - Ctrl+Enter,执行本单元代码，留在本单元
+
+- 命令模式：按ESC进入
+
+    - Y , cell切换到Code模模式
+    - M ，cell切换到Markdown模式
+    - A ，在当前cell上面添加cell
+    - B , 在当前cell下面添加cell
+
+- 编辑模式：按Enter进入
+
+    - 补全代码：变量、方法后跟Tab键
+    - 为一行或多行代码添加/取消注释： Ctrl+/
+
+- 其他
+
+    - 回退： Ctrl+Z
+    - 重做： Ctrl+Y
+    - 删除当前cell:  双击D
+    - 快速跳转首个cell: Ctrl+Home
+    - 快速跳转到最后一个cell: Ctrl+End
+
+
