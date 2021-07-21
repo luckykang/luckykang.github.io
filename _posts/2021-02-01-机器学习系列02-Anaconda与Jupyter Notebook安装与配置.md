@@ -50,18 +50,70 @@ tag: Tools
 
 新建`requirenments.txt`文件，复制下面的代码
 
-    matplotlib==2.2.2
-    numpy==1.14.2
-    pandas==0.20.3
-    tables==3.4.2
-    jupyter==1.0.0
+    matplotlib
+    numpy
+    pandas
+    tables
+    jupyter
 
 
 然后在终端执行  
 
     pip install -r requirements.txt
 
-### 6.jupyter快捷键
+### 6.安装主题
+
+#### 6.1 Install with pip
+
+    # install jupyterthemes
+    pip install jupyterthemes
+
+    # upgrade to latest version
+    pip install --upgrade jupyterthemes
+
+#### 6.2 Install with conda
+
+    # install jupyterthemes
+    conda install -c conda-forge jupyterthemes
+
+    # update to latest version
+    conda update jupyterthemes
+
+#### 6.3 查看和设置主题字体
+
+- 主题参数
+
+    jt -l      # 查看列表
+
+    jt -t  monokai    # 选择主题
+
+    jt -r # 恢复默认主题
+
+- 字体参数
+
+    Code Font：-f
+
+    Code Font-Size：-fs
+
+    Notebook Font Size:-nfs
+
+    Text/MD Cell Fontsize:-tfs
+
+    Pandas DF Fontsize:-dfs
+
+    Output Area Fontsize:-ofs
+
+- 恢复默认设置
+
+    jt -dfonts
+
+- 常用设置
+
+    jt -t monokai -f fira -fs 15 -altp -tfs 11 -nfs 11 -dfs 9 -ofs 11 -cellw 88% -T
+
+[参考github:https://github.com/dunovank/jupyter-themes/tree/b12d6c8843b5ff6fa13097d542588b055060ffb7]](https://github.com/dunovank/jupyter-themes/tree/b12d6c8843b5ff6fa13097d542588b055060ffb7)
+
+### 7.jupyter快捷键
 
 - 两种模式通用快捷键
     - Shift+Enter,执行本单元代码，并跳转到下一单元
