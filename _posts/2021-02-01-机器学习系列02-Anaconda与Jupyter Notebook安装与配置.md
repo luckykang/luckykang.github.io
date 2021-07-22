@@ -114,7 +114,7 @@ tag: Tools
 
         jt -t onedork -f fira -fs 15 -altp -tfs 11 -nfs 11 -dfs 9 -ofs 11 -cellw 88% -T
 
-[参考github:https://github.com/dunovank/jupyter-themes/tree/b12d6c8843b5ff6fa13097d542588b055060ffb7]
+[参考github:https://github.com/dunovank/jupyter-themes/tree/b12d6c8843b5ff6fa13097d542588b055060ffb7](https://github.com/dunovank/jupyter-themes/tree/b12d6c8843b5ff6fa13097d542588b055060ffb7)
 
 ### 7.jupyter快捷键
 
