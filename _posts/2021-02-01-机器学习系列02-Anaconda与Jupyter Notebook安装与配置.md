@@ -83,35 +83,38 @@ tag: Tools
 
 - 主题参数
 
-    jt -l      # 查看列表
+        # 查看列表
+        jt -l      
 
-    jt -t  monokai    # 选择主题
+        # 选择主题
+        jt -t  onedork    
 
-    jt -r # 恢复默认主题
+        # 恢复默认主题
+        jt -r 
 
 - 字体参数
 
-    Code Font：-f
+        Code Font：-f
 
-    Code Font-Size：-fs
+        Code Font-Size：-fs
 
-    Notebook Font Size:-nfs
+        Notebook Font Size:-nfs
 
-    Text/MD Cell Fontsize:-tfs
+        Text/MD Cell Fontsize:-tfs
 
-    Pandas DF Fontsize:-dfs
+        Pandas DF Fontsize:-dfs
 
-    Output Area Fontsize:-ofs
+        Output Area Fontsize:-ofs
 
 - 恢复默认设置
 
-    jt -dfonts
+        jt -dfonts
 
 - 常用设置
 
-    jt -t monokai -f fira -fs 15 -altp -tfs 11 -nfs 11 -dfs 9 -ofs 11 -cellw 88% -T
+        jt -t onedork -f fira -fs 15 -altp -tfs 11 -nfs 11 -dfs 9 -ofs 11 -cellw 88% -T
 
-[参考github:https://github.com/dunovank/jupyter-themes/tree/b12d6c8843b5ff6fa13097d542588b055060ffb7]](https://github.com/dunovank/jupyter-themes/tree/b12d6c8843b5ff6fa13097d542588b055060ffb7)
+[参考github:https://github.com/dunovank/jupyter-themes/tree/b12d6c8843b5ff6fa13097d542588b055060ffb7]
 
 ### 7.jupyter快捷键
 
