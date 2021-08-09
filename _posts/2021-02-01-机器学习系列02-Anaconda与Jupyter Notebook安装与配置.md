@@ -1,7 +1,7 @@
 ---
 layout: post
 title: 机器学习系列02-Anaconda与Jupyter Notebook安装与配置
-tag: Tools
+tag: 机器学习
 ---
 
 ### 1.配置环境变量
