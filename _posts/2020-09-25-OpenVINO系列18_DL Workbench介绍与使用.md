@@ -10,7 +10,7 @@ DL Workbench是可视化的OpenVINO模型性能评估工具，用户可以在web
 
 ### 2.DL Workbench支持哪些设备
 
-DL Workbench支持基于CPU，英特尔®处理器图形（GPU），英特尔®Movidius™神经计算棒2（NCS 2）和具有英特尔®Movidius™VPU架构的英特尔®视觉加速设备。需要注意的是由于MYRIAD和HDDL设备不兼容，因此不能在DL Workbench中一起使用，故不能同时设置。
+DL Workbench支持基于Intel CPU、GPU、NCS2和具有英特尔VPU架构的视觉加速设备HDDL。需要注意的是由于MYRIAD和HDDL设备不兼容，因此不能在DL Workbench中一起使用，故不能同时设置。
 
 ### 3.DL Workbench可以做哪些事情
 
@@ -30,9 +30,9 @@ Workbench有两种安装方式：
 
 - 从Docker Hub安装DL Workbench（包括在Linux，Windows和macOS上安装）
 
-- 从英特尔®OpenVINO™工具包软件包中安装DL Workbench。参见链接:[https://docs.openvinotoolkit.org/latest/workbench_docs_Workbench_DG_Install_from_Package.html](https://docs.openvinotoolkit.org/latest/workbench_docs_Workbench_DG_Install_from_Package.html)
+- 从OpenVINO工具包软件包中安装DL Workbench。参见链接:[https://docs.openvinotoolkit.org/latest/workbench_docs_Workbench_DG_Install_from_Package.html](https://docs.openvinotoolkit.org/latest/workbench_docs_Workbench_DG_Install_from_Package.html)
 
-这里我们使用从Docker Hub安装的方式。在机器上安装完docker后，从github的主分支下载start_workbench.sh脚本
+这里我们使用从`Docker Hub`安装的方式。在机器上安装完docker后，从github的主分支下载start_workbench.sh脚本
 
 ![0921140114](https://cdn.jsdelivr.net/gh/luckykang/picture_bed/blogs_images/0921140114.png)
 
@@ -40,7 +40,7 @@ Workbench有两种安装方式：
 
 ![0921140553](https://cdn.jsdelivr.net/gh/luckykang/picture_bed/blogs_images/0921140553.png)
 
-执行脚本，如果本机没有镜像就会下载最新的workbench镜像。文章编写时最新的openvino/workbench大概有5.67GB。
+执行脚本，如果本机没有镜像就会下载最新的workbench镜像。
 
 ![0921140742](https://cdn.jsdelivr.net/gh/luckykang/picture_bed/blogs_images/0921140742.png)
 
@@ -106,11 +106,13 @@ Workbench有两种安装方式：
 
 ![0927141432](https://cdn.jsdelivr.net/gh/luckykang/picture_bed/blogs_images/0927141432.png)
 
-模型的优化的方式有两种：默认方式和AccuracyAware方式。
+模型的优化的方式有两种：
 
-默认方式又叫最大性能校准，可优化模型以获得最佳性能。适用于注释或未注释的数据集，是不可控制的模型精度下降，将支持INT8执行的所有层都转换为INT8精度。
+默认方式和AccuracyAware方式。
 
-AccuracyAware方式又叫最大精度校准，它指的是达到指定的最大可接受精度下降值时的最佳性能。只适用于带注释的数据集，是可控制的模型精度下降，仅转换了能够以INT8精度执行并且几乎不增加精度下降的那些层。
+`默认方式`又叫最大性能校准，可优化模型以获得最佳性能。适用于注释或未注释的数据集，是不可控制的模型精度下降，将支持INT8执行的所有层都转换为INT8精度。
+
+`AccuracyAware方式`又叫最大精度校准，它指的是达到指定的最大可接受精度下降值时的最佳性能。只适用于带注释的数据集，是可控制的模型精度下降，仅转换了能够以INT8精度执行并且几乎不增加精度下降的那些层。
 
 下图可以看到使用不同的优化方式对模型性能的影响
 
@@ -124,12 +126,20 @@ AccuracyAware方式又叫最大精度校准，它指的是达到指定的最大�
 
 下载完成后可以看到生成的最小部署包中包含了我们勾选的内容。
 
-![0927163456](https://cdn.jsdelivr.net/gh/luckykang/picture_bed/blogs_images/0927163456.png)
+![20210825142555](https://cdn.jsdelivr.net/gh/luckykang/picture_bed/blogs_images/20210825142555.png)
+
+### 10.DL_Workbench镜像的保存和导入
+
+- 如果有在别的设备或者网络不佳的时候运行DL_Workbench的需求，下次使用的时候不必再次下载，节省时间，那么执行下面命令即可保存。
+
+        docker save -o  /media/kang/openvino-workbench.tar openvino/workbench:latest
+
+- 当我们想从本地导入镜像，来运行DL_Workbench，只要系统安装好docker即可使用下面命令导入镜像包。
+
+        docker load --input /media/kang/workbench/openvino-workbench.tar
+
+- 启动服务：
+
+        ./start_workbench.sh -IMAGE_NAME openvino/workbench
 
 
-
-
-
-
-<br>
-转载请注明：[康瑶明的博客](https://luckykang.github.io)
