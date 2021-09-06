@@ -1,6 +1,6 @@
 ---
 layout: post
-title: OpenVINO系列27_OpenVINO支持NLP的BERT模型.md 
+title: OpenVINO系列27_OpenVINO支持哪些NLP的BERT模型.md 
 tag: OpenVINO
 ---
 

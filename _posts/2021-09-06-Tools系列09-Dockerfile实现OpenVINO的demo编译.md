@@ -1,6 +1,6 @@
 ---
 layout: post
-title: Tools系列09-Dockerfile的实现&OpenVINO的demo编译
+title: Tools系列09-Dockerfile实现OpenVINO的demo编译
 tag: Tools
 ---
 
@@ -151,7 +151,6 @@ Dockerfile编写如下，先build一个ubuntu镜像，拉取github仓库上的op
     COPY --from=builder /home/dldt/inference-engine/temp/opencv_4.5.2_ubuntu20/opencv/lib/libopencv_imgcodecs.so.4.5.2 ${install_dir}/lib/libopencv_imgcodecs.so.4.5
     COPY --from=builder /home/dldt/inference-engine/temp/opencv_4.5.2_ubuntu20/opencv/lib/libopencv_imgproc.so.4.5.2 ${install_dir}/lib/libopencv_imgproc.so.4.5
     RUN echo ${install_dir}/lib > /etc/ld.so.conf.d/opencv.conf && ldconfig
-
 
 运行结果
 
