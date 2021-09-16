@@ -160,3 +160,104 @@ Torch Tensor和Numpy array共享底层的内存空间，因此改变其中一个
 执行结果，可以看到第一行的结果是GPU执行的，第二行的结果是CPU上执行的。
 
 ![20210915180614](https://cdn.jsdelivr.net/gh/luckykang/picture_bed/blogs_images/20210915180614.png)
+
+### 四、Pytorch中的autograd
+
+在整个Pytorch框架中，所有的神经网络本质上都是一个**autograd package**(自动求导工具包)。autograd package提供了一个对Tensors上所有操作进行自动微分的功能。
+
+![20210916132938](https://cdn.jsdelivr.net/gh/luckykang/picture_bed/blogs_images/20210916132938.png)
+
+#### 1.关于Tensor的操作
+
+    x1 = torch.ones(3,3)
+    print(x1)
+    # 结果
+    tensor([[1., 1., 1.],
+            [1., 1., 1.],
+            [1., 1., 1.]])
+
+将requires_grad属性设置为True
+
+    x = torch.ones(2,2,requires_grad=True)
+    print(x)
+    # 结果
+    tensor([[1., 1.],
+        [1., 1.]], requires_grad=True)
+
+在具有requires_grad=True上执行一个加法操作
+
+    y = x + 2
+    print(y)
+    # 结果
+    tensor([[3., 3.],
+            [3., 3.]], grad_fn=<AddBackward0>)
+
+打印Tensor的grad_fn属性
+
+    print(x.grad_fn) # None
+    print(y.grad_fn) # <AddBackward0 object at 0x000001DAE6125F08>
+
+在Tensor上执行更复杂的操作
+
+    z = y * y * 3
+    # 求均值
+    out = z.mean()
+    print(z,out)
+    # 结果
+    tensor([[27., 27.],
+        [27., 27.]], grad_fn=<MulBackward0>)tensor(27., grad_fn=<MeanBackward0>)
+
+关于方法`.requires_grad_()`:该方法可以原地改变Tensor的属性`.requires_grad`的值。如果没有主动设定默认为False
+
+    # 随机初始化两行两列的矩阵
+    a = torch.randn(2,2)
+    a = ((a * 3) / (a - 1))
+    # 查看默认的设置，应为False
+    print(a.requires_grad) 
+
+    # 设置为True
+    a.requires_grad_(True)
+    # 再次查看设置,应为True
+    print(a.requires_grad)
+
+    # 执行加运算，grad_fn会显示最后一个运算操作
+    b = (a * a).sum()
+    print(b.grad_fn)
+
+    # 结果
+    False
+    True
+    <SumBackward0 object at 0x0000020D006FD9C8>
+
+#### 2.关于梯度Gradients
+
+在Pytorch中，反向传播是依靠.backward()实现的。
+
+    x = torch.ones(2,2,requires_grad=True)
+    y = x + 2
+    z = y * y * 3
+    out = z.mean()
+    out.backward()
+    print(x.grad)
+    # 结果
+    tensor([[4.5000, 4.5000],
+        [4.5000, 4.5000]])
+
+关于自动求导的属性设置：
+
+可以通过设置`.requires_grad=True`来执行自动求导，也可以通过`代码块的限制来停止自动求导 with torch.no_grad()`，建议使用第二种。
+
+    print(x.requires_grad)         # True
+    print((x ** 2).requires_grad)  # True
+    # 停止自动求导
+    with torch.no_grad():
+        print((x ** 2).requires_grad)  # False
+
+可以通过`.detach()`获得一个新的Tensor，拥有相同的内容但不需要自动求导。
+
+    print(x.requires_grad)   # true
+    y = x.detach()
+    print(y.requires_grad)   # False
+    # x、y所有的位置结果都一样
+    print(x.eq(y).all())     # tensor(True)
+
