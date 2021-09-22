@@ -24,11 +24,11 @@ tag: 机器学习
 
 > 定义一个pytorch实现的神经网络
 
-import torch
-import torch.nn as nn
-import torch.nn.functional as F 
+    import torch
+    import torch.nn as nn
+    import torch.nn.functional as F 
 
-# 定义网络类
+    # 定义网络类
 
     class Net(nn.Module):
         def __init__(self):
@@ -73,8 +73,9 @@ import torch.nn.functional as F
 模型中的所有的可训练参数，可以通过net.parameters()来获得
 
     params = list(net.parameters())
+    # 打印长度
     print(len(params))
-    # 打印第一个参数
+    # 打印第0个参数
     print(params[0].size())
 
 输出结果
@@ -87,13 +88,23 @@ import torch.nn.functional as F
     input = torch.randn(1,1,32,32)
     out = net(input)
     print(out)
+    print(out.size())
 
 输出结果
 
-    tensor([[ 0.0549,  0.1465,  0.0975,  0.0032, -0.0572,  0.0673, -0.0140, -0.0227,
-            -0.0324, -0.1341]], grad_fn=<AddmmBackward>)
+![20210922145126](https://cdn.jsdelivr.net/gh/luckykang/picture_bed/blogs_images/20210922145126.png)
 
-有个输出张量以后，就可以执行梯度归零和反向传播了
+**注意**
+
+- torch.nn构建的神经网络只支持mini-batches的输入，不支持单一样本的输入
+- 不如nn.Conv2d需要一个4D Tensor,形状为（nSamples,nChannels,Height,Width),如果你的输入只有单一样本形式，则需要执行input.unsqueeze(0),主动将3D Tensor 扩充成4D Tensor
+  
+
+> 损失函数
+
+- 损失函数的输入是一个输入的pair:(output,target),然后计算出一个数值来评估output和target之间的差距大小。
+- 在torch.nn中若干不同的损失函数可供使用，比如nn.MSELoss就是通过计算均方差损失来评估输入和目标值之间的差距。
+
 
 
 
