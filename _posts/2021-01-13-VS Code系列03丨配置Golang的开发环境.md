@@ -1,49 +1,10 @@
 ---
 layout: post
-title: Golang系列02-go的下载安装以及在VS Code中的配置
+title: 2021-01-13-VS Code系列03丨配置Golang的开发环境
 tag: VS Code
 ---
 
-### 一.go国内下载加速
-
-下载网址：[https://golang.google.cn/dl/](https://golang.google.cn/dl/)
-
-### 二.在linux上的下载安装
-
-    wget https://golang.google.cn/dl/go1.15.6.linux-amd64.tar.gz
-
-    tar xf go1.15.6.linux-amd64.tar.gz
-
-    sudo mv go /usr/local/go-1.15
-
-    cd /etc/profile.d/
-
-    sudo touch Z99-go-1.15.sh    
-
-    # 在~/.bashrc中添加环境变量
-    export GOROOT=/usr/local/go-1.15
-    export PATH=$GOROOT/bin:$PATH
-
-    # 使生效
-    source ~/.bashrc
-
-    # 查看go路径，版本，以及环境信息
-    which go 
-    go version
-    go env
-
-### 三.go proxy配置
-1.可以打开终端直接使用 `go env -w` 进行设置:
-
-    go env -w GO111MODULE=on
-
-    go env -w GOPROXY=https://goproxy.cn,direct
-
-2.输入`go env`可以看到proxy已经添加到环境中。
-
-![20210106003207](https://cdn.jsdelivr.net/gh/luckykang/picture_bed/blogs_images/20210106003207.png)
-
-### 四.VS Code中配置go
+### 一.VS Code中配置go
 
 1.现在我们要为我们的VS Code编辑器安装Go扩展插件，让它支持Go语言开发。
 
@@ -65,7 +26,7 @@ tag: VS Code
 
 ![20210106003530](https://cdn.jsdelivr.net/gh/luckykang/picture_bed/blogs_images/20210106003530.png)
 
-### 四.配置代码片段快捷键
+### 二.配置代码片段快捷键
 
 1.按`Ctrl/Command+Shift+P`,按下图输入`snippets`，选择命令并执行：
 
