@@ -1,6 +1,6 @@
 ---
 layout: post
-title: 2021-09-22-VS Code系列04丨Windows配置C语言的开发环境
+title: VS Code系列04丨Windows配置C语言的开发环境
 tag: VS Code
 ---
 
