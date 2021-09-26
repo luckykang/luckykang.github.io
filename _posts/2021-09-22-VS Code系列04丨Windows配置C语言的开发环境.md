@@ -6,52 +6,61 @@ tag: VS Code
 
 ### 一.下载安装MinGW编译器
 
-C/C++的编译器有很多种，这里选择开源的MinGW编译器,浏览器搜索下载。下载完成后点击`mingw-get-setup.exe`,等待安装完成
+C/C++的编译器有很多种，这里选择开源的MinGW编译器,浏览器搜索下载。点击[https://sourceforge.net/projects/mingw-w64/](https://sourceforge.net/projects/mingw-w64/),下拉找到在线安装方式，下载exe文件。
 
-![20210922161150](https://cdn.jsdelivr.net/gh/luckykang/picture_bed/blogs_images/20210922161150.png)
+![20210926172432](https://cdn.jsdelivr.net/gh/luckykang/picture_bed/blogs_images/20210926172432.png)
 
-完成后点击`continue`,在刷新的页面勾选`gcc-g++`,
+双击打开`mingw-w64-install.exe`，如下图所示
 
-![20210922161410](https://cdn.jsdelivr.net/gh/luckykang/picture_bed/blogs_images/20210922161410.png)
+![20210926172544](https://cdn.jsdelivr.net/gh/luckykang/picture_bed/blogs_images/20210926172544.png)
 
-然后点击左侧的`All Packages`,按下图进行勾选
+点击下一步，选择安装信息
 
-![20210922161652](https://cdn.jsdelivr.net/gh/luckykang/picture_bed/blogs_images/20210922161652.png)
+![2021-09-26-17-34-29](https://cdn.jsdelivr.net/gh/luckykang/picture_bed/blogs_images/2021-09-26-17-34-29.png)
 
-然后点击`Apply Changes`,
+*安装信息说明*
 
-![20210922161739](https://cdn.jsdelivr.net/gh/luckykang/picture_bed/blogs_images/20210922161739.png)
+- Version: 指的是 gcc 的版本，如果没有特殊的需求，一般选择最高的版本号即可。最高版本是8.1.0 ，选中它即可
 
-弹出页面中点击`Apply`
+- Architechture:电脑系统是64位的，选择x86_64；如果是32位系统，则选择i686
 
-![20210922161859](https://cdn.jsdelivr.net/gh/luckykang/picture_bed/blogs_images/20210922161859.png)
+- Threads:如果是 Windows ，选择 win32 ，如果是 Linux、Unix、Mac OS 等其他操作系统要选择 posix
 
-这一步的等待时间会比较长
+- Exception：seh 是新发明的，而 sjlj 则是古老的。seh 性能比较好，但不支持 32位。 sjlj 稳定性好，支持 32位。
 
-![20210922161945](https://cdn.jsdelivr.net/gh/luckykang/picture_bed/blogs_images/20210922161945.png)
+最终选择如下
 
-到这一步就安装完了，点击关闭
+![2021-09-26_17-37-48](https://cdn.jsdelivr.net/gh/luckykang/picture_bed/blogs_images/2021-09-26_17-37-48.png)
 
-![20210922162136](https://cdn.jsdelivr.net/gh/luckykang/picture_bed/blogs_images/20210922162136.png)
+选择完成后点击下一步，配置安装路径
+
+![2021-09-26_17-39-00](https://cdn.jsdelivr.net/gh/luckykang/picture_bed/blogs_images/2021-09-26_17-39-00.png)
+
+到这一步就安装成功了
+
+![2021-09-26_17-41-18](https://cdn.jsdelivr.net/gh/luckykang/picture_bed/blogs_images/2021-09-26_17-41-18.png)
 
 ### 二.检查安装情况并配置环境变量
 
 打开安装路径，查看`g++` `gcc` `gdb`,如果有就安装好了
 
-![20210922162305](https://cdn.jsdelivr.net/gh/luckykang/picture_bed/blogs_images/20210922162305.png)
-![20210922162414](https://cdn.jsdelivr.net/gh/luckykang/picture_bed/blogs_images/20210922162414.png)
+![20210926213851](https://cdn.jsdelivr.net/gh/luckykang/picture_bed/blogs_images/20210926213851.png)
 
 打开系统环境变量
 
 ![20210922162746](https://cdn.jsdelivr.net/gh/luckykang/picture_bed/blogs_images/20210922162746.png)
 
-添加环境变量
+复制安装路径
 
-![20210922162837](https://cdn.jsdelivr.net/gh/luckykang/picture_bed/blogs_images/20210922162837.png)
+![2021-09-26_17-44-15](https://cdn.jsdelivr.net/gh/luckykang/picture_bed/blogs_images/2021-09-26_17-44-15.png)
 
-在终端输入`gcc -v`看到安装完成
+添加path环境变量
 
-![20210922163131](https://cdn.jsdelivr.net/gh/luckykang/picture_bed/blogs_images/20210922163131.png)
+![2021-09-26_17-45-45](https://cdn.jsdelivr.net/gh/luckykang/picture_bed/blogs_images/2021-09-26_17-45-45.png)
+
+在终端输入`gcc -v`显示已安装的gcc版本信息
+
+![20210926214222](https://cdn.jsdelivr.net/gh/luckykang/picture_bed/blogs_images/20210926214222.png)
 
 ### 三.在VS Code中配置
 
