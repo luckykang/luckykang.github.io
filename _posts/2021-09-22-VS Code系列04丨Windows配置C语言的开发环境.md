@@ -70,7 +70,7 @@ C/C++的编译器有很多种，这里选择开源的MinGW编译器,浏览器搜
 
 接下来配置编译器路径，按快捷键`Ctrl+Shift+P`调出命令面板，输入`C/C++`，选择`Edit Configurations(UI)`进入配置,设置编译器路径。
 
-![20210923105317](https://cdn.jsdelivr.net/gh/luckykang/picture_bed/blogs_images/20210923105317.png)
+![20210927100342](https://cdn.jsdelivr.net/gh/luckykang/picture_bed/blogs_images/20210927100342.png)
 
 #### 2.安装配置code-runner
 
@@ -80,7 +80,7 @@ C/C++的编译器有很多种，这里选择开源的MinGW编译器,浏览器搜
 
 ![20210923095744](https://cdn.jsdelivr.net/gh/luckykang/picture_bed/blogs_images/20210923095744.png)
 
-配置code-runner扩展功能
+配置code-runner扩展功能，勾选下图四项
 
 ![20210922171035](https://cdn.jsdelivr.net/gh/luckykang/picture_bed/blogs_images/20210922171035.png)
 ![20210923101707](https://cdn.jsdelivr.net/gh/luckykang/picture_bed/blogs_images/20210923101707.png)
