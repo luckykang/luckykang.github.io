@@ -50,11 +50,11 @@ tag: 机器学习
 
 新建`requirenments.txt`文件，复制下面的代码
 
-    matplotlib
-    numpy
-    pandas
-    tables
-    jupyter
+    matplotlib==2.2.2
+    numpy==1.14.2
+    pandas==0.20.3
+    tables==3.4.2
+    jupyter==1.0.0
 
 
 然后在终端执行  
