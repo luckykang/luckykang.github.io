@@ -1,10 +1,12 @@
 ---
 layout: post
-title: ARM NanoPi
+title: ARM NanoPi丨玩机总结
 tag: Tools
 ---
 
-### 1.文件格式区别
+这里推荐三星、闪迪、海康的TF卡，会比较稳定。
+
+### 1.系统固件介绍以及选用
 
 ![20211023193755](https://cdn.jsdelivr.net/gh/luckykang/picture_bed/blogs_images/20211023193755.png)
 
@@ -14,7 +16,7 @@ tag: Tools
 
 官网下载：[https://www.balena.io/etcher/](https://www.balena.io/etcher/)  Mac
 
-### 3.固件
+### 3.主流的固件
 
 小朋友编译固件
 
@@ -40,15 +42,15 @@ klever 1988编译固件
 
 [https://www.right.com.cn/forum/thread-4387071-1-1.html](https://www.right.com.cn/forum/thread-4387071-1-1.html)
 
-pan_down
+install-html
 
-[https://cccscls-my.sharepoint.com/personal/boss_jldjld_com/_layouts/15/onedrive.aspx?id=%2Fpersonal%2Fboss%5Fjldjld%5Fcom%2FDocuments%2FR2S%E5%9B%BA%E4%BB%B6%E5%8A%A0%E5%86%99%E7%9B%98%E5%B7%A5%E5%85%B7&originalPath=aHR0cHM6Ly9jY2NzY2xzLW15LnNoYXJlcG9pbnQuY29tLzpmOi9nL3BlcnNvbmFsL2Jvc3NfamxkamxkX2NvbS9FdWI5RzdTTjdncE5pbjlOSHRxRmNkOEJpU3Q3SVZwYXg2eHJuejd0NVdfSjBRP3J0aW1lPVRKRHJDQm1XMlVn](https://cccscls-my.sharepoint.com/personal/boss_jldjld_com/_layouts/15/onedrive.aspx?id=%2Fpersonal%2Fboss%5Fjldjld%5Fcom%2FDocuments%2FR2S%E5%9B%BA%E4%BB%B6%E5%8A%A0%E5%86%99%E7%9B%98%E5%B7%A5%E5%85%B7&originalPath=aHR0cHM6Ly9jY2NzY2xzLW15LnNoYXJlcG9pbnQuY29tLzpmOi9nL3BlcnNvbmFsL2Jvc3NfamxkamxkX2NvbS9FdWI5RzdTTjdncE5pbjlOSHRxRmNkOEJpU3Q3SVZwYXg2eHJuejd0NVdfSjBRP3J0aW1lPVRKRHJDQm1XMlVn)
+[https://bigdongdong.gitbook.io/nanopi-r2s/r2srotherfirmware](https://bigdongdong.gitbook.io/nanopi-r2s/r2srotherfirmware)
 
 ### 4.写卡教程
 
 首先你先把R2S/R4S 断电，拿出TF卡，放入读卡器插入电脑。
 
-注意如果电脑提示格式化！不要格式化！ 不要格式化！ 不要格式化！ 直接写盘就行
+**注意如果电脑提示格式化！不要格式化！ 不要格式化！ 不要格式化！ 直接写盘就行**
 
 并且在Windows下或者mac下装有系统的TF卡是无法被读取的！！
 
