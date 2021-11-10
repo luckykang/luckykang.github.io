@@ -4,11 +4,15 @@ title: Tools系列11丨Telegraf+TDengine+Grafana搭建监控系统
 tag: Tools
 ---
 
-### 一.Telegraf介绍与安装
+#### 一.监控系统架构图
 
-#### 1.Telegraf是什么，可以用来干什么
+![Snipaste_2021-11-10_10-56-58](https://cdn.jsdelivr.net/gh/luckykang/picture_bed/blogs_images/Snipaste_2021-11-10_10-56-58.png)
 
-Telegraf是用Go写的代理程序，可以用于收集系统和服务的统计数据，是TICK技术栈的一部分。它具备输入插件，可以直接从系统获取指标数据，从第三方API获取指标数据，甚至可以通过statsd和Kafka获取指标数据。它还具备输出插件，可以将采集的指标发送到各种数据存储，服务和消息队列。比如InfluxDB，Graphite，TDengine，OpenTSDB，Datadog，Librato，Kafka，MQTT，NSQ等等。
+### 二.Telegraf介绍与安装
+
+#### 1.介绍
+
+Telegraf是用Go写的代理程序，可以用于收集系统和服务的监控数据，它具备输入插件，可以直接从系统获取指标数据，从第三方API获取指标数据，也具备输出插件，可以将采集的指标发送到各种数据存储，服务和消息队列。比如InfluxDB，Graphite，TDengine，OpenTSDB，Datadog，Librato，Kafka，MQTT，NSQ等等。
 
 #### 2.安装
 
@@ -16,13 +20,11 @@ Telegraf是用Go写的代理程序，可以用于收集系统和服务的统计�
 
     sudo dpkg -i telegraf_1.20.3-1_amd64.deb
 
-安装完成后先不要启动，后边我会配置`telegraf.conf`。配置文件位置为：`/etc/telegraf/telegraf.conf`
+###  三.TDengine的介绍与使用
 
-###  二.TDengine的介绍与使用
+#### 1.介绍
 
-#### 1.TDengine是什么？有什么用
-
-TDengine软件分为服务器、客户端和报警模块三部分，目前2.0版服务器仅能在Linux系统上安装和运行.客户端可以在Windows或Linux上安装和运行。任何OS的应用也可以选择RESTful接口连接服务器taosd。
+TDengine软件分为服务器、客户端和报警模块三部分，目前2.0版服务器仅能在Linux系统上安装和运行。客户端可以在Windows或Linux上安装和运行。任何OS的应用也可以选择RESTful接口连接服务器taosd。
 
 #### 2.安装
 
@@ -35,6 +37,8 @@ TDengine软件分为服务器、客户端和报警模块三部分，目前2.0版
     apt-get policy tdengine
 
     sudo apt-get install tdengine
+
+    # 查看版本 taos
 
 #### 3.下载编译Bailongma
 
@@ -95,7 +99,6 @@ TDengine 新版本（2.3.0.0+）包含一个 BLM3 独立程序，负责接收包
 ![2021-11-08-16-28-20](https://cdn.jsdelivr.net/gh/luckykang/picture_bed/blogs_images/2021-11-08-16-28-20.png)
 
 
-
 #### 6.查看数据
 
 即可在 TDengine 中查询到数据库中 Telegraf 写入的数据。
@@ -112,10 +115,6 @@ Grafana是一个开源指标分析和可视化套件，常用于可视化基础�
 Grafana支持多种不同的时序数据库数据源，Grafana对每种数据源提供不同的查询方法，而且能很好的支持每种数据源的特性。它支持多种数据源：Graphite、Elasticsearch、CloudWatch、InfluxDB、OpenTSDB、Prometheus、MySQL、Postgres、Microsoft SQL Server (MSSQL)。
 
 #### 2.安装
-
-    sudo apt-get install -y apt-transport-https
-
-    sudo apt-get install -y software-properties-common wget
 
     wget -q -O - https://packages.grafana.com/gpg.key |\
     sudo apt-key add -
@@ -137,18 +136,17 @@ Grafana支持多种不同的时序数据库数据源，Grafana对每种数据源
 
 ![2021-11-08-16-29-30](https://cdn.jsdelivr.net/gh/luckykang/picture_bed/blogs_images/2021-11-08-16-29-30.png)
 
-#### 4.Configure Grafana
+#### 4.配置 tdengine-datasource
 
-在`/etc/grafana/grafana.ini.`配置下面内容
+    wget -c https://github.com/taosdata/grafanaplugin/releases/download/v3.1.1/tdengine-datasource-3.1.1.zip
 
-    [plugins]
-    allow_loading_unsigned_plugins = true
+    sudo unzip tdengine-datasource-3.1.1.zip -d /var/lib/grafana/plugins/
 
-#### 5.启动Grafana Service
+    sudo chown grafana:grafana -R /var/lib/grafana/plugins/tdengine
 
-    sudo systemctl enable grafana-server
+    echo -e "[plugins]\nallow_loading_unsigned_plugins = tdengine-datasource\n" | sudo tee -a /etc/grafana/grafana.ini
 
-    sudo systemctl start grafana-server
+    sudo systemctl restart grafana-server.service
 
 #### 6.登录Grafana
 
