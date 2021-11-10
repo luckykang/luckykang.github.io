@@ -180,7 +180,7 @@ Grafana支持多种不同的时序数据库数据源，Grafana对每种数据源
 
 #### 5.登录Grafana
 
-打开`http://localhost:3000`,user/psd都填写`admin`,会提示修改密码
+打开`http://localhost:3000`,user/pwd都填写`admin`,会提示修改密码
 
 添加TDengine Data Source：
 
