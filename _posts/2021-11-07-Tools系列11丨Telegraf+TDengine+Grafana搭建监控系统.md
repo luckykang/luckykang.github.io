@@ -61,7 +61,7 @@ TDengine提供一个小工具Bailongma，只需在Telegraf做简单配置，无�
     go build
 
 
-#### 4.Telegraf 直接写入(通过 BLM v3)
+#### 4.配置修改telegraf.conf
 
 TDengine 新版本（2.3.0.0+）包含一个 BLM3 独立程序，负责接收包括 Telegraf 的多种应用的数据写入。
 
@@ -106,9 +106,9 @@ TDengine 新版本（2.3.0.0+）包含一个 BLM3 独立程序，负责接收包
 ![2021-11-08-16-26-49](https://cdn.jsdelivr.net/gh/luckykang/picture_bed/blogs_images/2021-11-08-16-26-49.png)
 
 
-### 三.Grafana
+### 四.Grafana介绍与使用
 
-#### 1.Grafana是什么，有什么用
+#### 1.介绍
 
 Grafana是一个开源指标分析和可视化套件，常用于可视化基础设施的性能数据和应用程序分析的时间序列数据。也可以应用于其他领域，包括工业传感器，家庭自动化，天气和过程控制。我使用Grafana最关心的是如何把数据进行聚合后进行展示。
 
@@ -126,7 +126,7 @@ Grafana支持多种不同的时序数据库数据源，Grafana对每种数据源
 
     sudo apt-get install grafana
 
-#### 3. TDengine Data Source Plugin
+#### 3. TDengine Data Source Plugin（和4比较）
 
     git clone --depth 1 https://github.com/taosdata/grafanaplugin.git
 
@@ -148,7 +148,7 @@ Grafana支持多种不同的时序数据库数据源，Grafana对每种数据源
 
     sudo systemctl restart grafana-server.service
 
-#### 6.登录Grafana
+#### 5.登录Grafana
 
 打开`http://localhost:3000`,user/psd都填写`admin`,会提示修改密码
 
@@ -156,3 +156,9 @@ Grafana支持多种不同的时序数据库数据源，Grafana对每种数据源
 
 `Configurations` -> `Data Sources menu`,点击`Add data source`按钮
 
+
+#### 6.导入json
+
+下载 dashboard JSON 文件后导入
+
+[https://github.com/taosdata/grafanaplugin/blob/master/examples/telegraf/grafana/dashboards/telegraf-dashboard-v0.1.0.json](https://github.com/taosdata/grafanaplugin/blob/master/examples/telegraf/grafana/dashboards/telegraf-dashboard-v0.1.0.json) 
