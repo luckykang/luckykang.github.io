@@ -247,3 +247,4 @@ link：[https://www.taosdata.com/cn/documentation/faq#port](https://www.taosdata
 
 #### 2.环境部署包的下载
 
+![20211111012959](https://cdn.jsdelivr.net/gh/luckykang/picture_bed/blogs_images/20211111012959.png)
