@@ -196,7 +196,6 @@ tdengine-datasource是一个taos写的plugin，用于在grafana web中加载TDen
     sudo systemctl restart grafana-server.service
 
 ![20211111004743](https://cdn.jsdelivr.net/gh/luckykang/picture_bed/blogs_images/20211111004743.png)
-
 ![20211111004815](https://cdn.jsdelivr.net/gh/luckykang/picture_bed/blogs_images/20211111004815.png)
 
 #### 4.登录Grafana
