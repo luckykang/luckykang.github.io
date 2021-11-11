@@ -27,15 +27,13 @@ Telegraf 是集中式的，输入输出插件丰富，更容易管理和维护�
 
 prometheus适用于单节点的部署，TDengine可以单节点，也可以集群，还免费。InfluxDB的集群是收费的。
 
-但是TDengine也是有缺点的，我踩的最大的坑就是数据在grafana web 的展示不够友好，折腾了一个礼拜，终于搞定了！
-
-下面我会说明我的环境和软件版本，以及把我用到的软件包放到文章末尾的`Q&A`部分，供大家使用，这个坑我已经迈过去了！！
+但是TDengine也是有缺点的，我踩的最大的坑就是插件在grafana web 的支持不太友好，容易出现各种报错问题。下面会介绍我的环境和软件版本，以及把用到的软件包放到文章末尾的`Q&A`部分，供大家使用，折腾了一周，终于搞定了！
 
 #### 二.版本适配与运行环境
 
 #### 1.组件搭配
 
-我画了一个图，这个图可以清楚的看到这三个不同软件之间的版本适配情况，这样就可以直接下载对应支持的软件，不用再去翻阅官方文档，节省了时间。
+我画了一个图，这个图可以明了的看到三个不同软件之间的版本适配情况，这样就可以直接下载对应支持的软件，不用再去翻阅官方文档，节省时间。
 
 ![Snipaste_2021-11-10_10-56-58](https://cdn.jsdelivr.net/gh/luckykang/picture_bed/blogs_images/Snipaste_2021-11-10_10-56-58.png)
 
@@ -96,9 +94,7 @@ Bailongma 是TDengine提供一个小工具，也叫`taosadapter`。可将Telegra
 - 安装好Golang, 1.10版本以上
 - 对应的TDengine版本。因为用到了TDengine的客户端动态链接库，因此需要安装好和服务端相同版本的TDengine程序；比如服务端版本是TDengine 2.0.0, 则在bailongma所在的linux服务器（可以与TDengine在同一台服务器，或者不同服务器）
 
----------------
-
-*配置golang，见另一篇博客*
+**配置golang，见写过的另一篇文章**
 
 link:[https://luckykang.github.io/2021/01/Golang%E7%B3%BB%E5%88%9701%E4%B8%A8Go%E8%AF%AD%E8%A8%80%E4%BB%8B%E7%BB%8D%E4%B8%8E%E4%B8%8B%E8%BD%BD%E5%AE%89%E8%A3%85/](https://luckykang.github.io/2021/01/Golang%E7%B3%BB%E5%88%9701%E4%B8%A8Go%E8%AF%AD%E8%A8%80%E4%BB%8B%E7%BB%8D%E4%B8%8E%E4%B8%8B%E8%BD%BD%E5%AE%89%E8%A3%85/)
 
@@ -175,9 +171,9 @@ TDengine 新版本（2.3.0.0+）包含一个 BLM3 独立程序，负责接收包
 
 #### 1.介绍
 
-Grafana是一个开源指标分析和可视化套件，常用于可视化基础设施的性能数据和应用程序分析的时间序列数据。也可以应用于其他领域，包括工业传感器，家庭自动化，天气和过程控制。我使用Grafana最关心的是如何把数据进行聚合后进行展示。
+Grafana是一个开源指标分析和可视化套件，常用于可视化基础设施的性能数据和应用程序分析的时间序列数据。也可以应用于其他领域，包括工业传感器，家庭自动化，天气和过程控制。一般来说，使用Grafana最关心的是如何把数据进行聚合后进行展示。
 
-Grafana支持多种不同的时序数据库数据源，Grafana对每种数据源提供不同的查询方法，而且能很好的支持每种数据源的特性。它支持多种数据源：Graphite、TDengine、Elasticsearch、CloudWatch、InfluxDB、OpenTSDB、Prometheus、MySQL、Postgres、Microsoft SQL Server (MSSQL)。
+Grafana支持多种不同的时序数据库数据源，Grafana对每种数据源提供不同的查询方法，而且能很好的支持每种数据源的特性。它支持多种数据源：Graphite、TDengine、Elasticsearch、CloudWatch、InfluxDB、OpenTSDB、Prometheus、MySQL、Postgres、Microsoft SQL Server (MSSQL)等。
 
 #### 2.安装
 
@@ -185,7 +181,7 @@ Grafana支持多种不同的时序数据库数据源，Grafana对每种数据源
 
 #### 3.配置 tdengine-datasource
 
-tdengine-datasource是一个taos写的plugin，用于在grafana web中加载TDengine Dashboard。这儿踩了不少坑，包括页面无数据刷新、datasource找不到tdengine插件、找到datasource插件了但是点击保存的时候js报错等问题，应该是插件与grafana的版本兼容性不太好有关。
+tdengine-datasource是一个taos写的plugin，用于在grafana web中加载TDengine Dashboard。这儿踩了不少坑，包括页面无数据刷新、datasource找不到tdengine插件、找到datasource插件了但是点击保存的时候js报错等问题，应该是taos的插件与grafana的兼容性不太好有关。
 
 我尝试了很多Grafana的版本，包括6.2，7.5，8.2等等。最后使用了6.2，按照下面的步骤配置，终于可以完美展示了。
 
@@ -223,7 +219,7 @@ tdengine-datasource是一个taos写的plugin，用于在grafana web中加载TDen
 
 ![20211111005506](https://cdn.jsdelivr.net/gh/luckykang/picture_bed/blogs_images/20211111005506.png)
 
-自动刷新页面，进入下图，选择`TDengine`，然后导入。
+联网情况下，页面会自动刷新。如下图，选择`TDengine`，然后导入。
 
 ![20211111002128](https://cdn.jsdelivr.net/gh/luckykang/picture_bed/blogs_images/20211111002128.png)
 
