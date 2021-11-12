@@ -4,7 +4,6 @@ title: Tools系列11丨Telegraf+TDengine+Grafana搭建监控系统
 tag: Tools
 ---
 
-
 ### 一.常用的监控系统方案有哪些？各自有什么优缺点？
 
 #### 1.常见的系统服务监控方案有下面几种：
@@ -19,15 +18,20 @@ tag: Tools
 
 #### 2.Exporter和Telegine的比较？
 
-Exporter 是各种独立的资源包，开箱即用，不过呢并不能保证每个 Exporter 都是存活的。
+Exporter是Prometheus的一类数据采集组件的总称。它负责从目标处搜集数据，并将其转化为Prometheus支持的格式。并不向中央服务器发送数据，而是等待中央服务器主动前来抓取。优点是各种独立的资源包，开箱即用，缺点是并不能保证每个 Exporter 都是存活的。
 
-Telegraf 是集中式的，输入输出插件丰富，更容易管理和维护，所以我们用Telegraf来做数据的采集工作。
+Telegraf 是集中式的，输入输出插件丰富，更容易管理和维护，所以我们Telegraf来做数据的采集工作。
 
 #### 3.Prometheus、TDengine、InfluxDB的比较？
 
-prometheus适用于单节点的部署，TDengine可以单节点，也可以集群，还免费。InfluxDB的集群是收费的。
+prometheus专注于运维需要的指标数据。它的的数据采集器，我们称之为Exporter,每一个Exporter会对外开放一个端口，供Prometheus Server拉取数据。不需要提前建表，有自己的一套DSL：PromQL。为了避免存储的采样数据产生很多小文件，是以块为单位存储指标的。
 
-但是TDengine也是有缺点的，我踩的最大的坑就是插件在grafana web 的支持不太友好，容易出现各种报错问题。下面会介绍我的环境和软件版本，以及把用到的软件包放到文章末尾的`Q&A`部分，供大家使用，折腾了一周，终于搞定了！
+TDengine面向工业物联网时序场景，是国产的一款集成了消息队列，数据库，流式计算等功能的数据库，具有高性能、高可靠、可伸缩、零管理、简单易学等技术特点。支持单节点，也支持集群部署。
+
+InfluxDB是一个用Go语言编写的开源时序数据库。其核心是一个自定义构建的存储引擎，它针对时间序列数据进行了优化，是目前最为流行的时间序列数据库，在DB-Engines的时序数据库榜单中稳居第一，不过集群是收费的。
+
+我这里选用了方案3来搭建监控系统。不过在TDengine使用过程中遇到了问题。我主要踩了三个坑：三个软件的版本对应问题、采集到的数据在taos数据库没有存储的问题，在Grafana Web找不到TDengine Plugin的问题。下面会介绍我的环境和软件版本，以及把用到的软件包放到文章末尾的`Q&A`部分，供大家使用，折腾了一周，终于搞定了！
+
 
 #### 二.版本适配与运行环境
 
@@ -72,7 +76,8 @@ Telegraf是用Go写的代理程序，可以用于收集系统和服务的监控�
 
 #### 1.介绍
 
-TDengine软件分为服务器、客户端和报警模块三部分，目前2.0版服务器仅能在Linux系统上安装和运行。客户端可以在Windows或Linux上安装和运行。任何OS的应用也可以选择RESTful接口连接服务器taosd。
+
+TDengine是C语言开发的一款集成了消息队列，数据库，流式计算等功能的物联网大数据平台。软件分为服务器、客户端和报警模块三部分，目前2.0版服务器仅能在Linux系统上安装和运行。客户端可以在Windows或Linux上安装和运行。任何OS的应用也可以选择RESTful接口连接服务器taosd。
 
 #### 2.下载安装
 
@@ -196,6 +201,7 @@ tdengine-datasource是一个taos写的plugin，用于在grafana web中加载TDen
     sudo systemctl restart grafana-server.service
 
 ![20211111004743](https://cdn.jsdelivr.net/gh/luckykang/picture_bed/blogs_images/20211111004743.png)
+
 ![20211111004815](https://cdn.jsdelivr.net/gh/luckykang/picture_bed/blogs_images/20211111004815.png)
 
 #### 4.登录Grafana
