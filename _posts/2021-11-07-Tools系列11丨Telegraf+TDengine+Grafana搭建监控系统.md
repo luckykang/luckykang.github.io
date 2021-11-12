@@ -16,7 +16,7 @@ tag: Tools
 
 方案4：Telegraf + InfluxDB + Grafana
 
-#### 2.Exporter和Telegine的比较？
+#### 2.Exporter和Telegraf的比较？
 
 Exporter是Prometheus的一类数据采集组件的总称。它负责从目标处搜集数据，并将其转化为Prometheus支持的格式。并不向中央服务器发送数据，而是等待中央服务器主动前来抓取。优点是各种独立的资源包，开箱即用，缺点是并不能保证每个 Exporter 都是存活的。
 
