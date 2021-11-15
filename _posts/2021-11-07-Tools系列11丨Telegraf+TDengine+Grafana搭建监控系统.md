@@ -164,7 +164,7 @@ TDengine 新版本（2.3.0.0+）包含一个 BLM3 独立程序，负责接收包
 
 #### 6.查看数据
 
-即可在 TDengine 中查询到数据库中写入的数据。
+**重启系统**，即可在 TDengine 中查询到数据库中写入的数据。
 
 ![2021-11-08-16-26-49](https://cdn.jsdelivr.net/gh/luckykang/picture_bed/blogs_images/2021-11-08-16-26-49.png)
 
@@ -181,6 +181,20 @@ Grafana是一个开源指标分析和可视化套件，常用于可视化基础�
 Grafana支持多种不同的时序数据库数据源，Grafana对每种数据源提供不同的查询方法，而且能很好的支持每种数据源的特性。它支持多种数据源：Graphite、TDengine、Elasticsearch、CloudWatch、InfluxDB、OpenTSDB、Prometheus、MySQL、Postgres、Microsoft SQL Server (MSSQL)等。
 
 #### 2.安装
+
+访问官网：[https://grafana.com/grafana/download/6.2.1?pg=get&plcmt=selfmanaged-box1-cta1&edition=oss](https://grafana.com/grafana/download/6.2.1?pg=get&plcmt=selfmanaged-box1-cta1&edition=oss)
+
+选择版本信息
+
+![20211115163105](https://cdn.jsdelivr.net/gh/luckykang/picture_bed/blogs_images/20211115163105.png)
+
+执行下载安装
+
+    sudo apt-get install -y adduser libfontconfig1
+
+    wget https://dl.grafana.com/oss/release/grafana_6.2.1_amd64.deb
+
+    sudo dpkg -i grafana_6.2.1_amd64.deb
 
 ![20211111005345](https://cdn.jsdelivr.net/gh/luckykang/picture_bed/blogs_images/20211111005345.png)
 
@@ -210,7 +224,7 @@ tdengine-datasource是一个taos写的plugin，用于在grafana web中加载TDen
 
 ![20211111000246](https://cdn.jsdelivr.net/gh/luckykang/picture_bed/blogs_images/20211111000246.png)
 
-#### 5.导入Dashboard
+#### 5.配置TDengine Dashboard
 
 `Configurations` -> `Data Sources menu`,找到TDengine图标
 
@@ -220,7 +234,9 @@ tdengine-datasource是一个taos写的plugin，用于在grafana web中加载TDen
 
 ![20211111001820](https://cdn.jsdelivr.net/gh/luckykang/picture_bed/blogs_images/20211111001820.png)
 
-点击左侧的`Create`->`Import`,填入 `15146`并加载，会自动加载TDengine 提供的一个Dashboard。
+#### 6. 导入仪表盘
+
+点击左侧的`Create`->`Import`,填入 `15146`，会自动加载TDengine 提供的`多节点监控指标仪表盘`,即ID为`15146`。
 
 ![20211111005506](https://cdn.jsdelivr.net/gh/luckykang/picture_bed/blogs_images/20211111005506.png)
 
@@ -228,7 +244,7 @@ tdengine-datasource是一个taos写的plugin，用于在grafana web中加载TDen
 
 ![20211111002128](https://cdn.jsdelivr.net/gh/luckykang/picture_bed/blogs_images/20211111002128.png)
 
-#### 6.数据展示
+#### 7.数据展示
 
 按上述步骤操作完成后，现在就可以在页面看到各项收集的监控数据啦
 
