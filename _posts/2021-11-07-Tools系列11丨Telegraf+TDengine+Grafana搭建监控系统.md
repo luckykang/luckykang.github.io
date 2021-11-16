@@ -248,11 +248,10 @@ tdengine-datasource是一个taos写的plugin，用于在grafana web中加载TDen
 
 按上述步骤操作完成后，现在就可以在页面看到各项收集的监控数据啦
 
-![20211111004527](https://cdn.jsdelivr.net/gh/luckykang/picture_bed/blogs_images/20211111004527.png)
+![sfsdfsfs](https://cdn.jsdelivr.net/gh/luckykang/picture_bed/blogs_images/sfsdfsfs.png)
 
-![20211111004556](https://cdn.jsdelivr.net/gh/luckykang/picture_bed/blogs_images/20211111004556.png)
+![dsafdsafsafsd](https://cdn.jsdelivr.net/gh/luckykang/picture_bed/blogs_images/dsafdsafsafsd.png)
 
-![20211111004627](https://cdn.jsdelivr.net/gh/luckykang/picture_bed/blogs_images/20211111004627.png)
 
 ### Q&A
 
