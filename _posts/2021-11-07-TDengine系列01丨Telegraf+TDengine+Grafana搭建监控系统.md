@@ -76,7 +76,6 @@ Telegraf是用Go写的代理程序，可以用于收集系统和服务的监控�
 
 #### 1.介绍
 
-
 TDengine是C语言开发的一款集成了消息队列，数据库，流式计算等功能的物联网大数据平台。软件分为服务器、客户端和报警模块三部分，目前2.0版服务器仅能在Linux系统上安装和运行。客户端可以在Windows或Linux上安装和运行。任何OS的应用也可以选择RESTful接口连接服务器taosd。
 
 #### 2.下载安装
@@ -89,7 +88,7 @@ link:[https://www.taosdata.com/cn/getting-started/#%E9%80%9A%E8%BF%87%E5%AE%89%E
 
 ![20211111001359](https://cdn.jsdelivr.net/gh/luckykang/picture_bed/blogs_images/20211111001359.png)
 
-#### 3.下载编译Bailongma
+#### 3.下载编译Bailongma(适合2.3之前版本，2.3及以后的直接跳过这一步)
 
 Bailongma 是TDengine提供一个小工具，也叫`taosadapter`。可将Telegraf采集的数据直接写入TDengine，并按规则在TDengine自动创建库和相关表项。
 
@@ -118,13 +117,15 @@ link:[https://luckykang.github.io/2021/01/Golang%E7%B3%BB%E5%88%9701%E4%B8%A8Go%
 
 #### 4.配置修改telegraf.conf
 
-TDengine 新版本（2.3.0.0+）包含一个 BLM3 独立程序，负责接收包括 Telegraf 的多种应用的数据写入。
+**TDengine 新版本（2.3.0.0+）** 包含一个 BLM3 独立程序，负责接收包括 Telegraf 的多种应用的数据写入。
 
 首先备份原先的conf文件。
 
     sudo cp telegraf.conf     telegraf.conf.old
 
-配置方法，在 `/etc/telegraf/telegraf.conf` 增加如下:
+配置方法，在 `/etc/telegraf/telegraf.conf` 增加如下
+
+**这里要注释掉[[outputs.influxdb]]参数，下同**
 
     [[outputs.http]]
     url = "http://127.0.0.1:6041/influxdb/v1/write?db=telegraf"
@@ -136,6 +137,21 @@ TDengine 新版本（2.3.0.0+）包含一个 BLM3 独立程序，负责接收包
     influx_max_line_bytes = 250
 
 ![20211111001225](https://cdn.jsdelivr.net/gh/luckykang/picture_bed/blogs_images/20211111001225.png)
+
+**如果TDengine 2.3.0之前版本**，配置如下:
+
+在output plugins部分，增加[[outputs.http]]配置项：
+
+    url = "http://127.0.0.1:8089/telegraf"
+    data_format："json"
+    json_timestamp_units："1ms"
+
+在agent部分：
+
+    # 区分不同采集设备的机器名称，需确保其唯一性
+    hostname: "01"
+    # 允许Telegraf每批次写入记录最大数量，增大其数量可以降低Telegraf的请求发送频率。
+    metric_batch_size: 100
 
 #### 5.启动服务
 
@@ -153,18 +169,24 @@ TDengine 新版本（2.3.0.0+）包含一个 BLM3 独立程序，负责接收包
 
 ![2021-11-08-16-24-55](https://cdn.jsdelivr.net/gh/luckykang/picture_bed/blogs_images/2021-11-08-16-24-55.png)
 
-启动blm_telegraf程序,要和`telegraf.conf`中配置的ip和port一致：
+启动taosadapter(**适用于2.3.0及之后版本**)，要和`telegraf.conf`中配置的ip和port一致：
+
+    # 查看是否生成taosadapter.log
+    cd /var/log/taos
+    # 查看taosadapter服务状态
+    sudo systemctl status taosadapter
+
+启动blm_telegraf程序(**适用于2.3.0之前版本**)
 
     sudo ./blm_telegraf --host 127.0.0.1 --port 6041
 
 ![2021-11-08-16-28-20](https://cdn.jsdelivr.net/gh/luckykang/picture_bed/blogs_images/2021-11-08-16-28-20.png)
 
-
 **注意**：关于TDengine网络端口说明见文末的`Q&A 1`
 
 #### 6.查看数据
 
-**重启系统**，即可在 TDengine 中查询到数据库中写入的数据。
+即可在 TDengine 中查询到数据库中写入的数据。
 
 ![2021-11-08-16-26-49](https://cdn.jsdelivr.net/gh/luckykang/picture_bed/blogs_images/2021-11-08-16-26-49.png)
 
