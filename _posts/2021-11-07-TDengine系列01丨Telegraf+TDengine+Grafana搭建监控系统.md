@@ -1,7 +1,7 @@
 ---
 layout: post
-title: Tools系列11丨Telegraf+TDengine+Grafana搭建监控系统
-tag: Tools
+title: TDengine系列01丨Telegraf+TDengine+Grafana搭建监控系统
+tag: TDengine
 ---
 
 ### 一.常用的监控系统方案有哪些？各自有什么优缺点？
