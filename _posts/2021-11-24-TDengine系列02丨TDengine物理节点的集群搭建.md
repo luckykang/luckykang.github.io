@@ -8,7 +8,7 @@ tag: TDengine
 
 出于对技术选型的验证评估，我们想搭建一个容器化的Tdengine集群。但是官方文档说不建议在生产环境中部署容器化集群。问了下技术人员，回复说容器化的部署会损失部分性能，具体损失百分之多少，由于docker资源是灵活分配的，不好做标准评估。所以先搭建一个物理集群，熟悉一下集群配置的具体流程,为容器化的集群应用做准备。
 
-## 二.集群相关概念说明
+## 二.集群相关名词说明
 
 ### 1.什么是FQDN
 
@@ -21,19 +21,31 @@ FQDN(fully qualified domain name,完全限定域名)是internet上特定计算�
 
 ![20211124180612](https://cdn.jsdelivr.net/gh/luckykang/picture_bed/blogs_images/20211124180612.png)
 
-### 3.vnode的高可用
+### 3.什么是dnode、vnode、vgroup、Mnode？
 
-TDengine通过多副本的机制来提供系统的高可用性。vnode的副本数是与DB关联的，一个集群里可以有多个DB，根据运营的需求，每个DB可以配置不同的副本数。创建数据库时，通过参数replica 指定副本数（缺省为1）。如果副本数为1，系统的可靠性无法保证，只要数据所在的节点宕机，就将无法提供服务。集群的节点数必须大于等于副本数。
+dnode：代表一个tdengine实例，一个物理节点可以创建一个或多个dnode,一般只创建一个。通过将dnode进行虚拟化拆分为vnode和Mnode
 
-### 4.Mnode的高可用
+vnode:负责存储实际数据，一个dnode中有多个vnode,可以设置副本数
 
-TDengine集群是由mnode (taosd的一个模块，管理节点) 负责管理的，为保证mnode的高可用，可以配置多个mnode副本，副本数由系统配置参数numOfMnodes决定，有效范围为1-3。为保证元数据的强一致性，mnode副本之间是通过同步的方式进行数据复制的。
+vgroup: 虚拟节点组，实现副本的管理。一个vgroup可以包含多个vnode。同一个vgroup组当中的vnode的数据是实时同步的。
+
+Mnode：TDengine集群是由mnode (taosd的一个模块，管理节点) 负责管理的，一个运行的系统里只有一个Mnode，但它有多个副本。APP通过taosc只要访问集群任意节点，就可以访问整个集群。
+
+![20211125130412](https://cdn.jsdelivr.net/gh/luckykang/picture_bed/blogs_images/20211125130412.png)
+
+### 4.vnode的高可用
+
+TDengine通过多副本的机制来提供系统的高可用性。vnode的副本数是与DB关联的，一个集群里可以有多个DB，根据运营的需求，每个DB可以配置不同的副本数。创建数据库时，通过参数replica 指定副本数（缺省为1）。如果副本数为1，系统的可靠性无法保证，只要数据所在的节点宕机，就将无法提供服务。**集群的节点数必须大于等于副本数。**
+
+### 5.Mnode的高可用
+
+为保证mnode的高可用，可以配置多个mnode副本，副本数由系统配置参数numOfMnodes决定，有效范围为1-3。为保证元数据的强一致性，mnode副本之间是通过同步的方式进行数据复制的。
 
 一个集群有多个数据节点dnode，但一个dnode至多运行一个mnode实例。多个dnode情况下，哪个dnode可以作为mnode呢？这是完全由系统根据整个系统资源情况，自动指定的。
 
 **注意：** 一个TDengine高可用系统，无论是vnode还是mnode, 都必须配置多个副本。
 
-### 5.Arbitrator
+### 6.Arbitrator
 
 当副本数为偶数时，当一个 vnode group 里一半或超过一半的 vnode 不工作时，是无法从中选出 master 的。为了解决这个问题，tdengine引入了arb，可以防止`split brain`情形。
 
