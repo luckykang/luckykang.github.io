@@ -178,7 +178,7 @@ link:[https://luckykang.github.io/2021/01/Golang%E7%B3%BB%E5%88%9701%E4%B8%A8Go%
 
 启动blm_telegraf程序(**适用于2.3.0之前版本**)
 
-    sudo ./blm_telegraf --host 127.0.0.1 --port 6041
+    sudo ./blm_telegraf --host 127.0.0.1 --port 8089
 
 ![2021-11-08-16-28-20](https://cdn.jsdelivr.net/gh/luckykang/picture_bed/blogs_images/2021-11-08-16-28-20.png)
 

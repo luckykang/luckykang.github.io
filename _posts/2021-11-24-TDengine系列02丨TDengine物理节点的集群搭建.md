@@ -6,30 +6,44 @@ tag: TDengine
 
 ## 一.前言
 
-出于对技术选型的验证评估，我们想搭建一个容器化的Tdengine集群。但是官方文档说不建议在生产环境中部署容器化集群。问了下技术人员，回复说容器化的部署会损失部分性能，具体损失百分之多少，由于docker资源是灵活分配的，不好做标准评估。所以先搭建一个物理集群，熟悉一下集群配置的具体流程,为搭建容器化的集群应用做准备。
+出于对技术选型的验证评估，我们想搭建一个容器化的Tdengine集群。但是官方文档说不建议在生产环境中部署容器化集群。问了下技术人员，回复说容器化的部署会损失部分性能，具体损失百分之多少，由于docker资源是灵活分配的，不好做标准评估。所以先搭建一个物理集群，熟悉一下集群配置的具体流程,为容器化的集群应用做准备。
 
 ## 二.集群相关概念说明
 
-### 1.集群的数据节点
+### 1.什么是FQDN
 
-是由End Point来唯一标识的，End Point是由FQDN(Fully Qualified Domain Name)外加Port组成，比如 h1.taosdata.com:6030
+FQDN(fully qualified domain name,完全限定域名)是internet上特定计算机或主机的完整域名。FQDN由两部分组成:主机名和域名。集群的每个节点是由End Point来唯一标识的，End Point是由FQDN外加Port组成，比如 h1.taosdata.com:6030。这样当IP发生变化的时候，我们依然可以使用FQDN来动态找到节点，不需要更改集群的任何配置。
+当然如果本地配置了DNS服务器，就不用配置FQDN了。
 
-### 2.什么是FQDN
+### 2.新加入集群的dnode,配置项需要注意什么？
 
-FQDN(fully qualified domain name,完全限定域名)是internet上特定计算机或主机的完整域名。FQDN由两部分组成:主机名和域名。例如，假设邮件服务器的FQDN可能是mail.taosdata.com。主机名是mail，主机位于域名taosdata.com中。
-
-DNS(Domain Name System)，负责将FQDN翻译成IP，是互联网绝大多数应用的寻址方式。
-
-**加入到集群中的数据节点dnode，涉及集群相关的下表11项参数必须完全相同**
+加入到集群中的数据节点dnode，涉及集群相关的下表11项参数必须完全相同。
 
 ![20211124180612](https://cdn.jsdelivr.net/gh/luckykang/picture_bed/blogs_images/20211124180612.png)
 
-## 三.集群架构图
+### 3.vnode的高可用
+
+TDengine通过多副本的机制来提供系统的高可用性。vnode的副本数是与DB关联的，一个集群里可以有多个DB，根据运营的需求，每个DB可以配置不同的副本数。创建数据库时，通过参数replica 指定副本数（缺省为1）。如果副本数为1，系统的可靠性无法保证，只要数据所在的节点宕机，就将无法提供服务。集群的节点数必须大于等于副本数。
+
+### 4.Mnode的高可用
+
+TDengine集群是由mnode (taosd的一个模块，管理节点) 负责管理的，为保证mnode的高可用，可以配置多个mnode副本，副本数由系统配置参数numOfMnodes决定，有效范围为1-3。为保证元数据的强一致性，mnode副本之间是通过同步的方式进行数据复制的。
+
+一个集群有多个数据节点dnode，但一个dnode至多运行一个mnode实例。多个dnode情况下，哪个dnode可以作为mnode呢？这是完全由系统根据整个系统资源情况，自动指定的。
+
+**注意：** 一个TDengine高可用系统，无论是vnode还是mnode, 都必须配置多个副本。
+
+### 5.Arbitrator
+
+当副本数为偶数时，当一个 vnode group 里一半或超过一半的 vnode 不工作时，是无法从中选出 master 的。为了解决这个问题，tdengine引入了arb，可以防止`split brain`情形。
+
+**arb的原理**是模拟一个 vnode 或 mnode 在工作，但只简单的负责网络连接，不处理任何数据插入或访问。只要包含 Arbitrator 在内，超过半数的 vnode 或 mnode 工作，那么该 vnode group 或 mnode 组就可以正常的提供数据插入或查询服务。比如对于副本数为 2 的情形，如果一个节点 A 离线，但另外一个节点 B 正常，而且能连接到 Arbitrator，那么节点 B 就能正常工作。
+
+目前官方推荐的配置方式为`双副本加arb`，这样可以提升系统的可用性。
+
+## 三.规划物理节点
 
 这里我用两台机器做数据的采集和存储，用`FQDN`(Fully Qualified Domain Name，完全限定域名)来进行节点之间的通信。应用端无需配置集群节点IP/FQDN地址，而仅配置`firstEP`实现集群寻址。
-
-![20211124175306](https://cdn.jsdelivr.net/gh/luckykang/picture_bed/blogs_images/20211124175306.png)
-
 
 ![20211124234932](https://cdn.jsdelivr.net/gh/luckykang/picture_bed/blogs_images/20211124234932.png)
 
@@ -106,12 +120,9 @@ yes表示时间已成功同步，
 
 ![20211124184010](https://cdn.jsdelivr.net/gh/luckykang/picture_bed/blogs_images/20211124184010.png)
 
-然后安装telegraf并修改`/etc/telefraf/telegraf.conf`,2.3版本的url形式按下图设置。
+然后安装telegraf并修改`/etc/telefraf/telegraf.conf`,2.3版本的url形式按下图设置。**注意要注释[[outputs.influxdb]],不然无法写入TDengine**
+
 ![20211124185124](https://cdn.jsdelivr.net/gh/luckykang/picture_bed/blogs_images/20211124185124.png)
-
-**注意要注释[[outputs.influxdb]],不然无法写入TDengine**,telegraf会显示如下报错
-
-![20211125002437](https://cdn.jsdelivr.net/gh/luckykang/picture_bed/blogs_images/20211125002437.png)
 
 ### 4.TDengine的配置
 
@@ -143,7 +154,9 @@ yes表示时间已成功同步，
 
 ![20211124180037](https://cdn.jsdelivr.net/gh/luckykang/picture_bed/blogs_images/20211124180037.png)
 
-## 六.管理节点
+配置完成后如果发现节点的tdengine数据库中没有采集到数据，可以参照文章末尾 **Q&A 1** 解决办法。
+
+## 六.管理节点和数据库
 
 在TDengine cli登录h1节点，查看集群所有的dnodes
 
@@ -232,4 +245,34 @@ h2节点的数据展示
 
 ## Q&A
 
+### 1.集群搭建好以后发现每个节点的数据库都没有采集到数据，怎么解决？
+
+**描述**
+
+这里我用了最新的TDengine2.3版本，因为它包含一个 BLM3 独立程序，可以直接接收Telegraf 的数据写入。但是搭建完成后却发现每个节点都没有数据写入。
+
+**解决过程**
+
+查看telegraf启动状态发现，会显示如下报错
+
+![20211125002437](https://cdn.jsdelivr.net/gh/luckykang/picture_bed/blogs_images/20211125002437.png)
+
+然后查看telegraf.conf，注释掉[[outputs.influxdb]]，重启服务还是没有数据写入。由此判定问题可能出在TDengine上。
+
+登录节点，尝试建表插入数据，发现是可以写入的。那么问题是出在哪里呢？
+
+和taos的技术人员交流后一起排查，发现在`/var/log/taos`目录下并没有生成taosadapter.log，使用`sudo systemctl start taosadapter`启动adapter服务，报错如下，找不到服务
+
+![20211125105119](https://cdn.jsdelivr.net/gh/luckykang/picture_bed/blogs_images/20211125105119.png)
+    
+鉴于是官网下载的版本安装的，并非自己编译的，技术人员说说tdengine启动的时候adapter会随之启动，可能是一个BUG他们会尽快修复的。然后发给我一个补丁文件，见下图。
+
 ![20211125082831](https://cdn.jsdelivr.net/gh/luckykang/picture_bed/blogs_images/20211125082831.png)
+
+这个补丁文件的使用方法是这样的，放到`/etc/init.d`和`/etc/systemd/system`目录下，然后`chmod 754`加权限，然后重启服务器，即可看到服务已经启动
+
+![20211125110020](https://cdn.jsdelivr.net/gh/luckykang/picture_bed/blogs_images/20211125110020.png)
+
+然后我们查看数据库，发现数据已经采集到tdengine了，问题解决了！！
+
+![20211125110203](https://cdn.jsdelivr.net/gh/luckykang/picture_bed/blogs_images/20211125110203.png)
