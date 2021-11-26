@@ -201,7 +201,7 @@ yes表示时间已成功同步，
 
 ![20211124231119](https://cdn.jsdelivr.net/gh/luckykang/picture_bed/blogs_images/20211124231119.png)
 
-### 2.查看mnodes和dnodes
+### 2.查看Mnodes和dnodes
 
 ![20211125002306](https://cdn.jsdelivr.net/gh/luckykang/picture_bed/blogs_images/20211125002306.png)
 
@@ -225,7 +225,7 @@ yes表示时间已成功同步，
 
 ### 6.修改DB的Vnode副本数
 
-Vnode副本数不能超过节点数，否则会报错。我们有2个节点，所以最多只能创建2个副本。建库是默认指定为1，这里我们修改为2，并查看数据库`replice`显示为2，修改成功。 
+Vnode副本数不能超过节点数，否则会报错。我们有2个节点，所以最多只能创建2个副本。建库时默认指定为1，这里我们修改为2，并查看数据库`replice`显示为2，修改成功。 
 
 ![20211125145906](https://cdn.jsdelivr.net/gh/luckykang/picture_bed/blogs_images/20211125145906.png)
 
