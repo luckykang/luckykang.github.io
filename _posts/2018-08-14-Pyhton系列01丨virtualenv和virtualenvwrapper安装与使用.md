@@ -85,5 +85,7 @@ rmvirtualenv  tonado_py3
 
 ![20211128164053](https://cdn.jsdelivr.net/gh/luckykang/picture_bed/blogs_images/20211128164053.png)
 
+### 5.在Pycharm导入
 
+![20211128165426](https://cdn.jsdelivr.net/gh/luckykang/picture_bed/blogs_images/20211128165426.png)
 
