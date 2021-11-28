@@ -1,6 +1,6 @@
 ---
 layout: post
-title: Pyhton系列01丨virtualenv和virtualenvwrapper安装与使用
+title: Python系列01丨virtualenv和virtualenvwrapper安装与使用
 tag: Python
 ---
 
