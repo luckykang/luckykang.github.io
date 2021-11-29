@@ -145,7 +145,7 @@ yes表示时间已成功同步，
 
 ![20211124184010](https://cdn.jsdelivr.net/gh/luckykang/picture_bed/blogs_images/20211124184010.png)
 
-然后安装telegraf并修改`/etc/telefraf/telegraf.conf`。**要注释[[outputs.influxdb]]**,不然无法写入TDengine
+然后安装telegraf并修改`/etc/telegraf/telegraf.conf`。**要注释[[outputs.influxdb]]**,不然无法写入TDengine
 
 ![20211125134936](https://cdn.jsdelivr.net/gh/luckykang/picture_bed/blogs_images/20211125134936.png)
 
