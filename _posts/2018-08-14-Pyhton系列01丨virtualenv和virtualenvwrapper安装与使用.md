@@ -64,9 +64,9 @@ virtualenvwrapper，相较于使用virtualenv，好处就是把所有环境都�
 
 ### 1.创建虚拟环境
 
-创建虚拟环境名tf_test, 完成后自动进入环境
+创建虚拟环境名tf_test, 指定版本为python3，创建成功后会自动进入环境
 
-    mkvirtualenv tf_test
+    mkvirtualenv -p python3 tf_test
 
 ![20211128163208](https://cdn.jsdelivr.net/gh/luckykang/picture_bed/blogs_images/20211128163208.png)
 
