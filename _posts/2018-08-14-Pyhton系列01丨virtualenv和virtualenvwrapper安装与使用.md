@@ -54,7 +54,7 @@ virtualenvwrapper，相较于使用virtualenv，好处就是把所有环境都�
 
 ![20211128155551](https://cdn.jsdelivr.net/gh/luckykang/picture_bed/blogs_images/20211128155551.png)
 
-在Ubuntu下，为
+在Ubuntu下，需要修改virtualenvwrapper路径：
 
     export VIRTUALENVWRAPPER_PYTHON=/usr/bin/python3
     export WORKON_HOME=$HOME/.venv
