@@ -1,8 +1,8 @@
-**---
+---
 layout: post
 title: openvino_tensorflow介绍与使用
 tag: OpenVINO
----**
+---
 
 ## 一.介绍
 
@@ -94,12 +94,9 @@ tag: OpenVINO
 
 最后一项`--disable_ovtf`参数的意思是不使用openvino进行加速，将使用默认的tf进行推理。这里我们首先使用默认的tf进行推理，看看推理用时怎么样。我这里用了自己的照片，所以指定了`--input`参数。不加则使用默认提供的。
 
-    python3 examples/object_detection_sample.py --disable_ovtf -input=/home/kang/kang.jpeg
-
+    python3 examples/object_detection_sample.py --input=/home/kang/kang.jpeg
 
 ![20211202010502](https://cdn.jsdelivr.net/gh/luckykang/picture_bed/blogs_images/20211202010502.png)
-
-    python3 examples/object_detection_sample.py --input=/home/kang/kang.jpeg
 
 得到推理结果，推理耗时733.25ms,推理设备为CPU。
 
