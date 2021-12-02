@@ -1,14 +1,14 @@
 **---
 layout: post
-title: OpenVINO integration with TensorFlow的介绍与使用
+title: openvino_tensorflow介绍与使用
 tag: OpenVINO
 ---**
 
-## 一.OpenVINO integration with TensorFlow介绍
+## 一.介绍
 
 ### 1.为什么要使用？
 
-OpenVINO integration with TensorFlow 是为想尝试把openvino用于推理应用中的tensorflow开发者们设计的。原理是通过OpenVINO的内联优化，只需少量代码的改动就可以
+`openvino_tensorflow`是为想尝试把openvino用于推理应用中的tensorflow开发者们设计的。原理是通过OpenVINO的内联优化，只需少量代码的改动就可以
 显著提高其推理性能。该仓库展示了对TensorFlow的良好兼容性，可以多众多的AI模型都有加速效果。
 
 ### 2.在哪些计算单元有加速效果？
