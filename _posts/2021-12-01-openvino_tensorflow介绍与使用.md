@@ -6,9 +6,9 @@ tag: OpenVINO
 
 ## 一.介绍
 
-### 1.为什么要使用？
+### 1.`openvino_tensorflow`插件介绍
 
-`openvino_tensorflow`是为想尝试把openvino用于推理应用中的tensorflow开发者们设计的。原理是通过OpenVINO的内联优化，只需少量代码的改动就可以
+`openvino_tensorflow`是为尝试把openvino用于推理应用中的tensorflow开发者们设计的。原理是通过OpenVINO的内联优化，只需少量代码的改动就可以
 显著提高其推理性能。该仓库展示了对TensorFlow的良好兼容性，可以对众多的AI模型起到加速效果。
 
 ### 2.在哪些计算单元有加速效果？
@@ -148,7 +148,7 @@ python3 examples/object_detection_sample.py --input=/home/kang/200.jpg
 
 ![20211204171238](https://cdn.jsdelivr.net/gh/luckykang/picture_bed/blogs_images/20211204171238.png)
 
-## 四.加速原理
+
 
 
 
