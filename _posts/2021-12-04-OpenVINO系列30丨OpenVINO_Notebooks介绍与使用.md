@@ -83,80 +83,50 @@ Notebook | 姓名 |
 
 ## 四.tensorflow-to-openvino
 
-    import time
-    from pathlib import Path
-    import cv2
-    import matplotlib.pyplot as plt
-    import numpy as np
-    from IPython.display import Markdown
-    from openvino.inference_engine import IECore
+这个notebook展示了展示了如何转换 TensorFlow mobilenetV3模型，然后用 OpenVINO 的推理引擎对图像进行分类。
 
-    # The paths of the source and converted models
-    model_path = Path("model/v3-small_224_1.0_float.pb")
-    ir_path = Path(model_path).with_suffix(".xml")
+### 1.首先导入模块
 
-    # Construct the command for Model Optimizer
-    mo_command = f"""mo 
-                    --input_model "{model_path}" 
-                    --input_shape "[1,224,224,3]" 
-                    --mean_values="[127.5,127.5,127.5]"
-                    --scale_values="[127.5]" 
-                    --data_type FP16 
-                    --output_dir "{model_path.parent}"
-                    """
-    mo_command = " ".join(mo_command.split())
-    print("Model Optimizer command to convert TensorFlow to OpenVINO:")
-    display(Markdown(f"`{mo_command}`"))
+`pathlib`是用于处理文件路径的模块，是面向对象的，简化了操作，相比os更加简单好用。
 
-    # Run Model Optimizer if the IR model file does not exist
-    if not ir_path.exists():
-        print("Exporting TensorFlow model to IR... This may take a few minutes.")
-        ! $mo_command
-    else:
-        print(f"IR model {ir_path} already exists.")
+![20211205220339](https://cdn.jsdelivr.net/gh/luckykang/picture_bed/blogs_images/20211205220339.png)
 
-    ie = IECore()
-    net = ie.read_network(model=ir_path, weights=ir_path.with_suffix(".bin"))
-    exec_net = ie.load_network(network=net, device_name="CPU")
+### 2.设置模型存放路径
 
-    input_key = list(exec_net.input_info)[0]
-    output_key = list(exec_net.outputs.keys())[0]
-    network_input_shape = exec_net.input_info[input_key].tensor_desc.dims
+指定原模型所在路径和转化为OpenVINO IR中间表示的路径，这里使用的模型是`001 hello-world `notebook中的 `mobileenetv3`
 
-    # The MobileNet network expects images in RGB format
-    image = cv2.cvtColor(cv2.imread(filename="data/coco.jpg"), code=cv2.COLOR_BGR2RGB)
+![20211205220506](https://cdn.jsdelivr.net/gh/luckykang/picture_bed/blogs_images/20211205220506.png)
 
-    # Resize image to network input image shape
-    resized_image = cv2.resize(src=image, dsize=(224, 224))
+### 3.指定模型优化器的转换参数
 
-    # Transpose image to network input shape
-    input_image = np.reshape(resized_image, network_input_shape) / 255
-    input_image = np.expand_dims(np.transpose(resized_image, (2, 0, 1)), 0)
-    plt.imshow(image);
+使用OpenVINO的模型优化器进行转换，输入模型相关shape和路径，添加了`--mean_values`、
+`--scale_values`等参数，精度指定了为FP16。
 
-    result = exec_net.infer(inputs={input_key: input_image})[output_key]
-    result_index = np.argmax(result)
+![20211205220756](https://cdn.jsdelivr.net/gh/luckykang/picture_bed/blogs_images/20211205220756.png)
 
-    # Convert the inference result to a class name.
-    imagenet_classes = open("utils/imagenet_2012.txt").read().splitlines()
+### 4.执行模型优化
 
-    # The model description states that for this model, class 0 is background,
-    # so we add background at the beginning of imagenet_classes
-    imagenet_classes = ['background'] + imagenet_classes
+执行完成后，我们可以在model目录下看到生成的IR文件。
 
-    imagenet_classes[result_index]
+![20211205221028](https://cdn.jsdelivr.net/gh/luckykang/picture_bed/blogs_images/20211205221028.png)
 
-    num_images = 1000
-    start = time.perf_counter()
-    for _ in range(num_images):
-        exec_net.infer(inputs={input_key: input_image})
-    end = time.perf_counter()
-    time_ir = end - start
-    print(
-        f"IR model in Inference Engine/CPU: {time_ir/num_images:.4f} "
-        f"seconds per image, FPS: {num_images/time_ir:.2f}"
-    )
+### 5.推理验证
 
-## 五.tensorflow-training-openvino
+加载模型文件，指定推理硬件为CPU。获取模型信息，加载要推理的图片并处理为适合的格式
+
+![20211205223725](https://cdn.jsdelivr.net/gh/luckykang/picture_bed/blogs_images/20211205223725.png)
+
+执行推理并输出结果
+
+![20211205225308](https://cdn.jsdelivr.net/gh/luckykang/picture_bed/blogs_images/20211205225308.png)
+
+### 6.性能测试
+
+测试一千张图片的推理用时，来评估模型优化后的性能。如果我们想得到更准确更专业的性能参数，可以
+使用benchmark_app进行性能评估。
+
+![20211205230852](https://cdn.jsdelivr.net/gh/luckykang/picture_bed/blogs_images/20211205230852.png)
+
+到此，从模型的优化到推理，再到简单的性能测试，就都完成啦。
 
 
