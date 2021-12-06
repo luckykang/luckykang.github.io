@@ -81,11 +81,11 @@ Notebook | 姓名 |
 
 ![20211204231027](https://cdn.jsdelivr.net/gh/luckykang/picture_bed/blogs_images/20211204231027.png)
 
-## 四.tensorflow-to-openvino
+## 五.101-tensorflow-to-openvino
 
-这个notebook展示了展示了如何转换 TensorFlow mobilenetV3模型，然后用 OpenVINO 的推理引擎对图像进行分类。
+这个notebook介绍了如何把TensorFlow 模型转换为OpenVINO IR文件。我们把一个TensorFlow MobilenetV3模型转换为IR中间表示，并使用 OpenVINO 的推理引擎对图像进行分类。
 
-### 1.首先导入模块
+### 1.导入模块
 
 `pathlib`是用于处理文件路径的模块，是面向对象的，简化了操作，相比os更加简单好用。
 
@@ -128,5 +128,27 @@ Notebook | 姓名 |
 ![20211205230852](https://cdn.jsdelivr.net/gh/luckykang/picture_bed/blogs_images/20211205230852.png)
 
 到此，从模型的优化到推理，再到简单的性能测试，就都完成啦。
+
+## 六.301-tensorflow-training-openvino
+
+这个notebook介绍了如何使用TensorFlow和OpenVINO从训练到部署的流程。下图可以看到两个ipynb文件,我们分为两部分来说。
+
+`301-tensorflow-training-openvino.ipynb`是端到端的深度学习训练教程，演示如何使用 TensorFlow 和 OpenVINO 训练、转换和部署图像分类模型。它使用了`tf _ flowers`数据集,约3700张鲜花照片。
+
+`301-tensorflow-training-openvino-pot.ipynb`演示如何对上面OpenVINO IR 模型进行量化。量化过程是使用OpenVINO Post Training Optimization Tool (POT)
+工具实现的，通过量化可以加快模型的推理速度。
+
+![20211206225859](https://cdn.jsdelivr.net/gh/luckykang/picture_bed/blogs_images/20211206225859.png)
+
+首先来看第一部分：如何对花的图像进行分类（基于TensorFlow的官方教程）。它使用`keras.Sequential`模型创建了一个图像分类器，并使用p`reprocessing.image_dataset_from_directory`加载数据。
+
+### 1.导入模块
+
+`PIL`,全称 `Python Imaging Library`，是 Python 平台一个功能非常强大而且简单易用的图像处理库。
+
+![20211206235230](https://cdn.jsdelivr.net/gh/luckykang/picture_bed/blogs_images/20211206235230.png)
+
+### 2.
+
 
 
