@@ -148,7 +148,11 @@ Notebook | 姓名 |
 
 ![20211206235230](https://cdn.jsdelivr.net/gh/luckykang/picture_bed/blogs_images/20211206235230.png)
 
-### 2.
+### 2.下载数据集
+
+有5个子目录，每个类都有一个。
+
+![20211207002622](https://cdn.jsdelivr.net/gh/luckykang/picture_bed/blogs_images/20211207002622.png)
 
 
 
