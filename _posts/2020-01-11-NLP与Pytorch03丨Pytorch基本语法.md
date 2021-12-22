@@ -1,6 +1,6 @@
 ---
 layout: post
-title: NLP学习系列08丨Pytorch基本语法
+title: NLP与Pytorch03丨Pytorch基本语法
 tag: NLP
 ---
 
