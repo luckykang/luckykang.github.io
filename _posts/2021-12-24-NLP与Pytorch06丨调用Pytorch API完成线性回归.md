@@ -234,5 +234,12 @@ plt.show()
 ```
 
 
+**在GPU执行程序：**
 
-​	
+- 1.自定义的参数和数据，需要转化为cuda支持的tensor
+
+- 2.model需要转化为cuda支持的model
+
+- 3.执行的结果需要和cpu的tensor计算的时候，`tensor.cpu()`可以把cuda的tensor转化为cpu的tensor
+
+
