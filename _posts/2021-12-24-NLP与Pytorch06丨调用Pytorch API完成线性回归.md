@@ -150,6 +150,89 @@ plt.show()
 
 但是在其他的一些模型中，**训练的参数和预测的参数会不相同**，到时候就需要具体告诉程序我们是在进行训练还是预测，比如模型中存在**Dropout**，**BatchNorm**的时候
 
+## 五.在GPU上运行代码
+
+当模型太大，或者参数太多的情况下，为了加快训练速度，经常会使用GPU来进行训练。
+
+此时我们的代码需要稍作调整：
+
+1. 判断GPU是否可用`torch.cuda.is_available()`
+
+```python
+torch.device("cuda:0" if torch.cuda.is_available() else "cpu")
+>>device(type='cuda', index=0)  #使用gpu
+>>device(type='cpu') #使用cpu
+```
+
+2. 把模型参数和input数据转化为cuda的支持类型
+
+```python
+model.to(device)
+x_true.to(device)
+```
+
+3. 在GPU上计算结果也为cuda的数据类型，需要转化为numpy或者torch的cpu的tensor类型
+
+```python
+predict = predict.cpu().detach().numpy() 
+```
+
+   `detach()`的效果和data的相似，但是`detach()`是深拷贝，data是取值，是浅拷贝
+
+修改之后的代码如下：
+
+```python
+import torch
+from torch import nn
+from torch import optim
+import numpy as np
+from matplotlib import pyplot as plt
+import time
+
+# 1. 定义数据
+x = torch.rand([50,1])
+y = x*3 + 0.8
+
+#2 .定义模型
+class Lr(nn.Module):
+    def __init__(self):
+        super(Lr,self).__init__()
+        self.linear = nn.Linear(1,1)
+
+    def forward(self, x):
+        out = self.linear(x)
+        return out
+
+# 2. 实例化模型，loss，和优化器
+
+device = torch.device("cuda:0" if torch.cuda.is_available() else "cpu")
+x,y = x.to(device),y.to(device)
+
+model = Lr().to(device)
+criterion = nn.MSELoss()
+optimizer = optim.SGD(model.parameters(), lr=1e-3)
+
+#3. 训练模型
+for i in range(300):
+    out = model(x)
+    loss = criterion(y,out)
+
+    optimizer.zero_grad()
+    loss.backward()
+    optimizer.step()
+    if (i+1) % 20 == 0:
+        print('Epoch[{}/{}], loss: {:.6f}'.format(i,30000,loss.data))
+
+#4. 模型评估
+model.eval() #
+predict = model(x)
+predict = predict.cpu().detach().numpy() #转化为numpy数组
+plt.scatter(x.cpu().data.numpy(),y.cpu().data.numpy(),c="r")
+plt.plot(x.cpu().data.numpy(),predict,)
+plt.show()
+
+```
+
 
 
 ​	
