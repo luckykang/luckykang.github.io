@@ -4,7 +4,6 @@ title: VS Code系列01丨配置Python开发环境
 tag: VS Code
 ---
 
-
 ### 1.安装 python
 
 国内下载源：[https://mirrors.huaweicloud.com/python/](https://mirrors.huaweicloud.com/python/)
