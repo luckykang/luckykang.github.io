@@ -1,6 +1,6 @@
 ---
 layout: post
-title: 计算机视觉与TensorFlow系列02丨Tensorflow和Keras简介
+title: 计算机视觉与TensorFlow系列02丨Tensorflow和Keras介绍与Tensorboard使用
 tag: 计算机视觉与TensorFlow
 ---
 
@@ -116,19 +116,124 @@ tensor_2.numpy()
 
 ![20220105175644](https://cdn.jsdelivr.net/gh/luckykang/picture_bed/blogs_images/20220105175644.png)
 
+### 4.张量的常用函数
 
+```python
+import tensorflow as tf
+# 忽略
+import os
+os.environ['TF_CPP_MIN_LOG_LEVEL'] = '2'
 
+a = tf.constant([
+    [1, 2],
+    [2, 3],
+])
+b = tf.constant([
+    [3, 4],
+    [4, 5],
+])
+# 计算张量的和
+print(tf.add(a, b), "\n")
+# 计算张量的元素乘法
+print(tf.multiply(a, b), "\n")
+# 计算乘法
+print(tf.matmul(a, b), "\n")
+```
+结果
+```python
+tf.Tensor(
+[[4 6]
+ [6 8]], shape=(2, 2), dtype=int32) 
 
+tf.Tensor(
+[[ 3  8]
+ [ 8 15]], shape=(2, 2), dtype=int32) 
 
+tf.Tensor(
+[[11 14]
+ [18 23]], shape=(2, 2), dtype=int32)
+```
 
+### 5.聚合运算
 
+```
+tf.reduce_sum()
+tf.reduce_mean()
+tf.reduce_max()
+tf.reduce_min()
+tf.argmax()
+tf.argmin()
+```
 
+### 6.变量
 
+变量是一种特殊的张量，形状是不可变的，但可以更改其中的参数。
 
+```python
+var = tf.Variable([[1, 3], [4, 6]])
+# 形状
+print("shape", var.shape)
+# 类型
+print("dtype", var.dtype)
+# 转换为ndarray
+print("ndarray", var.numpy())
+# 改变参数
+print("assign", var.assign([[2, 3], [6, 7]]))
+```
 
+## 三.tf.keras介绍
 
+### 1.常用模块
 
-### 3.Tensorboard
+![20220106153215](https://cdn.jsdelivr.net/gh/luckykang/picture_bed/blogs_images/20220106153215.png)
+
+### 2.常用方法
+
+- 1.导入tf.keras
+
+```python
+import tensorflow as tf
+from tensorflow import keras
+```
+- 2.数据输入
+
+对于小的数据集，可以直接使用numpy格式的数据进行训练、评估模型，对于大型数据集或者要进行跨设备训练时可使用`tf.data.datasets`来进行数据输入。
+
+- 3.模型构建
+
+简单模型使用Sequential进行构建
+
+复杂模型使用函数式编程来构建
+
+自定义layers
+
+- 4.训练与评估
+
+![20220106161920](https://cdn.jsdelivr.net/gh/luckykang/picture_bed/blogs_images/20220106161920.png)
+
+- 5.回调函数(callbacks)
+
+![20220106162304](https://cdn.jsdelivr.net/gh/luckykang/picture_bed/blogs_images/20220106162304.png)
+
+- 6.模型的保存和恢复
+
+> 只保存参数
+
+```python
+# 只保存模型的权重
+model.save_weights('./model')
+# 加载模型的权重
+model.load_weights('model')
+```
+> 保存整个模型
+```python
+# 保存模型架构与权重在h5文件中
+model.save('model.h5')
+# 加载模型：包括架构和对应的权重
+model = keras.models.load_model('model.h5')
+```
+
+## 四.Tensorboard介绍与使用
 
 TensorFlow有一个亮点就是，我们能看到自己写的程序的可视化效果，这个功能就是Tensorboard。它是一个可视化工具。通过它，我们可以更方便地对 TensorFlow 程序的理解、调试与优化。
 
