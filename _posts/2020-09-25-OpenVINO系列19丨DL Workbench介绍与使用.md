@@ -4,7 +4,7 @@ title: OpenVINO系列19丨DL Workbench的介绍与使用
 tag: OpenVINO
 ---
 
->>> 全文字数1376，预计阅读6min
+>>> 全文字数1303，预计阅读5min
 
 ### 1.什么是DL Workbench 
 
@@ -32,27 +32,32 @@ Workbench有两种安装方式：
 
 - 从Docker Hub安装DL Workbench（包括在Linux，Windows和macOS上安装）
 
+[https://docs.openvino.ai/latest/workbench_docs_Workbench_DG_Run_Locally.html](https://docs.openvino.ai/latest/workbench_docs_Workbench_DG_Run_Locally.html)
+
 - 从OpenVINO工具包软件包中安装DL Workbench。参见链接:[https://docs.openvinotoolkit.org/latest/workbench_docs_Workbench_DG_Install_from_Package.html](https://docs.openvinotoolkit.org/latest/workbench_docs_Workbench_DG_Install_from_Package.html)
 
-这里我们使用从`Docker Hub`安装的方式。在机器上安装完docker后，从github的主分支下载start_workbench.sh脚本
+这里我们使用从`Docker Hub`安装的方式。在机器上安装完docker后，在页面选择配置：
 
-![0921140114](https://cdn.jsdelivr.net/gh/luckykang/picture_bed/blogs_images/0921140114.png)
+![20220224231742](https://cdn.jsdelivr.net/gh/luckykang/picture_bed/blogs_images/20220224231742.png)
 
-给予当前用户执行权限
+Pull DL Workbench image
 
-![0921140553](https://cdn.jsdelivr.net/gh/luckykang/picture_bed/blogs_images/0921140553.png)
+```
+docker pull openvino/workbench:2021.4.2
+```
+Start DL Workbench
 
-执行脚本，如果本机没有镜像就会下载最新的workbench镜像。
+```
+docker run -p 0.0.0.0:5665:5665 --name workbench -it openvino/workbench:2021.4.2
+```
 
-![0921140742](https://cdn.jsdelivr.net/gh/luckykang/picture_bed/blogs_images/0921140742.png)
-
-下载完成后显示如下图，会生成一个带token的本地服务地址，每次重新启动后地址链接都是变化的，因为token是随机生成的，到这一步就安装完成了。
+执行成功的显示如下图，这时会启动一个本地服务器。
 
 ![0921142540](https://cdn.jsdelivr.net/gh/luckykang/picture_bed/blogs_images/0921142540.png)
 
 ### 5.如何使用DL Workbench进行推理
 
-执行脚本启动服务，粘贴链接到谷歌浏览器并打开Workbench的Web界面，首页显示如下图
+粘贴本地服务器的link到浏览器并打开Workbench的Web界面，首页显示如下图
 
 ![0921143423](https://cdn.jsdelivr.net/gh/luckykang/picture_bed/blogs_images/0921143423.png)
 
