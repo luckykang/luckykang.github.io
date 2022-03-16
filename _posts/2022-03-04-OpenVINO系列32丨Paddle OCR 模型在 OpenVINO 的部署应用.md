@@ -80,6 +80,7 @@ pip3 install -r src/bindings/python/src/compatibility/openvino/requirements-dev.
 
 ```
 ls
+
 export OPENVINO_BASEDIR=`pwd`
 
 mkdir build
