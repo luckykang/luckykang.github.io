@@ -1,6 +1,6 @@
 ---
 layout: post
-title: 2021-01-13-VS Code系列03丨配置Golang的开发环境
+title: VS Code系列03丨配置Golang的开发环境
 tag: VS Code
 ---
 
