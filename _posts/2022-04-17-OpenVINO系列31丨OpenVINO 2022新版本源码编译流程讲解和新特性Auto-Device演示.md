@@ -83,12 +83,15 @@ chmod +x install_build_dependencies.sh
 安装python依赖环境
 
 ```
-pip3 install -r src/bindings/python/src/compatibility/openvino/requirements.txt
+pip3 install -r src/bindings/python/src/compatibility/openvino/requirements-dev.txt
+
 ```
 
 ![20220417224034](https://cdn.jsdelivr.net/gh/luckykang/picture_bed/blogs_images/20220417224034.png)
 
-## 4.build
+## 4.build选项介绍与操作步骤
+
+### 1.编译选项介绍
 
 cmake 编译OpenVINO 环境的时候，允许我们根据自身需求来灵活指定编译的选项。
 
@@ -131,27 +134,30 @@ clDNN，即深度神经网络计算库，是一个用于深度学习(DL)应用�
 ```
 -DNGRAPH_DEBUG_ENABLE=ON
 ```
+### 2.执行build
 
+介绍完每个选项的功能后，接下来就开始build操作了。
 
 ```
 mkdir build  && cd build
 
 cmake  -DCMAKE_BUILD_TYPE=Release -DENABLE_PYTHON=ON -DNGRAPH_PYTHON_BUILD_ENABLE=ON -DPYTHON_EXECUTABLE=`which python3.8` -DPYTHON_LIBRARY=/usr/lib/x86_64-linux-gnu/libpython3.8.so -DPYTHON_INCLUDE_DIR=/usr/include/python3.8 -DENABLE_MKL_DNN=ON  -DENABLE_CLDNN=ON -DENABLE_MYRIAD=ON -DNGRAPH_ONNX_IMPORT_ENABLE=ON -DNGRAPH_DEBUG_ENABLE=ON   ..
+```
+![20220425221908](https://cdn.jsdelivr.net/gh/luckykang/picture_bed/blogs_images/20220425221908.png)
 
+
+```
 make --jobs=$(nproc --all)
 ```
 
+![20220425221953](https://cdn.jsdelivr.net/gh/luckykang/picture_bed/blogs_images/20220425221953.png)
 
+编译完成
 
+![20220425222044](https://cdn.jsdelivr.net/gh/luckykang/picture_bed/blogs_images/20220425222044.png)
+### 3.环境初始化
 
-```
-cmake -DNGRAPH_PDPD_FRONTEND_ENABLE=ON -DENABLE_SAMPLES=OFF -DENABLE_CLDNN=OFF -DENABLE_PYTHON=ON -DNGRAPH_PYTHON_BUILD_ENABLE=ON -DENABLE_MYRIAD=OFF -DNGRAPH_ONNX_IMPORT_ENABLE=ON -DCMAKE_INSTALL_PREFIX=`pwd`/install -DNGRAPH_UNIT_TEST_ENABLE=ON -DNGRAPH_USE_SYSTEM_PROTOBUF=OFF -DPYTHON_EXECUTABLE=$(which python3) -DCMAKE_EXPORT_COMPILE_COMMANDS=ON -DENABLE_GNA=OFF -DENABLE_CLANG_FORMAT=ON -DENABLE_TESTS=ON -DENABLE_FUNCTIONAL_TESTS=ON -DENABLE_STRICT_DEPENDENCIES=OFF \
--DENABLE_FASTER_BUILD=ON \
--DDNNL_LIBRARY_TYPE=SHARED \
-..
-```
-## 环境初始化
-
+这里需要把编译好的python动态库导入setupvars路径，这样脚本才能找到python环境。
 ```
 cd scripts/setupvars/
 
@@ -162,21 +168,40 @@ cp -rf  ~/openvino/bin/intel64/Release/lib/python_api/python3.8/    ./python
 source ~/openvino/scripts/setupvars/setupvars.sh
 ```
 
-![20220228230659](https://cdn.jsdelivr.net/gh/luckykang/picture_bed/blogs_images/20220228230659.png)
+![20220425222141](https://cdn.jsdelivr.net/gh/luckykang/picture_bed/blogs_images/20220425222141.png)
 
-![20220228230609](https://cdn.jsdelivr.net/gh/luckykang/picture_bed/blogs_images/20220228230609.png)
-
-
-# 五.从模型下载到推理完成的演示
-
-
-
-
-
-
-# 六.Auto-Device 的介绍与演示
+# 五.Auto-Device 的介绍与演示
 
 ## 1.什么是AUTO Device？
 
-AUTO Device (简称 AUTO)是 OpenVINO 工具包中的一个新的特殊“虚拟”或“代理”设备，它不绑定到特定类型的 HW 设备。AUTO 解决了为硬件设备选择(通过硬件设备)编写逻辑代码所需的应用程序复杂性，然后，在推导该设备上的最佳优化设置时所需的复杂性。它通过自我发现系统中所有可用的加速器和功能，通过尊重新的“提示”配置 API 来分别动态优化延迟或吞吐量，从而匹配用户的性能需求。开发人员可以编写一次应用程序并部署到任何地方。
-## 2.
+AUTO Device (简称 AUTO)是 OpenVINO 工具包中的一个新的特殊“虚拟”或“代理”设备，它不绑定到特定类型的设备。它可以降低使用者对硬件设备选择的复杂性，代码中指定`-d AUTO`后,它可以自动发现设备中可用的计算硬件并自动选择执行推理，通过配置 API 来分别动态优化延迟或吞吐量，从而匹配用户的性能需求。开发人员可以编写一次应用程序并部署到任何地方。
+
+## 2.演示
+
+接下来就让我们试试怎么使用吧。首先检测benchmark_app的环境是否配置成功。这里发现有个报错，当前环境没有'progress'模块。
+```
+cd openvino/tools/benchmark_tool
+
+./benchmark_app.py --help
+```
+
+![20220425222305](https://cdn.jsdelivr.net/gh/luckykang/picture_bed/blogs_images/20220425222305.png)
+
+
+安装progress模块
+```
+pip3 install progress
+```
+
+![20220425222329](https://cdn.jsdelivr.net/gh/luckykang/picture_bed/blogs_images/20220425222329.png)
+
+再次执行上边的命令，现在可以看到benchmark_app的参数介绍了，环境配置成功。它也检测到我们目前可用的device有CPU、GNA和GPU
+
+![20220425222349](https://cdn.jsdelivr.net/gh/luckykang/picture_bed/blogs_images/20220425222349.png)
+
+找个resnet-50的OV模型，执行推理。可以在执行过程中看到`Device info`为 `AUTO`,此时OV会在可用的硬件设备中自动匹配并加载和优化模型，进行推理。
+
+```
+./benchmark_app.py -m ~/resnet-50-pytorch.xml  -d AUTO -b 8 -t 50 -nstreams 8 -progress
+```
+![20220425224614](https://cdn.jsdelivr.net/gh/luckykang/picture_bed/blogs_images/20220425224614.png)
