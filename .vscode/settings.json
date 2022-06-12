@@ -1,5 +1,6 @@
 {
     "python.pythonPath": "/usr/bin/python3",
     "git.ignoreLimitWarning": true,
-    "editor.fontSize": 18
+    "editor.fontSize": 18,
+    "C_Cpp.errorSquiggles": "Enabled"
 }
