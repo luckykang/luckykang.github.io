@@ -22,6 +22,7 @@ apt update
 apt install git sudo
 cd /opt
 ```
+
 ![20220904151900](https://cdn.jsdelivr.net/gh/luckykang/picture_bed/blogs_images/20220904151900.png)
 
 # 二.克隆 OpenVINO 的代码仓和子代码仓
