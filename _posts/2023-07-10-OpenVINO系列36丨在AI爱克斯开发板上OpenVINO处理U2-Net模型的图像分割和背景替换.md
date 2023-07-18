@@ -4,6 +4,8 @@ title: OpenVINO系列36丨在AI爱克斯开发板上OpenVINO处理U2-Net模型�
 tag: OpenVINO
 ---
 
+作者：康瑶明 - 英特尔边缘计算创新大使
+
 
 # 一.AIxBoard介绍
 
@@ -234,6 +236,10 @@ plt.show()
 ```
 
 ![20230712221749](https://cdn.jsdelivr.net/gh/luckykang/picture_bed/blogs_images/20230712221749.png)
+
+# 四. 结论
+
+AI爱克斯开发板，板载8G内存，64GB存储，WiFi6千兆无线网卡，CPU+iGPU异构计算，还有一个M.2插槽支持可扩展硬盘。搭载的Intel Celeron N5105是Jaser Lake系列的四核处理器，被定位为嵌入式CPU，不管是性能，还是功耗，散热都做的非常不错。在测试中，内置的集成显卡可以在U2-Net模型的加速推理时间缩短近10倍，FPS也提高了近10倍。然而GPU利用率才50%左右，这说明GPU的加速效果还是很可观的，还有潜力进一步释放算力，是AI开发者的趁手利器。
 
 
 
