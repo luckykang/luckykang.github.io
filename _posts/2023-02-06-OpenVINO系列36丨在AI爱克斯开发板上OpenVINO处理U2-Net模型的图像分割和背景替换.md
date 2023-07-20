@@ -4,8 +4,6 @@ title: OpenVINO系列36丨在AI爱克斯开发板上OpenVINO处理U2-Net模型�
 tag: OpenVINO
 ---
 
-作者：康瑶明 - 英特尔边缘计算创新大使
-
 
 # 一.AIxBoard介绍
 
