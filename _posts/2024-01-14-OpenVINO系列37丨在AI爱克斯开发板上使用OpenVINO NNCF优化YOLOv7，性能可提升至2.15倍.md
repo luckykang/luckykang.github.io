@@ -1,9 +1,9 @@
-
 ---
 layout: post
 title: OpenVINO系列37丨在AI爱克斯开发板上使用OpenVINO NNCF优化YOLOv7，性能可提升至2.15倍
 tag: OpenVINO
 ---
+
 
 YOLO代表“You Only Look Once”，它是一种流行的实时物体检测算法系列。最初的YOLO物体检测器于2016年首次发布。从那时起，YOLO的不同版本和变体被提出，每个版本和变体都显着提高了性能和效率。YOLO算法作为one-stage目标检测算法最典型的代表，其基于深度神经网络进行对象的识别和定位，运行速度很快，可以用于实时系统。YOLOv7 是 YOLO 模型系列的下一个演进阶段，在不增加推理成本的情况下，大大提高了实时目标检测精度。
 
